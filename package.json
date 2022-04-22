@@ -1,0 +1,29 @@
+{
+  "name": "web-app",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 5050",
+    "test:unit": "vitest --environment jsdom",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "deploy-dev": "vercel",
+    "deploy-prod": "vercel --prod"
+  },
+  "dependencies": {
+    "pinia": "^2.0.13",
+    "vue": "^3.2.33",
+    "vue-router": "^4.0.14"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.1",
+    "@vue/test-utils": "^2.0.0-rc.20",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^8.2.0",
+    "jsdom": "^19.0.0",
+    "sass": "^1.50.1",
+    "vercel": "^24.1.0",
+    "vite": "^2.9.5",
+    "vitest": "^0.9.3"
+  }
+}
