@@ -1,13 +1,17 @@
 <script setup>
-import AppHeader from './components/AppHeader/AppHeader.vue';
-import { ref, watch } from 'vue';
-import {useRoute, RouterView} from 'vue-router'
+  import AppHeader from './components/AppHeader/AppHeader.vue';
+  import { ref, watch } from 'vue';
+  import {useRoute, RouterView} from 'vue-router'
+
+  import { useHeaderNavStore } from "@/stores/HeaderNavBar.js"
+  const navbarStore = useHeaderNavStore();
 
   const route= useRoute();
   const currentSection = ref(route.name);
 
   watch(() => route.name, (newRouteName) => {
-    currentSection.value = newRouteName
+    currentSection.value = newRouteName;
+    navbarStore.removeActive();
 })
 </script>
 
@@ -18,7 +22,6 @@ import {useRoute, RouterView} from 'vue-router'
 
 <style>
 @import '@/assets/base.css';
-
 
 @media (min-width:1280px){
   #app {
