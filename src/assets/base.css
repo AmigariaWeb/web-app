@@ -88,3 +88,7 @@ p{
  font-size: 1rem;
  line-height: 2.188rem;
 }
+
+strong{
+  font-weight: bold;
+}

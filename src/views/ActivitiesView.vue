@@ -3,7 +3,16 @@
 
   <div class="container">
     <div class="containerPostits">
-    <div class="postit"></div>
+    <div class="postit">
+      <h4><strong>Ir a la biblioteca</strong></h4>
+      <p>Tengo que ir a devolver un libro y echar un vistazo para llevarme otro.</p>
+      <div class="postItContent">
+        <p><strong>Cuándo:</strong> 20 Abril 2022, 19:00</p>
+        <p><strong>Dónde:</strong> Torrent, Valencia, biblioteca pública</p>
+        <p><strong>Duración:</strong> 2 - 3 horas</p>
+      </div>
+      <button>Ayudar</button>
+    </div>
     <div class="postit"></div>
     <div class="postit"></div>
     <div class="postit"></div>
@@ -36,14 +45,17 @@
 .postit{
   background-color: var(--clr-yellow-light);
   width: 300px;
-  height: 300px;
+  min-height: 300px;
   padding:1rem;
   margin: 1rem;
-  border: 10px solid white;
-  border-radius: 20px;
+  border: 15px solid white;
+  border-radius: 15px;
   box-shadow: var(--shadow);
   position: relative;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 
   &::before {
@@ -88,6 +100,24 @@
         63.5% 58%,
         76% 35.5%,
         84% 15.5%);
+  }
+
+  & .postItContent{
+    background-color: var(--clr-emphasis-light);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    width: 100%;
+  }
+
+  & button {
+    font-size: 2rem;
+    width: 150px;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    padding: 0.5rem;
+    background-color: var(--clr-emphasis-light);
+    color: var(--clr-dark-blue)
   }
 }
 </style>
