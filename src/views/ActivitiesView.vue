@@ -4,7 +4,7 @@
   <div class="container">
     <div class="containerPostits">
     <div class="postit">
-      <h4><strong>Ir a la biblioteca</strong></h4>
+      <h4><strong>Ir a la biblioteca.</strong></h4>
       <p>Tengo que ir a devolver un libro y echar un vistazo para llevarme otro.</p>
       <div class="postItContent">
         <p><strong>Cuándo:</strong> 20 Abril 2022, 19:00</p>
@@ -13,10 +13,47 @@
       </div>
       <button>Ayudar</button>
     </div>
-    <div class="postit"></div>
-    <div class="postit"></div>
-    <div class="postit"></div>
-    <div class="postit"></div>
+
+    <div class="postit">
+      <h4><strong>Hacer la compra.</strong></h4>
+      <p>Tengo que comprar unas cosas que pesan demasiado para mí. Voy con andador.</p>
+      <div class="postItContent">
+        <p><strong>Cuándo:</strong> 5 Mayo 2022, 10:00</p>
+        <p><strong>Dónde:</strong> Leroy Merlín de Plaza, Zaragoza</p>
+        <p><strong>Duración:</strong> 1 - 2 horas</p>
+      </div>
+      <button>Ayudar</button>
+    </div>
+    <div class="postit">
+      <h4><strong>Tomar un café.</strong></h4>
+      <p>Hace mucho que no tomo un café con alguien. Invito yo.</p>
+      <div class="postItContent">
+        <p><strong>Cuándo:</strong> 29 Abril 2022, 16:00</p>
+        <p><strong>Dónde:</strong> Starbucks, Madrid</p>
+        <p><strong>Duración:</strong> lo que surja.</p>
+      </div>
+      <button>Ayudar</button>
+    </div>
+    <div class="postit">
+      <h4><strong>Hacer la compra.</strong></h4>
+      <p>Tengo que comprar unas cosas que pesan demasiado para mí. Voy con andador.</p>
+      <div class="postItContent">
+        <p><strong>Cuándo:</strong> 5 Mayo 2022, 10:00</p>
+        <p><strong>Dónde:</strong> Leroy Merlín de Plaza, Zaragoza</p>
+        <p><strong>Duración:</strong> 1 - 2 horas</p>
+      </div>
+      <button>Ayudar</button>
+    </div>
+    <div class="postit">
+            <h4><strong>Hacer la compra</strong></h4>
+      <p>Tengo que comprar unas cosas que pesan demasiado para mí. Voy con andador.</p>
+      <div class="postItContent">
+        <p><strong>Cuándo:</strong> 5 Mayo 2022, 10:00</p>
+        <p><strong>Dónde:</strong> Leroy Merlín de Plaza, Zaragoza</p>
+        <p><strong>Duración:</strong> 1 - 2 horas</p>
+      </div>
+      <button>Ayudar</button>
+    </div>
     </div>
   </div>
 </template>
