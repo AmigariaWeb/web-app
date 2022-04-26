@@ -5,8 +5,8 @@
     <div class="containerPostits">
     <div class="postit">
       <h4><strong>Ir a la biblioteca.</strong></h4>
-      <p>Tengo que ir a devolver un libro y echar un vistazo para llevarme otro.</p>
-      <div class="postItContent">
+      <p class="postItContent">Tengo que ir a devolver un libro y echar un vistazo para llevarme otro.</p>
+      <div class="postItData">
         <p><strong>Cuándo:</strong> 20 Abril 2022, 19:00</p>
         <p><strong>Dónde:</strong> Torrent, Valencia, biblioteca pública</p>
         <p><strong>Duración:</strong> 2 - 3 horas</p>
@@ -16,8 +16,8 @@
 
     <div class="postit">
       <h4><strong>Hacer la compra.</strong></h4>
-      <p>Tengo que comprar unas cosas que pesan demasiado para mí. Voy con andador.</p>
-      <div class="postItContent">
+      <p class="postItContent">Tengo que comprar unas cosas que pesan demasiado para mí. Voy con andador. Texto de relleno para probar el botón leer más.</p>
+      <div class="postItData">
         <p><strong>Cuándo:</strong> 5 Mayo 2022, 10:00</p>
         <p><strong>Dónde:</strong> Leroy Merlín de Plaza, Zaragoza</p>
         <p><strong>Duración:</strong> 1 - 2 horas</p>
@@ -26,8 +26,8 @@
     </div>
     <div class="postit">
       <h4><strong>Tomar un café.</strong></h4>
-      <p>Hace mucho que no tomo un café con alguien. Invito yo.</p>
-      <div class="postItContent">
+      <p class="postItContent">Hace mucho que no tomo un café con alguien. Invito yo.</p>
+      <div class="postItData">
         <p><strong>Cuándo:</strong> 29 Abril 2022, 16:00</p>
         <p><strong>Dónde:</strong> Starbucks, Madrid</p>
         <p><strong>Duración:</strong> lo que surja.</p>
@@ -36,8 +36,8 @@
     </div>
     <div class="postit">
       <h4><strong>Hacer la compra.</strong></h4>
-      <p>Tengo que comprar unas cosas que pesan demasiado para mí. Voy con andador.</p>
-      <div class="postItContent">
+      <p class="postItContent">Tengo que comprar unas cosas que pesan demasiado para mí. Voy con andador.</p>
+      <div class="postItData">
         <p><strong>Cuándo:</strong> 5 Mayo 2022, 10:00</p>
         <p><strong>Dónde:</strong> Leroy Merlín de Plaza, Zaragoza</p>
         <p><strong>Duración:</strong> 1 - 2 horas</p>
@@ -46,8 +46,8 @@
     </div>
     <div class="postit">
             <h4><strong>Hacer la compra</strong></h4>
-      <p>Tengo que comprar unas cosas que pesan demasiado para mí. Voy con andador.</p>
-      <div class="postItContent">
+      <p class="postItContent">Tengo que comprar unas cosas que pesan demasiado para mí. Voy con andador.</p>
+      <div class="postItData">
         <p><strong>Cuándo:</strong> 5 Mayo 2022, 10:00</p>
         <p><strong>Dónde:</strong> Leroy Merlín de Plaza, Zaragoza</p>
         <p><strong>Duración:</strong> 1 - 2 horas</p>
@@ -81,8 +81,8 @@
 }
 .postit{
   background-color: var(--clr-yellow-light);
-  width: 300px;
-  min-height: 300px;
+  max-width: 320px;
+  max-height: 450px;
   padding:1rem;
   margin: 1rem;
   border: 15px solid white;
@@ -91,7 +91,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
+  justify-content: space-between;
   align-items: center;
   overflow: hidden;
 
@@ -140,6 +141,13 @@
   }
 
   & .postItContent{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  }
+
+  & .postItData{
     background-color: var(--clr-emphasis-light);
     border-radius: 0.5rem;
     padding: 0.5rem;
