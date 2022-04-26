@@ -41,7 +41,7 @@
   margin: 1rem;
   border: 10px solid white;
   border-radius: 20px;
-  box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow);
   position: relative;
   display: flex;
   overflow: hidden;
