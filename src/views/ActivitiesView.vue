@@ -190,7 +190,11 @@
     border: 1px solid transparent;
     padding: 0.5rem;
     background-color: var(--clr-emphasis-light);
-    color: var(--clr-dark-blue);
+    color: var(--clr-green-dark);
+
+    &:hover{
+      cursor: pointer;
+    }
   }
 }
 </style>
