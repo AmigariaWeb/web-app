@@ -2,6 +2,9 @@
 <template>
 
   <div class="container">
+    <div class="searchBarContainer">
+      <input class="searchBar" type="text" placeholder="Buscar...">
+    </div>
     <div class="containerPostits">
     <div class="postit">
       <h4><strong>Ir a la biblioteca.</strong></h4>
@@ -69,11 +72,36 @@
 .container{
   background-color: var(--clr-green-light);
   padding:1rem;
-
+  display:flex;
+  flex-direction: column;
 }
+
+.searchBar{
+  float:right;
+  font-size: 20px;
+  border:5px solid transparent;
+  border-radius: 15px;
+  padding:0.5rem;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  box-shadow: var(--shadow);
+  color: var(--clr-dark-blue);
+
+  &:hover{
+    border: 5px solid var(--clr-yellow-light);
+  }
+
+  &:focus{
+      border: 5px solid var(--clr-yellow-light);
+      outline: none;
+  }
+}
+
+
+
 .containerPostits{
   background-color: var(--clr-green-light);
-  padding:1rem;
+ // padding:1rem;
   margin: 1rem;
   display:flex;
   flex-wrap: wrap;
@@ -162,7 +190,7 @@
     border: 1px solid transparent;
     padding: 0.5rem;
     background-color: var(--clr-emphasis-light);
-    color: var(--clr-dark-blue)
+    color: var(--clr-dark-blue);
   }
 }
 </style>
