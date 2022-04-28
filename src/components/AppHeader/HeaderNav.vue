@@ -82,16 +82,11 @@ const routes = [
     gap: 0.625rem;
     min-height: 90px;
 
-    li {
+    a {
       box-shadow: 0px 7px 0px #00000015;
-
-
-      a {
-        padding-block: 0.5rem;
-        width: 100%;
-        border-radius: 0px 0px 20px 20px;
-
-      }
+      padding-block: 0.5rem;
+      width: 100%;
+      border-radius: 0px 0px 20px 20px;
     }
   }
 
