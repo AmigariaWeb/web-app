@@ -43,7 +43,6 @@ const routes = [
         font-size: 1.2rem;
         display: block;
         color: var(--clr-dark-blue-shadow);
-        padding: 1rem;
         background-color: var(--clr-yellow-light);
         text-align: center;
         text-decoration: none;
@@ -67,6 +66,7 @@ const routes = [
     gap: 2rem;
 
     a {
+      padding: 1rem;
       border-radius: 2rem;
       border: 4px solid var(--clr-yellow-shadow);
       width: min(100%, 15rem);
@@ -77,6 +77,7 @@ const routes = [
 .app-header-nav-desktop {
   ul {
     a {
+      padding: 0.2rem;
       border: 4px solid var(--clr-yellow-shadow);
       border-left: 2px solid var(--clr-yellow-shadow);
       border-right: 4px solid var(--clr-yellow-shadow);

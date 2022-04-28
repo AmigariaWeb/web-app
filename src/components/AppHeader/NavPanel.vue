@@ -24,7 +24,7 @@
   padding-inline: 1rem;
   background-color: var(--clr-emphasis-light);
   width: min(100%, 100vw);
-  height: 100vh;
+  min-height: 100vh;
   top: 0px;
   left: 0px;
   position: absolute;

@@ -23,11 +23,10 @@
 <style>
 @import '@/assets/base.css';
 
-@media (min-width:1280px){
+@media (min-width:1440px){
   #app {
-    max-width: 1280px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 2rem;
   }
 }
 </style>
