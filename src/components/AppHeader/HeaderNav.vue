@@ -8,7 +8,7 @@ const routes = [
   { name: "Actividades", path: "/" },
   { name: "Talleres", path: "/workshops" },
   { name: "Mis Actividades", path: "/myactivities" },
-  { name: "Crear Actividad", path: "/myactivities/form"}
+  { name: "Crear Actividad", path: "/myactivities/form" }
 ]
 
 </script>
@@ -25,15 +25,16 @@ const routes = [
 
 
 <style lang="scss" scoped>
-
-.app-header-nav-desktop, .app-header-nav {
+.app-header-nav-desktop,
+.app-header-nav {
   margin-bottom: 44px;
+
   ul {
     list-style: none;
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
     li {
       width: 100%;
@@ -51,6 +52,7 @@ const routes = [
     }
   }
 }
+
 .app-header-nav {
   width: inherit;
   height: inherit;
@@ -59,7 +61,6 @@ const routes = [
   ul {
     flex-direction: column;
     gap: 2rem;
-    min-height: ;
 
     a {
       padding-block: 1rem;
@@ -68,7 +69,8 @@ const routes = [
       width: min(100%, 15rem);
     }
   }
-    .router-link-exact-active {
+
+  .router-link-exact-active {
     font-weight: 700;
     background-color: var(--clr-emphasis-light);
     border: 4px solid transparent;
@@ -78,16 +80,22 @@ const routes = [
 .app-header-nav-desktop {
   ul {
     gap: 0.625rem;
-    box-shadow: 0px 7px 0px #00000015;
+    min-height: 90px;
 
-    a {
-      padding-block: 0.5rem;
-      width: 100%;
-      border-radius: 0px 0px 20px 20px;
+    li {
+      box-shadow: 0px 7px 0px #00000015;
 
+
+      a {
+        padding-block: 0.5rem;
+        width: 100%;
+        border-radius: 0px 0px 20px 20px;
+
+      }
     }
   }
-    .router-link-exact-active {
+
+  .router-link-exact-active {
     font-weight: 700;
     background-color: var(--clr-yellow-light);
   }
