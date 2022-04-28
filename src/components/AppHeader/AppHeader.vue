@@ -13,7 +13,6 @@ defineProps({
 })
 
 const store = useHeaderNavStore();
-const show = ref(true);
 
 onMounted(() => {
   store.onWidthChange(window.innerWidth)
@@ -35,13 +34,14 @@ onUnmounted(() => window.removeEventListener('resize', () => store.onWidthChange
 
 <style lang="scss" scoped>
 .app-header {
-  position: relative;
+  position: sticky;
   background-color: var(--clr-emphasis-light);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-inline: 1rem;
   z-index: 1;
+  top: 0;
 
   h2 {
     font-size: clamp(1.5rem, 8vw, 3rem);

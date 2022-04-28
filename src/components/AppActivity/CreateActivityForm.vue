@@ -1,113 +1,147 @@
+<script setup>
+import { ref } from 'vue';
+
+
+const newActivity = ref({});
+
+const sendForm = (e) => {
+	e.preventDefault();
+	// addNewActivity(newActivity.value);
+	console.table(newActivity.value);
+};
+</script>
+
 <template>
-    <form class="formActivities">
-        <input type="text" class="titulo" placeholder="Introduce aquí el título" required>
-        <textarea class="desc" rows=7
-            placeholder="Introduce aquí la descripción de la actividad. Sé tan preciso como puedas."
-            required></textarea>
-        <div class="wrapper">
-            <div class="bloqueIzq">
-                <p>Cuándo</p>
-                <p>Dónde</p>
-                <p>Tiempo</p>
-            </div>
-            <div class="linea"></div>
-            <div class="bloqueDcho">
-                <input type="date" class="date" required>
-                <input type="text" class="lugar" placeholder="Lugar" required>
-                <input type="time" class="horas" required>
-            </div>
-        </div>
-        <button class="botonCrearTicket">Crear Ticket</button>
-    </form>
+<form @submit="sendForm" id="activity-form">
+		<div class="title form-content">
+			<label for="titleForm">Título</label>
+			<input type="text" id="titleForm" placeholder="Título..." required v-model="newActivity.title">
+		</div>
+		<div class="description form-content">
+			<label for="descriptionForm">Descripción</label>
+			<textarea  name="descriptionForm" id="descriptionForm" rows="4"
+				placeholder="Introduzca una descripción..." required v-model="newActivity.description"></textarea>
+		</div>
+		<div class="type form-content">
+			<label for="typeForm">Tipo</label>
+			<select  id="typeForm" required v-model="newActivity.type">
+				<option selected disabled value="undefined">Selecciona un tipo</option>
+				<option value="social">Social</option>
+				<option value="entretenimiento">Entretenimiento</option>
+				<option value="transporte">Transporte</option>
+				<option value="ayuda">Ayuda</option>
+				<option value="otros">Otros</option>
+			</select>
+		</div>
+		<div class="date form-content">
+			<label for="dateForm">Fecha</label>
+			<input class="" type="date" name="dateForm" id="dateForm" required v-model="newActivity.date">
+		</div>
+		<div class="time form-content">
+			<div class="from">
+				<label for="fromTimeForm">Desde</label>
+				<input type="time" name="fromTimeForm" id="fromTimeForm" min="06:00:AM"  required v-model="newActivity.from">
+			</div>
+			<div class="to">
+				<label for="toTimeForm">Hasta</label>
+				<input type="time" name="toTimeForm" id="toTimeForm" required :min="newActivity.from" max="23:59:PM"
+					:disabled="newActivity.from === undefined" v-model="newActivity.to">
+			</div>
+		</div>
+	</form>
+	<button form="activity-form" type="submit">Enviar</button>
 </template>
+
 <style lang="scss" scoped>
-::placeholder {
-    color: var(--clr-dark-blue);
+
+form {
+	padding: 1rem 2rem;
+	width: min(100%, 640px);
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+
+	.form-content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	label {
+		color: var(--clr-emphasis-light);
+		font-size: 1.563rem;
+		line-height: 2.75rem;
+	}
+
+	input,
+	textarea,
+	select {
+		color: var(--clr-dark-blue-shadow);
+		min-height: 44px;
+		border-radius: 20px;
+		padding-inline: 1rem;
+		background-color: var(--clr-emphasis-light);
+		border: 3px solid var(--clr-dark-blue-shadow);
+		font-size: 0.8rem;
+		transition: border 0.2s ease;
+		box-shadow:(10px 10px 0px rgba(0, 0, 0, 0.15));
+
+		&:hover,
+		&:focus {
+			outline: none;
+			border: 3px solid var(--clr-green-light);
+		}
+
+		&::placeholder {
+			color: var(--clr-green-dark);
+			font-size: 1rem;
+		}
+
+		&:disabled {
+			background-color: #ffffffd1;
+		}
+	}
+
+	textarea {
+		padding-top: 0.5rem;
+		resize: none;
+	}
+
+	.time {
+		flex-direction: row;
+		justify-content: space-between;
+		flex-wrap: wrap;
+
+		.from,
+		.to {
+			display: flex;
+			flex-direction: column;
+			width: min(45%, 15rem);
+		}
+	}
 }
 
-.formActivities {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+button {
+	font-size: 1.5rem;
+	color: var(--clr-dark-blue-shadow);
+	width: min(100%, 640px);
+	height: 50px;
+	background-color: var(--clr-yellow-light);
+	border: none;
+	transition: background-color 0.5s ease;
+
+	&:hover,
+	&:focus {
+		background-color: var(--clr-yellow-shadow);
+		cursor: pointer;
+	}
 }
 
-.titulo {
-    padding: 10px;
-    border: 4px solid var(--clr-yellow-shadow);
-    background-color: var(--clr-yellow-light);
-    border-radius: 20px;
-    font-family: var(--font-default);
-    font-style: normal;
-    font-weight: 700;
-    font-size: 25px;
-    line-height: 44px;
-    letter-spacing: 0.0012em;
-    color: var(--clr-dark-blue);
-    text-align: center;
-    margin: 10px 0px;
-    width: min(100%, 1200px);
-}
+@media(min-width:640px) {
 
-.desc {
-    padding: 15px;
-    border: 4px solid var(--clr-yellow-shadow);
-    border-radius: 20px;
-    width: min(100%, 1200px);
-    background-color: var(--clr-yellow-light);
-    margin: 10px 0px;
-    color: var(--clr-dark-blue);
-}
-
-.wrapper {
-    display: grid;
-    grid-template-columns: 60px 5px 120px;
-    padding: 10px;
-    background: var(--clr-emphasis-light);
-    color: var(--clr-dark-blue);
-    border-radius: 30px;
-    width: min(100%, 300px);
-}
-
-.bloqueDcho {
-    display: flex;
-    flex-direction: column;
-}
-
-.bloqueDcho>input {
-    border: none;
-    color: var(--clr-dark-blue);
-    width: min(100%, 800px);
-    font-size: 1rem;
-    line-height: 2.188rem;
-}
-
-.linea {
-    position: relative;
-    overflow: hidden;
-}
-
-.linea::after {
-    content: "";
-    display: block;
-    background: linear-gradient(0deg, var(--clr-green-dark) 80% 50%, var(--clr-emphasis-light) 80% 80%);
-    background-size: 100% 35px;
-    background-repeat: repeat-y;
-    width: 3px;
-    height: 100%;
-    position: absolute;
-    top: 0px;
-
-}
-
-.botonCrearTicket {
-    background-color: var(--clr-emphasis-light);
-    border: none;
-    padding: 10px;
-    border-radius: 20px;
-    margin-top: 10px;
-    font-size: 1.563rem;
-    line-height: 2.75rem;
-    color: var(--clr-green-dark);
+	button {
+		width: min(100%, 560px);
+		height: 4.375rem;
+		border-radius: 20px;
+	}
 }
 </style>

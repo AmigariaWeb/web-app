@@ -27,7 +27,6 @@ const routes = [
 <style lang="scss" scoped>
 .app-header-nav-desktop,
 .app-header-nav {
-  margin-bottom: 44px;
 
   ul {
     list-style: none;
