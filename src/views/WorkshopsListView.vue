@@ -15,8 +15,8 @@
 <style lang="scss" scoped>
   main{
       background-color: var(--clr-yellow-light);
-      padding-top: 60px;
-      padding-bottom: 60px;
+      padding-top: 40px;
+      padding-bottom: 40px;
       display: flex;
       flex-flow: column;
       gap:60px;

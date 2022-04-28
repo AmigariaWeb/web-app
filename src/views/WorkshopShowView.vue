@@ -30,15 +30,15 @@
     main{
         background-color: var(--clr-yellow-light);
         min-height: 100vh;
-        padding-top: 60px;
-        padding-bottom: 60px;
+        padding-top: 40px;
+        padding-bottom: 40px;
     }
     .card{
         text-decoration: none;
         background-color:var(--clr-green-light);
         border-radius: 20px;
         padding: 15px;
-        margin: 0px 60px 0px 60px;
+        margin: 0px 0px 0px 0px;
         display: flex;
         flex-flow: column;
         gap:15px;

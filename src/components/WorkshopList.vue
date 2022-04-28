@@ -29,7 +29,7 @@
         background-color:var(--clr-green-light);
         border-radius: 20px;
         padding: 15px;
-        margin: 0px 60px;
+        margin: 0px 0px;
         display: flex;
         flex-flow: column;
         gap:15px;
