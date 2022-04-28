@@ -19,6 +19,11 @@ const router = createRouter({
       name:"MyActivities",
       component:() => import('@/views/MyActivitiesView.vue')
     },
+    {
+      path: "/myactivities/form",
+      name:"Crear Actividad",
+      component:() => import('@/views/ActivityFormView.vue')
+    },
   ]
 })
 
