@@ -13,12 +13,13 @@
   --font-logo:"JosefinSans";
 
   --header-size:4.5rem;
+  --shadow: 10px 10px 0px rgba(0, 0, 0, 0.15);
 }
 
 @font-face {
   font-family: "JosefinSans";
   font-weight: bold;
-  src: 
+  src:
     url(./fonts/JosefinSans/JosefinSans-Bold.woff2) format("woff2"),
     url(./fonts/JosefinSans/JosefinSans-Bold.woff) format("woff"),
     url(./fonts/JosefinSans/JosefinSans-Bold.ttf) format("truetype")
@@ -26,7 +27,7 @@
 @font-face {
   font-family: "JosefinSans";
   font-weight: regular;
-  src: 
+  src:
     url(./fonts/JosefinSans/JosefinSans-Bold.woff2) format("woff2"),
     url(./fonts/JosefinSans/JosefinSans-Bold.woff) format("woff"),
     url(./fonts/JosefinSans/JosefinSans-Bold.ttf) format("truetype")
@@ -34,7 +35,7 @@
 @font-face {
   font-family: "AtkinsonHyperlegible";
   font-weight: bold;
-  src: 
+  src:
     url(./fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Bold.woff2) format("woff2"),
     url(./fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Bold.woff) format("woff"),
     url(./fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Bold.ttf) format("truetype")
@@ -42,7 +43,7 @@
 @font-face {
   font-family: "AtkinsonHyperlegible";
   font-weight: regular;
-  src: 
+  src:
     url(./fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Regular.woff2) format("woff2"),
     url(./fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Regular.woff) format("woff"),
     url(./fonts/AtkinsonHyperlegible/AtkinsonHyperlegible-Regular.ttf) format("truetype")
@@ -87,4 +88,8 @@ h4{
 p{
  font-size: 1rem;
  line-height: 2.188rem;
+}
+
+strong{
+  font-weight: bold;
 }
