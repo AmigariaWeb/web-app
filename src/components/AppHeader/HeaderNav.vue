@@ -8,6 +8,7 @@ const routes = [
   { name: "Actividades", path: "/" },
   { name: "Talleres", path: "/workshops" },
   { name: "Mis Actividades", path: "/myactivities" },
+  { name: "Crear Actividad", path: "/myactivities/form"}
 ]
 
 </script>
@@ -25,8 +26,8 @@ const routes = [
 
 <style lang="scss" scoped>
 
-.app-header-nav-desktop,
-.app-header-nav {
+.app-header-nav-desktop, .app-header-nav {
+  margin-bottom: 44px;
   ul {
     list-style: none;
     padding: 0;
@@ -43,17 +44,11 @@ const routes = [
         font-size: 1.2rem;
         display: block;
         color: var(--clr-dark-blue-shadow);
-        background-color: var(--clr-yellow-light);
+        background-color: var(--clr-green-light);
         text-align: center;
         text-decoration: none;
       }
     }
-  }
-
-  .router-link-exact-active {
-    font-weight: 700;
-    background-color: var(--clr-green-light);
-    border: 4px solid var(--clr-green-dark);
   }
 }
 .app-header-nav {
@@ -64,25 +59,37 @@ const routes = [
   ul {
     flex-direction: column;
     gap: 2rem;
+    min-height: ;
 
     a {
-      padding: 1rem;
+      padding-block: 1rem;
       border-radius: 2rem;
-      border: 4px solid var(--clr-yellow-shadow);
+      border: 4px solid var(--clr-green-dark);
       width: min(100%, 15rem);
     }
+  }
+    .router-link-exact-active {
+    font-weight: 700;
+    background-color: var(--clr-emphasis-light);
+    border: 4px solid transparent;
   }
 }
 
 .app-header-nav-desktop {
   ul {
+    gap: 0.625rem;
+    box-shadow: 0px 7px 0px #00000015;
+
     a {
-      padding: 0.2rem;
-      border: 4px solid var(--clr-yellow-shadow);
-      border-left: 2px solid var(--clr-yellow-shadow);
-      border-right: 4px solid var(--clr-yellow-shadow);
+      padding-block: 0.5rem;
       width: 100%;
+      border-radius: 0px 0px 20px 20px;
+
     }
+  }
+    .router-link-exact-active {
+    font-weight: 700;
+    background-color: var(--clr-yellow-light);
   }
 }
 </style>
