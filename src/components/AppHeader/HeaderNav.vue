@@ -1,7 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { useHeaderNavStore } from "@/stores/HeaderNavBar.js"
-
+import AppNavLogin from "@/components/AppLogin/AppNavLogin.vue"
+import AppLoginGoogle from '@/components/AppLoginGoogle.vue'
 const store = useHeaderNavStore();
 
 const routes = [
@@ -15,9 +16,23 @@ const routes = [
 
 <template>
   <nav :class="store.isMobile ? 'app-header-nav' : 'app-header-nav-desktop'">
-    <ul>
+    <ul v-if="$route.name === 'Iniciar sesion' || $route.name === 'Registrarse'">
+          <li>
+            <AppLoginGoogle/>
+          </li>
+          <li>
+              <RouterLink :to="{ path: '/login'}">Iniciar sesion</RouterLink>
+          </li>
+          <li>
+              <RouterLink :to="{ name: 'Registrarse'}">Registrase</RouterLink>
+          </li>
+    </ul>
+    <ul v-else>
       <li v-for="route in routes">
         <RouterLink :to="route.path">{{ route.name }}</RouterLink>
+      </li>
+      <li>
+        <RouterLink :to="{ path: '/login' }">Cerrar sesion</RouterLink>
       </li>
     </ul>
   </nav>
