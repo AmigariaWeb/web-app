@@ -1,30 +1,32 @@
 <script setup>
 import { ref } from 'vue';
+import { addNewActivity } from '@/services/firebase/crud'
+import { useRouter } from 'vue-router';
 
-
+const router = useRouter();
 const newActivity = ref({});
 
 const sendForm = (e) => {
 	e.preventDefault();
-	// addNewActivity(newActivity.value);
-	console.table(newActivity.value);
+	addNewActivity(newActivity.value);
+	router.push("/")
 };
 </script>
 
 <template>
-<form @submit="sendForm" id="activity-form">
+	<form @submit="sendForm" id="activity-form">
 		<div class="title form-content">
 			<label for="titleForm">Título</label>
 			<input type="text" id="titleForm" placeholder="Título..." required v-model="newActivity.title">
 		</div>
 		<div class="description form-content">
 			<label for="descriptionForm">Descripción</label>
-			<textarea  name="descriptionForm" id="descriptionForm" rows="4"
-				placeholder="Introduzca una descripción..." required v-model="newActivity.description"></textarea>
+			<textarea name="descriptionForm" id="descriptionForm" rows="4" placeholder="Introduzca una descripción..."
+				required v-model="newActivity.description"></textarea>
 		</div>
 		<div class="type form-content">
 			<label for="typeForm">Tipo</label>
-			<select  id="typeForm" required v-model="newActivity.type">
+			<select id="typeForm" required v-model="newActivity.type">
 				<option selected disabled value="undefined">Selecciona un tipo</option>
 				<option value="social">Social</option>
 				<option value="entretenimiento">Entretenimiento</option>
@@ -40,7 +42,7 @@ const sendForm = (e) => {
 		<div class="time form-content">
 			<div class="from">
 				<label for="fromTimeForm">Desde</label>
-				<input type="time" name="fromTimeForm" id="fromTimeForm" min="06:00:AM"  required v-model="newActivity.from">
+				<input type="time" name="fromTimeForm" id="fromTimeForm" min="06:00:AM" required v-model="newActivity.from">
 			</div>
 			<div class="to">
 				<label for="toTimeForm">Hasta</label>
@@ -53,7 +55,6 @@ const sendForm = (e) => {
 </template>
 
 <style lang="scss" scoped>
-
 form {
 	padding: 1rem 2rem;
 	width: min(100%, 640px);
@@ -83,7 +84,7 @@ form {
 		border: 3px solid var(--clr-dark-blue-shadow);
 		font-size: 1rem;
 		transition: border 0.2s ease;
-		box-shadow:(10px 10px 0px rgba(0, 0, 0, 0.15));
+		box-shadow: (10px 10px 0px rgba(0, 0, 0, 0.15));
 
 		&:hover,
 		&:focus {
