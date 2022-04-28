@@ -6,12 +6,12 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name:"Activities",
+      name:"Actividades",
       component:ActivitiesView
     },
     {
       path: "/workshops",
-      name:"Workshops",
+      name:"Talleres",
       component:() => import('@/views/WorkshopsListView.vue')
     },
     {
@@ -20,7 +20,7 @@ const router = createRouter({
     },
     {
       path: "/myactivities",
-      name:"MyActivities",
+      name:"Mis Actividades",
       component:() => import('@/views/MyActivitiesView.vue')
     },
     {
