@@ -81,7 +81,7 @@ form {
 		padding-inline: 1rem;
 		background-color: var(--clr-emphasis-light);
 		border: 3px solid var(--clr-dark-blue-shadow);
-		font-size: 0.8rem;
+		font-size: 1rem;
 		transition: border 0.2s ease;
 		box-shadow:(10px 10px 0px rgba(0, 0, 0, 0.15));
 
