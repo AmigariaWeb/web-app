@@ -31,9 +31,8 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
         <strong>Hasta las:</strong> <span>{{ selectedActivity.to }}</span>
       </p>
     </div>
-    <button>Me apunto</button>
+    <RouterLink to="/workinprogress">Me apunto</RouterLink>
   </div>
-
 </template>
 
 <style lang="scss" scoped>
@@ -59,7 +58,7 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
   .type {
     p {
       border-top: 3px solid var(--clr-yellow-light);
-      padding-inline: 1.5rem;
+      padding-inline: 2rem;
       color: var(--clr-emphasis-light);
     }
   }
@@ -70,7 +69,7 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
     border-radius: 20px;
     color: var(--clr-dark-blue);
     padding: 1rem;
-    align-self: flex-end;
+    align-self: center;
     box-shadow: var(--shadow);
 
     .title-calendar {
@@ -83,7 +82,9 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
     }
   }
 
-  button{
+  a{
+    text-decoration: none;
+    text-align: center;
     background-color: var(--clr-green-light);
     padding: 1rem;
     width: min(100%, 300px);
@@ -91,7 +92,7 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
     background-color: var(--clr-yellow-light);
     border: 3px solid transparent;
     border-radius: 20px;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--clr-dark-blue-shadow);
     transition: background-color 0.5s ease;
 
@@ -99,5 +100,13 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
       background-color: var(--clr-yellow-shadow);
     }
   }
+}
+  @media(min-width:640px){
+    .details{
+      .calendar{
+        align-self: flex-end;
+      }
+
+    }
 }
 </style>

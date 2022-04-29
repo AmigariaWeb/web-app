@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ActivitiesView from '@/views/ActivitiesView.vue';
-import AppLogin from '@/components/AppLogin.vue';
-import AppRegister from '@/components/AppRegister.vue';
+import AppLogin from '@/components/AppLogin/AppLogin.vue';
+import AppRegister from '@/components/AppLogin/AppRegister.vue';
 import ActivityDetailView from '@/views/ActivityDetailView.vue';
 
 const router = createRouter({
@@ -42,7 +42,7 @@ const router = createRouter({
       name:" - ",
       component:() => import('@/views/LoginRegisterView.vue'),
       children: [{
-        name:"Iniciar sesion",
+        name:"Iniciar sesión",
         path: '',
         component: AppLogin,
       },
@@ -51,6 +51,10 @@ const router = createRouter({
         path: 'register',
         component: AppRegister,
       }]
+    },
+    {
+      path: '/workinprogress',
+      component: () => import ('@/views/WorkInProgressView.vue') 
     },
     {
       path: '/:pathMatch(.*)*',
