@@ -17,15 +17,15 @@ const routes = [
 <template>
   <nav :class="store.isMobile ? 'app-header-nav' : 'app-header-nav-desktop'">
     <ul v-if="$route.name === 'Iniciar sesion' || $route.name === 'Registrarse'">
-          <li>
-            <AppLoginGoogle/>
-          </li>
-          <li>
-              <RouterLink :to="{ path: '/login'}">Iniciar sesion</RouterLink>
-          </li>
-          <li>
-              <RouterLink :to="{ name: 'Registrarse'}">Registrase</RouterLink>
-          </li>
+      <li>
+        <AppLoginGoogle />
+      </li>
+      <li>
+        <RouterLink :to="{ path: '/login' }">Iniciar sesion</RouterLink>
+      </li>
+      <li>
+        <RouterLink :to="{ name: 'Registrarse' }">Registrase</RouterLink>
+      </li>
     </ul>
     <ul v-else>
       <li v-for="route in routes">
@@ -92,6 +92,9 @@ const routes = [
 }
 
 .app-header-nav-desktop {
+  position: sticky;
+  top: var(--header-size);
+  z-index: 2;
   ul {
     gap: 0.625rem;
     min-height: 90px;

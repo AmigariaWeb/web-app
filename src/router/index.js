@@ -44,7 +44,11 @@ const router = createRouter({
         path: 'register',
         component: AppRegister,
       }]
-    }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import ('@/views/PageNotFound.vue') 
+    },
   ]
 })
 
