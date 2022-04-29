@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ActivitiesView from '@/views/ActivitiesView.vue';
-import AppLogin from'@/components/AppLogin.vue'
-import AppRegister from'@/components/AppRegister.vue'
+import AppLogin from '@/components/AppLogin.vue';
+import AppRegister from '@/components/AppRegister.vue';
+import ActivityDetailView from '@/views/ActivityDetailView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,6 +11,12 @@ const router = createRouter({
       path: "/",
       name:"Actividades",
       component:ActivitiesView
+    },
+    {
+      path: "/activityDetail/:id",
+      name:"Actividad",
+      component: ActivityDetailView,
+      props:true
     },
     {
       path: "/workshops",

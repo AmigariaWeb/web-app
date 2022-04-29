@@ -5,11 +5,6 @@ import { useActivitiesStore } from '../stores/useActivitiesStore';
 const {searchQuery} = storeToRefs(useActivitiesStore());
 const {findSearchQuery} = useActivitiesStore();
 
-function er(){
-  console.log(searchQuery);
-  
-}
-
 </script>
 <template>
   <div class="searchBarContainer">

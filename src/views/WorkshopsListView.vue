@@ -14,7 +14,6 @@
 
 <style lang="scss" scoped>
   main{
-      background-color: var(--clr-yellow-light);
       padding-top: 40px;
       padding-bottom: 40px;
       display: flex;
