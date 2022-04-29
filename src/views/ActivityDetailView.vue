@@ -31,7 +31,7 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
         <strong>Hasta las:</strong> <span>{{ selectedActivity.to }}</span>
       </p>
     </div>
-    <button>Me apunto</button>
+    <RouterLink to="/workinprogress">Me apunto</RouterLink>
   </div>
 </template>
 
@@ -82,7 +82,9 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
     }
   }
 
-  button{
+  a{
+    text-decoration: none;
+    text-align: center;
     background-color: var(--clr-green-light);
     padding: 1rem;
     width: min(100%, 300px);
@@ -90,7 +92,7 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
     background-color: var(--clr-yellow-light);
     border: 3px solid transparent;
     border-radius: 20px;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--clr-dark-blue-shadow);
     transition: background-color 0.5s ease;
 

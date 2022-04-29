@@ -8,7 +8,7 @@ const store = useHeaderNavStore();
 const routes = [
   { name: "Actividades", path: "/" },
   { name: "Talleres", path: "/workshops" },
-  { name: "Mis Actividades", path: "/myactivities" },
+  { name: "Mis Actividades", path: "/workinprogress" },
   { name: "Crear Actividad", path: "/myactivities/form" }
 ]
 

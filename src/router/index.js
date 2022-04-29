@@ -53,6 +53,10 @@ const router = createRouter({
       }]
     },
     {
+      path: '/workinprogress',
+      component: () => import ('@/views/WorkInProgressView.vue') 
+    },
+    {
       path: '/:pathMatch(.*)*',
       component: () => import ('@/views/PageNotFound.vue') 
     },
