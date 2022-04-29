@@ -77,6 +77,7 @@ form {
 	input,
 	textarea,
 	select {
+		font-family: "AtkinsonHyperlegible", sans-serif;
 		color: var(--clr-dark-blue-shadow);
 		min-height: 44px;
 		border-radius: 20px;
@@ -123,6 +124,7 @@ form {
 }
 
 button {
+	font-family: "AtkinsonHyperlegible", sans-serif;
 	font-size: 1.5rem;
 	color: var(--clr-dark-blue-shadow);
 	width: min(100%, 640px);

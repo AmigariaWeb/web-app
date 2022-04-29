@@ -33,7 +33,6 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
     </div>
     <button>Me apunto</button>
   </div>
-
 </template>
 
 <style lang="scss" scoped>
@@ -59,7 +58,7 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
   .type {
     p {
       border-top: 3px solid var(--clr-yellow-light);
-      padding-inline: 1.5rem;
+      padding-inline: 2rem;
       color: var(--clr-emphasis-light);
     }
   }
@@ -70,7 +69,7 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
     border-radius: 20px;
     color: var(--clr-dark-blue);
     padding: 1rem;
-    align-self: flex-end;
+    align-self: center;
     box-shadow: var(--shadow);
 
     .title-calendar {
@@ -99,5 +98,13 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
       background-color: var(--clr-yellow-shadow);
     }
   }
+}
+  @media(min-width:640px){
+    .details{
+      .calendar{
+        align-self: flex-end;
+      }
+
+    }
 }
 </style>
