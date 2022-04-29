@@ -1,5 +1,5 @@
 <script setup>
-    import AppLoginGoogle from '@/components/AppLoginGoogle.vue'
+    import AppLoginGoogle from '@/components/AppLogin/AppLoginGoogle.vue'
 </script>
 <template>
     <div class="login-nav">
