@@ -8,6 +8,7 @@ const newActivity = ref({});
 
 const sendForm = (e) => {
 	e.preventDefault();
+	newActivity.value.id = Date.now();
 	addNewActivity(newActivity.value);
 	router.push("/")
 };

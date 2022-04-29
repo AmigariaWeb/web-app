@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import {getAllActivities} from '@/services/firebase/crud';
+import { getAllActivities } from '@/services/firebase/crud';
 
 
 export const useActivitiesStore = defineStore({
   id: "activities",
   state: () => ({
     activities: [],
+    selectedActivity:{},
     queryActivities: [],
     searchQuery: "",
     loading: false,
@@ -15,7 +16,7 @@ export const useActivitiesStore = defineStore({
     getActivities() {
       return this.activities;
     },
-    
+
   },
   actions: {
     async fetchActivities() {
@@ -36,15 +37,17 @@ export const useActivitiesStore = defineStore({
     },
     findSearchQuery() {
       this.queryActivities = this.activities.filter(activity => {
-
-        if (activity.title.toLowerCase().includes(this.searchQuery.toLowerCase())){
+        if (activity.title.toLowerCase().includes(this.searchQuery.toLowerCase())) {
           return true
         }
-        if (activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())){
+        if (activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())) {
           return true
         }
         return false
       })
+    },
+    addLastActivityDetail(lastActivity) {
+      this.selectedActivity = lastActivity;
     }
   },
 });

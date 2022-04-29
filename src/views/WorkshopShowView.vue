@@ -28,7 +28,6 @@
 
 <style lang="scss" scoped>
     main{
-        background-color: var(--clr-yellow-light);
         min-height: 100vh;
         padding-top: 40px;
         padding-bottom: 40px;

@@ -1,20 +1,29 @@
 <script setup>
+import { useActivitiesStore } from '../stores/useActivitiesStore';
 
-const props = defineProps(['activity'])
+const activitiesStore = useActivitiesStore();
+const { addLastActivityDetail } = activitiesStore;
+
+
+defineProps({
+  activity: Object
+})
+
 </script>
 
 <template>
-    <div class="postit">
-      <h4>{{ activity.title }}</h4>
-      <p class="postItContent">{{ activity.description }}</p>
-      <div class="postItData">
-        <p><strong>Tipo: </strong>{{ activity.type }}</p>
-        <p><strong>Cuándo: </strong>{{ activity.date }}</p>
-        <p><strong>Desde: </strong>{{ activity.from }}</p>
-        <p><strong>Hasta: </strong>{{ activity.to }}</p>
-      </div>
-      <button>Ayudar</button>
+  <div class="postit">
+    <h3>{{ activity.title }}</h3>
+    <p class="postItContent">{{ activity.description }}</p>
+    <div class="postItData">
+      <p><strong>Tipo: </strong>{{ activity.type }}</p>
+      <p><strong>Cuándo: </strong>{{ activity.date }}</p>
+      <p><strong>Desde: </strong>{{ activity.from }}</p>
+      <p><strong>Hasta: </strong>{{ activity.to }}</p>
     </div>
+    <RouterLink :to="'/activityDetail/' + activity.id" @click="addLastActivityDetail(activity)" class="card">Saber más
+    </RouterLink>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -35,6 +44,10 @@ const props = defineProps(['activity'])
   width: min(100%, 300px);
   transition: transform 0.5s ease;
 
+h3{
+  font-size: 1.5rem;
+  text-align: center;
+}
   &::before {
     background-color: white;
     bottom: -2px;
@@ -98,17 +111,22 @@ const props = defineProps(['activity'])
     width: 100%;
   }
 
-  & button {
-    font-size: 2rem;
-    width: 150px;
+  & a {
+    font-size: 1.5rem;
+    width: min(100%, 150px);
     border-radius: 50px;
     border: 1px solid transparent;
     padding: 0.5rem;
     background-color: var(--clr-emphasis-light);
     color: var(--clr-green-dark);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    text-align: center;
+    text-decoration: none;
 
     &:hover {
       cursor: pointer;
+      background-color: var(--clr-green-light);
+      color: var(--clr-emphasis-light);
     }
   }
 }
