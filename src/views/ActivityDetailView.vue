@@ -4,6 +4,12 @@ import { storeToRefs } from 'pinia';
 import { useActivitiesStore } from '../stores/useActivitiesStore';
 
 const { selectedActivity } = storeToRefs(useActivitiesStore());
+const {addLastActivityDetail} = useActivitiesStore()
+
+  if (Object.keys(selectedActivity.value).length === 0) {
+    let lastActivity = JSON.parse(localStorage.getItem('lastActivity'));
+    addLastActivityDetail(lastActivity)
+  }
 
 </script>
 <template>
@@ -82,7 +88,7 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
     }
   }
 
-  a{
+  a {
     text-decoration: none;
     text-align: center;
     background-color: var(--clr-green-light);
@@ -96,17 +102,18 @@ const { selectedActivity } = storeToRefs(useActivitiesStore());
     color: var(--clr-dark-blue-shadow);
     transition: background-color 0.5s ease;
 
-    &:hover{
+    &:hover {
       background-color: var(--clr-yellow-shadow);
     }
   }
 }
-  @media(min-width:640px){
-    .details{
-      .calendar{
-        align-self: flex-end;
-      }
 
+@media(min-width:640px) {
+  .details {
+    .calendar {
+      align-self: flex-end;
     }
+
+  }
 }
 </style>

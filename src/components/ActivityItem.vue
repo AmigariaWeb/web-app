@@ -4,10 +4,14 @@ import { useActivitiesStore } from '../stores/useActivitiesStore';
 const activitiesStore = useActivitiesStore();
 const { addLastActivityDetail } = activitiesStore;
 
-
-defineProps({
+const props = defineProps({
   activity: Object
 })
+
+const saveActivity = () => {
+  addLastActivityDetail(props.activity)
+  localStorage.setItem('lastActivity', JSON.stringify(props.activity));
+}
 
 </script>
 
@@ -21,7 +25,7 @@ defineProps({
       <p><strong>Desde: </strong>{{ activity.from }}</p>
       <p><strong>Hasta: </strong>{{ activity.to }}</p>
     </div>
-    <RouterLink :to="'/activityDetail/' + activity.id" @click="addLastActivityDetail(activity)" class="card">Saber más
+    <RouterLink :to="'/activityDetail/' + activity.id" @click="saveActivity()" class="card">Saber más
     </RouterLink>
   </div>
 </template>
