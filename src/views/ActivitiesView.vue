@@ -10,15 +10,14 @@ const { fetchActivities } = useActivitiesStore();
 fetchActivities()
 </script>
 
-
 <template>
   <div class="container">
     <SearchBar />
     <div class="containerPostits">
     <TransitionGroup name="fade">
       <p v-if="!activities">Aun no hay actividades</p>
-      <ActivityItem v-else-if="searchQuery" v-for="activity in queryActivities" :activity="activity" />
-      <ActivityItem v-else v-for="activity in activities" :activity="activity" />
+      <ActivityItem v-else-if="searchQuery" v-for="activity in queryActivities" :activity="activity" :key="activity.id" />
+      <ActivityItem v-else v-for="activity in activities" :activity="activity" :key="activity.title"/>
     </TransitionGroup> 
     </div>
   </div>

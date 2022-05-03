@@ -23,7 +23,7 @@ const routes = [
 
     </ul>
     <ul v-else>
-      <li v-for="route in routes">
+      <li v-for="route in routes" :key="route.name">
         <RouterLink class="navLink" :to="route.path">{{ route.name }}</RouterLink>
       </li>
       <li>

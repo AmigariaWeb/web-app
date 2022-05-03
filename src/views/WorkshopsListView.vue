@@ -20,7 +20,4 @@
       flex-flow: column;
       gap:60px;
   }
-  .workshop__item{
-
-  }
 </style>

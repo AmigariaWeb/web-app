@@ -66,8 +66,6 @@
             min-height: 300px;
             height: 100%;
             max-height: 50vh;
-            & iframe{
-            }
         }
     }
 </style>
