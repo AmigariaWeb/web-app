@@ -25,7 +25,7 @@ const saveActivity = () => {
       <p><strong>Desde: </strong>{{ activity.from }}</p>
       <p><strong>Hasta: </strong>{{ activity.to }}</p>
     </div>
-    <RouterLink :to="'/activityDetail/' + activity.id" @click="saveActivity()" class="card">Saber más
+    <RouterLink to="/activityDetail" @click="saveActivity()" class="card">Saber más
     </RouterLink>
   </div>
 </template>
@@ -48,10 +48,11 @@ const saveActivity = () => {
   width: min(100%, 300px);
   transition: transform 0.5s ease;
 
-h3{
-  font-size: 1.5rem;
-  text-align: center;
-}
+  h3 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
   &::before {
     background-color: white;
     bottom: -2px;

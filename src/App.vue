@@ -10,6 +10,7 @@ const navbarStore = useHeaderNavStore();
 const route = useRoute();
 const currentSection = ref(route.name);
 
+
 watch(() => route.name, (newRouteName) => {
   currentSection.value = newRouteName;
   navbarStore.removeActive();

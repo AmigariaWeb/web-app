@@ -75,6 +75,6 @@ export const useUserStore = defineStore("userStore", {
       await signInWithPopup(auth, provider)
       this.SET_USER(auth.currentUser);
       router.push("/")
-    }
+    },
   },
 });

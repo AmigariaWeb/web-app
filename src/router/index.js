@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { auth } from '../services/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import ActivitiesView from '@/views/ActivitiesView.vue';
 import AppLogin from '@/components/AppLogin/AppLogin.vue';
 import AppRegister from '@/components/AppLogin/AppRegister.vue';
 import ActivityDetailView from '@/views/ActivityDetailView.vue';
-import { onAuthStateChanged } from 'firebase/auth';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +18,7 @@ const router = createRouter({
       }
     },
     {
-      path: "/activityDetail/:id",
+      path: "/activityDetail",
       name: "Actividad",
       component: ActivityDetailView,
       props: true,
@@ -100,16 +100,11 @@ const getCurrentUser = () => {
 }
 
 router.beforeEach(async (to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (await getCurrentUser()) {
-      next()
-    } else {
-      console.log("You dont have access");
-      next('/login');
-    }
-  } else {
-    next();
+  if ((await getCurrentUser() === null) && (to.matched.some(record => record.meta.requiresAuth))) {
+    next('/login')
+    return
   }
+  next();
 })
 
 export default router

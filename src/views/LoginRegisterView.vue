@@ -1,4 +1,14 @@
 <script setup>
+import { onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router'
+import { auth } from '../services/firebase';
+
+const router = useRouter();
+onBeforeMount(() => {
+	if (auth.currentUser) {
+		router.push('/')
+	}
+})
 
 </script>
 <template>
