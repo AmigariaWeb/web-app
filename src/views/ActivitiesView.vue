@@ -1,24 +1,25 @@
 <script setup>
 import { useActivitiesStore } from '@/stores/useActivitiesStore.js';
 import { storeToRefs } from 'pinia';
-import ActivityItem from '../components/ActivityItem.vue';
-import SearchBar from '../components/SearchBar.vue';
+import ActivityItem from '@/components/ActivityItem.vue';
+import SearchBar from '@/components/SearchBar.vue';
+import Spinner from '../components/Spinner/Spinner.vue';
 
-const { activities, queryActivities, searchQuery } = storeToRefs(useActivitiesStore())
+const { activities, queryActivities, searchQuery, loading } = storeToRefs(useActivitiesStore())
 const { fetchActivities } = useActivitiesStore();
 // Rellenar actividades
 fetchActivities()
+
 </script>
 
 <template>
   <div class="container">
     <SearchBar />
     <div class="containerPostits">
-    <TransitionGroup name="fade">
-      <p v-if="!activities">Aun no hay actividades</p>
+      <Spinner v-if="loading" />
+      <p v-else-if="activities.length === 0">Aun no hay actividades</p>
       <ActivityItem v-else-if="searchQuery" v-for="activity in queryActivities" :activity="activity" :key="activity.id" />
       <ActivityItem v-else v-for="activity in activities" :activity="activity" :key="activity.title"/>
-    </TransitionGroup> 
     </div>
   </div>
 </template>
@@ -37,11 +38,14 @@ fetchActivities()
   flex-wrap: wrap;
   justify-content: center;
   gap: 3rem;
+
+  p{
+    color: var(--clr-emphasis-light);
+    font-size: 2rem;
+  }
 }
 
-.fade-enter-active{
-  transition: opacity 0.1s ease;
-}
+.fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
 }

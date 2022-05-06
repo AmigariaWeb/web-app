@@ -5,7 +5,7 @@ import { getAllActivities } from '@/services/firebase/crud';
 export const useActivitiesStore = defineStore({
   id: "activities",
   state: () => ({
-    activities: [],
+    activities: null,
     selectedActivity:{},
     queryActivities: [],
     searchQuery: "",
@@ -20,7 +20,6 @@ export const useActivitiesStore = defineStore({
   },
   actions: {
     async fetchActivities() {
-      this.posts = []
       this.loading = true
       try {
         const activities = [];
@@ -36,15 +35,16 @@ export const useActivitiesStore = defineStore({
       }
     },
     findSearchQuery() {
-      this.queryActivities = this.activities.filter(activity => {
-        if (activity.title.toLowerCase().includes(this.searchQuery.toLowerCase())) {
-          return true
-        }
-        if (activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())) {
-          return true
-        }
-        return false
-      })
+      if (this.activities) {
+        this.queryActivities = this.activities.filter(activity => {
+          if (activity.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+          || activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())){
+            return true
+          }
+          return false
+        })
+      }
+      return null
     },
     addLastActivityDetail(lastActivity) {
       this.selectedActivity = lastActivity;

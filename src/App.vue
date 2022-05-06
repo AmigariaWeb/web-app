@@ -1,15 +1,20 @@
 <script setup>
 import AppHeader from './components/AppHeader/AppHeader.vue';
-import { ref, watch } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import { useRoute, RouterView } from 'vue-router'
 import { useHeaderNavStore } from "@/stores/HeaderNavBar.js"
+import { useUserStore } from "@/stores/useUserStore"
 
+const userStore = useUserStore()
 /* Navbar */
 const navbarStore = useHeaderNavStore();
 
 const route = useRoute();
 const currentSection = ref(route.name);
 
+onBeforeMount(() => {
+  userStore.fetchUser()
+})
 
 watch(() => route.name, (newRouteName) => {
   currentSection.value = newRouteName;

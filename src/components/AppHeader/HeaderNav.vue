@@ -11,7 +11,7 @@ const userStore = useUserStore();
 const routes = [
   { name: "Actividades", path: "/" },
   { name: "Talleres", path: "/workshops" },
-  { name: "Mis Actividades", path: "/workinprogress" },
+  { name: "Mis Actividades", path: "/myactivities" },
   { name: "Crear Actividad", path: "/myactivities/form" }
 ]
 

@@ -7,6 +7,9 @@ export const useUserStore = defineStore("userStore", {
   state: () => ({
     user: null,
   }),
+  getters: {
+    actualUser: (state) => console.log(state.user)
+  },
   actions: {
     SET_USER(user) {
       this.user = user;
@@ -76,5 +79,14 @@ export const useUserStore = defineStore("userStore", {
       this.SET_USER(auth.currentUser);
       router.push("/")
     },
+    fetchUser() {
+      auth.onAuthStateChanged(async user => {
+        if (user === null) {
+          this.CLEAR_USER();
+        } else {
+          this.SET_USER(auth.currentUser);
+        }
+      })
+    }
   },
 });
