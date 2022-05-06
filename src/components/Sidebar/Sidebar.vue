@@ -2,11 +2,13 @@
 <script setup>
 import { useUserStore } from '@/stores/useUserStore';
 import { ref } from 'vue';
+
 const userStore = useUserStore()
-const is_expanded = ref(false)
+const is_expanded = ref(localStorage.getItem("is_expanded") === "true")
 
 const toggleMenu = () => {
   is_expanded.value = !is_expanded.value;
+  localStorage.setItem("is_expanded", is_expanded.value)
 }
 </script>
 
