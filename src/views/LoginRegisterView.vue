@@ -12,20 +12,35 @@ onBeforeMount(() => {
 
 </script>
 <template>
-	<div class="container">
+	<main class="container" id="login-register">
 		<div class="login-wrap">
 			<RouterView />
 		</div>
-	</div>
+	</main>
 </template>
 
 
 <style lang="scss" scoped>
+
+#app {
+  main {  
+
+      padding-left: 2rem;
+
+  }
+}
+
 .container {
 	max-width: 800px;
 	margin: auto;
 	padding: 0px;
 	color: var(--clr-emphasis-light);
+
+	@media (max-width: 640px){
+		#login-register{
+    	padding-left: 0;
+		}
+	}
 }
 
 .login {

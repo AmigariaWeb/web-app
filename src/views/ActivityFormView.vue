@@ -4,9 +4,9 @@ import CreateActivityForm from '../components/AppActivity/CreateActivityForm.vue
 </script>
 
 <template>
-	<section class="content">
+	<main class="content">
 		<CreateActivityForm />
-	</section>
+	</main>
 </template>
 
 <style lang="scss">

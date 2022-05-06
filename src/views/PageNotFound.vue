@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<div class="pageNotFound">
+<main class="pageNotFound">
   <h3>No se ha encontrado lo que buscas</h3>
   <h4>Quizás te referías a alguna de estas secciones:</h4>
   <ul>
@@ -11,7 +11,7 @@
     <li><RouterLink to="/workshops">Talleres</RouterLink></li>
     <li><a href="https://amigaria.com">Apúntate</a></li>
   </ul>
-</div>
+</main>
 </template>
 
 <style lang="scss" scoped>

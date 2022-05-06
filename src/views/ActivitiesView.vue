@@ -13,7 +13,7 @@ fetchActivities()
 </script>
 
 <template>
-  <div class="container">
+  <main class="container">
     <SearchBar />
     <div class="containerPostits">
       <Spinner v-if="loading" />
@@ -21,12 +21,11 @@ fetchActivities()
       <ActivityItem v-else-if="searchQuery" v-for="activity in queryActivities" :activity="activity" :key="activity.id" />
       <ActivityItem v-else v-for="activity in activities" :activity="activity" :key="activity.title"/>
     </div>
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
 .container {
-  background-color: var(--clr-dark-blue);
   padding: 1rem;
   display: flex;
   flex-direction: column;

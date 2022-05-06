@@ -6,7 +6,7 @@ console.log(userStore.user.displayName);
 </script>
 
 <template>
-  <div class="container">
+  <main class="container">
     <div class="user">
       <img :src="userStore.user.photoURL" />
       <p>{{ userStore.user.displayName }}</p>
@@ -14,7 +14,7 @@ console.log(userStore.user.displayName);
     <div class="email">
       <p>{{ userStore.user.email }}</p>
     </div>
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>

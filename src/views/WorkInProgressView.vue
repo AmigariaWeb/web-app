@@ -2,11 +2,11 @@
 
 </script>
 <template>
-<div class="container-wip">
+<main class="container-wip">
   <p class="title">Estamos trabajando en ello</p>
   <div class="wip-image"></div>
   <p>En breve podrás disfrutar de nuestros servicios al completo</p>
-</div>
+</main>
 </template>
 
 

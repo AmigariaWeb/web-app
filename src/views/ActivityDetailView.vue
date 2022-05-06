@@ -13,7 +13,7 @@ const {addLastActivityDetail} = useActivitiesStore()
 
 </script>
 <template>
-  <div class="details">
+  <main class="details">
 
     <h3>{{ selectedActivity.title }}</h3>
     <div class="description">
@@ -38,7 +38,7 @@ const {addLastActivityDetail} = useActivitiesStore()
       </p>
     </div>
     <RouterLink to="/workinprogress">Me apunto</RouterLink>
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
