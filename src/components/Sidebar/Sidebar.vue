@@ -41,7 +41,7 @@ const toggleMenu = () => {
       </div>
     </div>
     <div class="menu-toggle-wrap">
-      <button class="menu-toggle" tabindex="1" @click="toggleMenu">
+      <button class="menu-toggle"  @click="toggleMenu">
         <img src="@/assets/images/arrow.svg" alt="flecha para abrir menú ">
       </button>
     </div>
