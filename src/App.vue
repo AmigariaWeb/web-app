@@ -19,10 +19,12 @@ onBeforeMount(() => {
 @import '@/assets/base.css';
 
 #app {
+  min-height: 100vh;
   main {
+    min-height: 100vh;
     flex: 1 1 0;
-    padding: 2rem;
-    padding-left: 6rem;
+    padding: 0.8rem;
+    padding-left: 5rem;
   }
 }
 

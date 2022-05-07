@@ -15,27 +15,28 @@ const toggleMenu = () => {
 <template>
   <aside :class="`${is_expanded && 'is-expanded'}`">
     <div class="menu" v-if="userStore.user">
-      <RouterLink class="button" to="/">
+      <RouterLink class="navlink" to="/">
         <img src="@/assets/images/activities-icon.svg" alt="ir actividades">
         <span class="text">Actividades</span>
       </RouterLink>
-      <RouterLink class="button" to="/myactivities">
+      <RouterLink class="navlink" to="/myactivities">
         <img src="@/assets/images/myactivities-icon.svg" alt="ir mis actividades">
         <span class="text">Mis actividades</span>
       </RouterLink>
-      <RouterLink class="button" to="/myactivities/form">
+      <RouterLink class="navlink" to="/myactivities/form">
         <img src="@/assets/images/create-activity-icon.svg" alt="ir crear actividad">
         <span class="text">Nueva actividad</span>
       </RouterLink>
-      <RouterLink class="button" to="/workshops">
+      <RouterLink class="navlink" to="/workshops">
         <img src="@/assets/images/workshops-icon.svg" alt="ir talleres">
         <span class="text">Talleres</span>
       </RouterLink>
-      <RouterLink class="button" to="/workinprogress">
-        <img src="@/assets/images/amigaria-logo.svg" alt="imagen de usuario">
-        <span class="text">Usuario</span>
+      <RouterLink class="navlink" to="/workinprogress">
+        <img  v-if="userStore.user.photoURL" :src="userStore.user.photoURL" alt="imagen de usuario">
+        <img v-else src="@/assets/images/amigaria-logo.svg">
+        <span class="text userName">{{userStore.user.displayName || "Usuario"}}</span>
       </RouterLink>
-      <div class="button">
+      <div class="navlink">
         <button class="logout text" @click="userStore.logout()">Cerrar sesión</button>
       </div>
     </div>
@@ -103,7 +104,7 @@ aside {
   }
 
 
-  .button .text {
+  .navlink .text {
     opacity: 0;
   }
 
@@ -112,10 +113,9 @@ aside {
     margin: 0 -1rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 4rem;
+    justify-content: space-evenly;
 
-    .button {
+    .navlink {
       display: flex;
       align-items: center;
       text-decoration: none;
@@ -132,6 +132,9 @@ aside {
         white-space: nowrap;
         font-size: 0px;
       }
+      .logout{
+        font-size: 1rem;
+      }
 
       &:hover,
       &.router-link-exact-active {
@@ -147,6 +150,7 @@ aside {
       background-color: transparent;
       color: var(--clr-emphasis-light);
       border: none;
+      
     }
   }
 
@@ -162,17 +166,23 @@ aside {
       }
     }
 
-    .button .text {
+    .navlink .text {
       opacity: 1;
     }
 
-    .button {
+    .navlink {
       img {
         margin-right: 1rem;
       }
 
       .text {
         font-size: 1rem;
+      }
+      .userName{
+        max-width: var(--aside-size);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }
