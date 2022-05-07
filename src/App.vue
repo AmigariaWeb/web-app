@@ -11,7 +11,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <Sidebar v-if="userStore.user" />
+  <Sidebar v-if="userStore.isEmailVerified" />
   <RouterView />
 </template>
 

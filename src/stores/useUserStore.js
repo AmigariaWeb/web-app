@@ -1,14 +1,22 @@
 import router from '../router';
 import { defineStore } from "pinia";
 import { auth } from '../services/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth';
 
 export const useUserStore = defineStore("userStore", {
   state: () => ({
     user: null,
   }),
   getters: {
-    actualUser: (state) => console.log(state.user)
+    actualUser: (state) => console.log(state.user),
+    isEmailVerified: (state) => {
+      if (state.user) {
+        if (state.user.emailVerified) {
+          return true
+        }
+      }
+      return false
+    }
   },
   actions: {
     SET_USER(user) {
@@ -35,8 +43,16 @@ export const useUserStore = defineStore("userStore", {
         }
         return
       }
+      if (!auth.currentUser.emailVerified) {
+        await auth.signOut();
+        alert("Verifica tu email para entrar. Si no ves en la bandeja de entrada el correo de confirmación, comprueba en spam")
+        this.CLEAR_USER();
+        router.push("/login")
+        return
+      }
       this.SET_USER(auth.currentUser);
-      router.push("/");
+      router.push('/')
+      
     },
     
     async register(details) {
@@ -63,8 +79,12 @@ export const useUserStore = defineStore("userStore", {
         }
         return
       }
-      this.SET_USER(auth.currentUser)
-      router.push("/");
+      const actionCodeSettings = {
+        url: `https://app.amigaria.com`
+      }
+      await sendEmailVerification(auth.currentUser, actionCodeSettings);
+      auth.signOut();
+      router.push("/login");
     },
 
     async logout() {
@@ -79,9 +99,11 @@ export const useUserStore = defineStore("userStore", {
       this.SET_USER(auth.currentUser);
       router.push("/")
     },
+    
     fetchUser() {
       auth.onAuthStateChanged(async user => {
         if (user === null) {
+          await signOut(auth);
           this.CLEAR_USER();
         } else {
           this.SET_USER(auth.currentUser);
