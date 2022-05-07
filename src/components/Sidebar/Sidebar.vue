@@ -167,7 +167,7 @@ aside {
     }
 
     .navlink .text {
-      transition: opacity 0.3s ease-out;
+      transition: 0.3s ease-out;
       opacity: 1;
     }
 
