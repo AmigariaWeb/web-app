@@ -24,9 +24,7 @@ onBeforeMount(() => {
 
 #app {
   main {  
-
       padding-left: 2rem;
-
   }
 }
 
@@ -36,11 +34,7 @@ onBeforeMount(() => {
 	padding: 0px;
 	color: var(--clr-emphasis-light);
 
-	@media (max-width: 640px){
-		#login-register{
-    	padding-left: 0;
-		}
-	}
+	
 }
 
 .login {
@@ -82,4 +76,12 @@ onBeforeMount(() => {
 		}
 	}
 }
+@media (max-width: 640px){
+	#app{
+		#login-register{
+    	padding: 1rem;
+		}
+
+	}
+	}
 </style>

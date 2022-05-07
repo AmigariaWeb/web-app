@@ -28,6 +28,7 @@ const login = async () => {
 		</div>
 		<button class="login-submit">Enviar</button>
 		<p class="login-text">¿Aun no te has <RouterLink :to="{ name: 'Registrarse' }">registrado</RouterLink>?</p>
+		<p class="login-text">¿Has olvidado la <RouterLink :to="{ name: 'Recuperar contraseña' }">contraseña</RouterLink>?</p>
 	</form>
 </template>
 

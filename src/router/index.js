@@ -5,6 +5,7 @@ import ActivitiesView from '@/views/ActivitiesView.vue';
 import AppLogin from '@/components/AppLogin/AppLogin.vue';
 import AppRegister from '@/components/AppLogin/AppRegister.vue';
 import ActivityDetailView from '@/views/ActivityDetailView.vue';
+import RememberPassword from '@/components/AppLogin/RememberPassword.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,7 +71,13 @@ const router = createRouter({
         name: "Registrarse",
         path: 'register',
         component: AppRegister,
-      }]
+      },
+      {
+        name: "Recuperar contraseña",
+        path: 'resetpassword',
+        component: RememberPassword
+      }
+      ]
     },
     {
       path: '/workinprogress',
