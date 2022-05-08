@@ -1,16 +1,16 @@
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDEKXVUhPmKnfhYUaejzXpAZoT3b2We3kM",
-  authDomain: "amigaria-app.firebaseapp.com",
-  projectId: "amigaria-app",
-  storageBucket: "amigaria-app.appspot.com",
-  messagingSenderId: "209321818212",
-  appId: "1:209321818212:web:c58fe08483486f71884771"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID
 };
 
 
