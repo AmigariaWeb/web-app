@@ -100,25 +100,13 @@ const login = async () => {
 		input {
 			min-width: 44px;
 			min-height: 44px;
-			border-radius: 50px;
 			padding: 0px 15px;
 			margin-bottom: 18px;
 			margin-right: 15px;
 			border-width: 3px;
 			outline: none;
 			border-style: solid;
-
-			&:hover,
-			&:focus,
-			&:focus-visible,
-			&:focus-within {
-				border-color: var(--clr-green-light);
-			}
-		}
-
-		input {
 			color: var(--clr-dark-blue-shadow);
-			min-height: 44px;
 			border-radius: 20px;
 			padding-inline: 1rem;
 			background-color: var(--clr-emphasis-light);
@@ -169,8 +157,13 @@ const login = async () => {
 		border: none;
 		transition: background-color 0.5s ease;
 		color: var(--clr-dark-blue-shadow);
-		cursor: pointer;
 
+		&:hover,
+		&:focus {
+			background-color: var(--clr-dark-blue-shadow);
+			color: var(--clr-emphasis-light);
+			cursor: pointer;
+		}
 	}
 
 
