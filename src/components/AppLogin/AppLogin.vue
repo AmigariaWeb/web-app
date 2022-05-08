@@ -12,27 +12,43 @@ const login = async () => {
 
 </script>
 <template>
-	<div class="login-google" style="border-bottom: 3px solid var(--clr-yellow-light);">
-			<AppLoginGoogle></AppLoginGoogle>
-		<h4 class="login-title">o</h4>
-	</div>
-	<h3 class="login-title">{{ $route.name }}</h3>
-	<form @submit.prevent="login">
-		<div class="login-block">
-			<label class="login-block__label" for="">Email</label>
-			<input v-model="login_form.email" autocomplete="off" placeholder="Email" type="email" required>
-		</div>
-		<div class="login-block">
-			<label class="login-block__label" for="">Contraseña</label>
-			<input v-model="login_form.password" autocomplete="off" placeholder="Contraseña" type="password" required>
-		</div>
-		<button class="login-submit">Enviar</button>
-		<p class="login-text">¿Aun no te has <RouterLink :to="{ name: 'Registrarse' }">registrado</RouterLink>?</p>
-		<p class="login-text">¿Has olvidado la <RouterLink :to="{ name: 'Recuperar contraseña' }">contraseña</RouterLink>?</p>
-	</form>
+	<main class="login-container">
+		<h3 class="login-title">{{ $route.name }}</h3>
+		<form @submit.prevent="login">
+			<div class="login-block">
+				<label class="login-block__label" for="">Email</label>
+				<input v-model="login_form.email" autocomplete="off" placeholder="Email" type="email" required>
+			</div>
+			<div class="login-block">
+				<label class="login-block__label" for="">Contraseña</label>
+				<input v-model="login_form.password" autocomplete="off" placeholder="Contraseña" type="password"
+					required>
+			</div>
+			<p class="login-text">¿Has olvidado la <RouterLink :to="{ name: 'Recuperar contraseña' }">contraseña
+				</RouterLink>?</p>
+			<div class="login-buttons">
+				<button class="login-submit">Iniciar Sesión</button>
+				<div class="login-google">
+					<AppLoginGoogle></AppLoginGoogle>
+				</div>
+			</div>
+			<p class="login-text">¿Aun no te has <RouterLink :to="{ name: 'Registrarse' }">registrado</RouterLink>?</p>
+		</form>
+	</main>
 </template>
 
 <style lang="scss" scoped>
+#app {
+	min-height: 50vh;
+
+	main {
+		min-height: 50vh;
+		flex: 1 1 0;
+		padding: 1rem;
+		padding-left: 5rem;
+	}
+}
+
 .container {
 	max-width: 800px;
 	margin: auto;
@@ -42,6 +58,15 @@ const login = async () => {
 
 .login {
 
+	&-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		background-color: var(--clr-yellow-light);
+		color: var(--clr-dark-blue-shadow);
+		border-radius: 20px;
+	}
 
 	&-title {
 		text-align: center;
@@ -63,14 +88,12 @@ const login = async () => {
 
 		&__label {
 			font-style: normal;
-			font-weight: 700;
 			font-size: 36px;
-			line-height: 63px;
 			letter-spacing: 0.0012em;
-
-			font-weight: 400;
+			font-weight: 550;
 			font-size: 25px;
 			line-height: 44px;
+			text-align: center;
 
 		}
 
@@ -102,7 +125,7 @@ const login = async () => {
 			font-size: 1rem;
 			transition: border 0.2s ease;
 			box-shadow: (10px 10px 0px rgba(0, 0, 0, 0.15));
-			margin-bottom: 16PX;
+			margin-bottom: 16px;
 
 			&:hover,
 			&:focus {
@@ -122,29 +145,32 @@ const login = async () => {
 
 	}
 
+	&-buttons {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 0px;
+	}
+
 	&-submit {
 		font-style: normal;
-		font-weight: 400;
+		font-weight: 500;
 		font-size: 25px;
 		line-height: 44px;
 		text-align: center;
 		letter-spacing: 0.0012em;
 		min-height: 44px;
 		margin: 32px auto 32px auto;
-		width: 100%;
-		border-radius: 0px;
-		background-color: var(--clr-yellow-light);
+		width: 80%;
+		border-radius: 20px;
+		background-color: var(--clr-green-light);
 		border: none;
 		transition: background-color 0.5s ease;
 		color: var(--clr-dark-blue-shadow);
 
-		&:hover,
-		&:focus {
-			background-color: var(--clr-yellow-shadow);
-			cursor: pointer;
-		}
-
 	}
+
 
 	&-nav {
 		display: flex;
@@ -158,8 +184,14 @@ const login = async () => {
 			background-color: var(--clr-yellow-light);
 			border-radius: 15px;
 			height: 44px;
-			display: block;
 		}
+	}
+}
+
+@media (min-width:1440px) {
+	main {
+		max-width: 1440px;
+		margin: 0 auto;
 	}
 }
 </style>

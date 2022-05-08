@@ -21,11 +21,10 @@ onBeforeMount(() => {
 
 
 <style lang="scss" scoped>
-
 #app {
-  main {  
-      padding-left: 2rem;
-  }
+	main {
+		padding-left: 2rem;
+	}
 }
 
 .container {
@@ -34,7 +33,7 @@ onBeforeMount(() => {
 	padding: 0px;
 	color: var(--clr-emphasis-light);
 
-	
+
 }
 
 .login {
@@ -76,12 +75,13 @@ onBeforeMount(() => {
 		}
 	}
 }
-@media (max-width: 640px){
-	#app{
-		#login-register{
-    	padding: 1rem;
+
+@media (max-width: 640px) {
+	#app {
+		#login-register {
+			padding: 1rem;
 		}
 
 	}
-	}
+}
 </style>
