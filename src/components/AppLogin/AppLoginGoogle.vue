@@ -5,14 +5,15 @@ const userStore = useUserStore();
 </script>
 <template>
   <button @click="userStore.signInWithGoogle()" class="google-btn">
-    <img  className="google-icon"
-      src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google button" />
+    <img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+      alt="google button" />
     <span>Entra con Google</span>
   </button>
 </template>
 
 <style lang="scss" scoped>
 .google-btn {
+  width: 100%;
   align-items: center;
   background-color: var(--clr-emphasis-light);
   border: none;
@@ -28,7 +29,7 @@ const userStore = useUserStore();
 
   &:hover,
   &:focus {
-    background-color: var(--clr-yellow-light);
+    background-color: var(--clr-green-dark);
     cursor: pointer;
   }
 }

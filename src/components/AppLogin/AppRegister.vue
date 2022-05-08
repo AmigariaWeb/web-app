@@ -12,38 +12,52 @@ const register = async () => {
 };
 </script>
 <template>
-  <p class="login-text">
-    ¿Ya estas registrado? <RouterLink :to="{ path: '/login' }">Inicia sesión</RouterLink>
-  </p>
-  <div class="login-google" style="border-bottom: 3px solid var(--clr-yellow-light)">
-    <AppLoginGoogle></AppLoginGoogle>
-    <h4 class="login-title">o</h4>
-  </div>
-  <h3 class="login-title">{{ $route.name }}</h3>
-  <form @submit.prevent="register">
-    <div class="login-block">
-      <label class="login-block__label" for="">Email</label>
-      <input v-model="register_form.email" autocomplete="off" placeholder="Introduce tu email" type="email" required />
-    </div>
-    <div class="login-block">
-      <label class="login-block__label" for="">Contraseña</label>
-      <input v-model="register_form.password" autocomplete="off" placeholder="Introduce tu contraseña" type="password"
-        required />
-
-      <input autocomplete="off" placeholder="Repite tu contraseña" type="password" required />
-    </div>
-
-    <div class="login-block">
-      <label class="login-block__label" for="">Datos personales</label>
-      <input autocomplete="off" placeholder="introduce tu nombre" type="text" required />
-      <input autocomplete="off" placeholder="introduce tus apellidos" type="text" required />
-      <input autocomplete="off" placeholder="introduce tu código postal" type="text" required />
-    </div>
-    <button class="login-submit">Enviar</button>
-  </form>
+  <main class="login-container">
+    <h3 class="login-title">{{ $route.name }}</h3>
+    <form @submit.prevent="register">
+      <div class="login-block">
+        <label class="login-block__label" for="">Email</label>
+        <input v-model="register_form.email" autocomplete="off" placeholder="Introduce tu email" type="email"
+          required />
+      </div>
+      <div class="login-block">
+        <label class="login-block__label" for="">Contraseña</label>
+        <input v-model="register_form.password" autocomplete="off" placeholder="Introduce tu contraseña" type="password"
+          required />
+        <label class="login-block__label" for="">Repite tu contraseña</label>
+        <input autocomplete="off" placeholder="Repite la contraseña" type="password" required />
+      </div>
+      <div class="login-block" style="margin-top: 50px;">
+        <label class="login-block__label" for="">Datos personales</label>
+        <input autocomplete="off" placeholder="introduce tu nombre" type="text" required />
+        <input autocomplete="off" placeholder="introduce tus apellidos" type="text" required />
+        <input autocomplete="off" placeholder="introduce tu código postal" type="text" required />
+      </div>
+      <div class="login-buttons">
+        <button class="login-submit">Registrarse</button>
+        <div class="login-google">
+          <AppLoginGoogle></AppLoginGoogle>
+        </div>
+      </div>
+    </form>
+    <p class="login-text">
+      ¿Ya estas registrado? <RouterLink :to="{ path: '/login' }">Inicia sesión</RouterLink>
+    </p>
+  </main>
 </template>
 
 <style lang="scss" scoped>
+#app {
+  min-height: 90vh;
+
+  main {
+    min-height: 90vh;
+    flex: 1 1 0;
+    padding: 1rem;
+    padding-left: 5rem;
+  }
+}
+
 .container {
   max-width: 800px;
   margin: auto;
@@ -52,6 +66,15 @@ const register = async () => {
 }
 
 .login {
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--clr-yellow-light);
+    color: var(--clr-dark-blue-shadow);
+    border-radius: 20px;
+  }
 
   &-title {
     text-align: center;
@@ -73,14 +96,30 @@ const register = async () => {
 
     &__label {
       font-style: normal;
-      font-weight: 700;
       font-size: 36px;
-      line-height: 63px;
       letter-spacing: 0.0012em;
-
-      font-weight: 400;
+      font-weight: 550;
       font-size: 25px;
       line-height: 44px;
+      text-align: center;
+    }
+
+    input {
+      min-width: 300px;
+      min-height: 44px;
+      border-radius: 50px;
+      padding: 0px 15px;
+      margin-bottom: 18px;
+      border-width: 3px;
+      outline: none;
+      border-style: solid;
+
+      &:hover,
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        border-color: var(--clr-green-light);
+      }
     }
 
     input {
@@ -112,27 +151,29 @@ const register = async () => {
     }
   }
 
+  &-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+  }
+
   &-submit {
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 25px;
     line-height: 44px;
     text-align: center;
     letter-spacing: 0.0012em;
     min-height: 44px;
     margin: 32px auto 32px auto;
-    width: 100%;
-    border-radius: 0px;
-    background-color: var(--clr-yellow-light);
+    width: 80%;
+    border-radius: 20px;
+    background-color: var(--clr-green-light);
     border: none;
     transition: background-color 0.5s ease;
     color: var(--clr-dark-blue-shadow);
-
-    &:hover,
-    &:focus {
-      background-color: var(--clr-yellow-shadow);
-      cursor: pointer;
-    }
   }
 
   &-nav {
@@ -149,6 +190,13 @@ const register = async () => {
       height: 44px;
       display: block;
     }
+  }
+}
+
+@media (min-width:1440px) {
+  main {
+    max-width: 1440px;
+    margin: 0 auto;
   }
 }
 </style>
