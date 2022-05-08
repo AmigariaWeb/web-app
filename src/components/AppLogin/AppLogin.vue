@@ -98,11 +98,12 @@ const login = async () => {
 		}
 
 		input {
-			min-width: 300px;
+			min-width: 44px;
 			min-height: 44px;
 			border-radius: 50px;
 			padding: 0px 15px;
 			margin-bottom: 18px;
+			margin-right: 15px;
 			border-width: 3px;
 			outline: none;
 			border-style: solid;
@@ -168,6 +169,7 @@ const login = async () => {
 		border: none;
 		transition: background-color 0.5s ease;
 		color: var(--clr-dark-blue-shadow);
+		cursor: pointer;
 
 	}
 

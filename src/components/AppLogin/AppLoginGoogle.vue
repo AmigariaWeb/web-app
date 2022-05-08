@@ -31,6 +31,7 @@ const userStore = useUserStore();
   &:focus {
     background-color: var(--clr-green-dark);
     cursor: pointer;
+    color: var(--clr-emphasis-light);
   }
 }
 
