@@ -155,7 +155,7 @@ const register = async () => {
     line-height: 44px;
     text-align: center;
     letter-spacing: 0.0012em;
-    min-height: 44px;
+    padding: 5px 10px;
     margin: 32px auto 32px auto;
     width: 80%;
     border-radius: 20px;

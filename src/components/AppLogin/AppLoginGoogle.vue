@@ -16,7 +16,6 @@ const userStore = useUserStore();
   width: 100%;
   align-items: center;
   background-color: var(--clr-emphasis-light);
-  border: none;
   color: var(--clr-dark-blue-shadow);
   display: flex;
   padding: 1rem;
@@ -25,13 +24,12 @@ const userStore = useUserStore();
   justify-content: center;
   margin: auto;
   border-radius: 20px;
-  transition: background-color 0.3s ease;
+  border: 3px solid white;
 
   &:hover,
   &:focus {
-    background-color: var(--clr-green-dark);
     cursor: pointer;
-    color: var(--clr-emphasis-light);
+    border: 3px solid var(--clr-dark-blue-shadow);
   }
 }
 
