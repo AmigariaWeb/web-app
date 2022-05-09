@@ -2,6 +2,7 @@ import router from '../router';
 import { defineStore } from "pinia";
 import { auth } from '../services/firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth';
+import { swal } from '../utils/swal';
 
 export const useUserStore = defineStore("userStore", {
   state: () => ({
@@ -33,19 +34,20 @@ export const useUserStore = defineStore("userStore", {
       } catch (error) {
         switch (error.code) {
           case 'auth/user-not-found':
-            alert("User not found")
+            swal("error","Usuario no encontrado", "El usuario introducido no existe.")
             break;
           case "auth/wrong-password":
-            alert("Wrong password")
+            swal("error","Contraseña erronea", "La contraseña introducida es erronea. ¡Prueba con otra diferente!.")
+            break
           default:
-            alert("Something went wrong")
+            swal("error","Algo ha ido mal", "")
             break;
         }
         return
       }
       if (!auth.currentUser.emailVerified) {
         await auth.signOut();
-        alert("Verifica tu email para entrar. Si no ves en la bandeja de entrada el correo de confirmación, comprueba en spam")
+        swal("info","Verifica primero tu email","Te hemos enviado un correo de confirmación. Si no lo encuentras, mira en tu bandeja de spam.")
         this.CLEAR_USER();
         router.push("/login")
         return
@@ -62,19 +64,19 @@ export const useUserStore = defineStore("userStore", {
       } catch (error) {
         switch (error.code) {
           case 'auth/email-already-in-use':
-            alert("Email already in use")
+            swal("error", "El email ya está en uso", "Prueba con otro diferente o intenta iniciar sesión");
             break;
           case "auth/invalid-email":
-            alert("Invalid email");
+            swal("error","Email incorrecto", "Introduce un email válido.");
             break
           case "auth/operation-not-allowed":
-            alert("Operation not allowed");
+            swal("error","Operación no permitida", "");
             break
           case "auth/weak-password":
-            alert("Weak password");
+            swal("error","Contraseña debil","Pon una contraseña con mínimo 6 caracteres");
             break
           default:
-            alert(error);
+            console.error(error);
             break;
         }
         return
@@ -83,6 +85,7 @@ export const useUserStore = defineStore("userStore", {
         url: `https://app.amigaria.com`
       }
       await sendEmailVerification(auth.currentUser, actionCodeSettings);
+      swal("success","Registrado con éxito","Ahora confirma tu correo electrónico. Si no lo encuentras busca en la bandeja de spam.")
       auth.signOut();
       router.push("/login");
     },
