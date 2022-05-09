@@ -166,7 +166,6 @@ const login = async () => {
 		}
 	}
 
-
 	&-nav {
 		display: flex;
 		justify-content: space-evenly;
