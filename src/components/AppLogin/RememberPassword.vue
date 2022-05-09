@@ -4,6 +4,7 @@ import { auth } from '../../services/firebase';
 import { sendPasswordResetEmail } from '@firebase/auth';
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
+import {swal} from '@/utils/swal.js'
 
 const router = useRouter();
 const email = ref("")
@@ -11,14 +12,14 @@ const email = ref("")
 const resetUserPassword = async () => {
   try {
     await sendPasswordResetEmail(auth, email.value)
-    alert("¡Te hemos enviado un correo! Cambía tu contraseña e inicia sesión");
-    router.push('/login');
+    swal("success","Email válido","¡Te hemos enviado un correo! Ahora cambia tu contraseña e inicia sesión.")
+    router.push('/login')
   } catch (error) {
     if (error.code === "auth/user-not-found") {
-      return alert("Este email de usuario no existe.")
+      return swal("error","Email incorrecto","Este email de usuario no existe.")
     }
     if (error.code === "auth/missing-email") {
-      return alert("Introduce un correo.")
+      return swal("error", "Email vacio", "Rellena el campo email."); 
     }
   }
 }
@@ -38,7 +39,6 @@ const resetUserPassword = async () => {
 </template>
 
 <style lang="scss" scoped>
-
 a {
   color: var(--clr-emphasis-light);
   display: block;
