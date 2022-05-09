@@ -24,7 +24,8 @@ const userStore = useUserStore();
   justify-content: center;
   margin: auto;
   border-radius: 20px;
-  border: 3px solid white;
+  border: 3px solid var(--clr-emphasis-light);
+  transition: 0.5s;
 
   &:hover,
   &:focus {
