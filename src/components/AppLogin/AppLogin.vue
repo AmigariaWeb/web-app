@@ -88,7 +88,6 @@ const login = async () => {
 
 		&__label {
 			font-style: normal;
-			font-size: 36px;
 			letter-spacing: 0.0012em;
 			font-weight: 550;
 			font-size: 25px;
