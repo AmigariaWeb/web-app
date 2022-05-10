@@ -26,7 +26,8 @@ const sendForm = (e) => {
 				<textarea name="descriptionForm" id="descriptionForm" rows="4"
 					placeholder="Introduzca una descripción..." required v-model="newActivity.description"></textarea>
 			</div>
-			<div class="type form-content">
+			<div class="time form-content">
+				<div class="type form-content">
 				<label for="typeForm">Tipo</label>
 				<select id="typeForm" required v-model="newActivity.type">
 					<option selected disabled value="undefined">Selecciona un tipo</option>
@@ -41,6 +42,8 @@ const sendForm = (e) => {
 				<label for="dateForm">Fecha</label>
 				<input class="" type="date" name="dateForm" id="dateForm" required v-model="newActivity.date">
 			</div>
+			</div>
+		
 			<div class="time form-content">
 				<div class="from">
 					<label for="fromTimeForm">Desde</label>
@@ -53,7 +56,9 @@ const sendForm = (e) => {
 						:disabled="newActivity.from === undefined" v-model="newActivity.to">
 				</div>
 			</div>
-			<button form="activity-form" type="submit">Enviar</button>
+			<div class="buttons">
+				<button form="activity-form" type="submit">Enviar</button>
+			</div>
 		</form>
 	</div>
 </template>
@@ -64,13 +69,12 @@ const sendForm = (e) => {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	justify-content: center;
 	background-color: var(--clr-yellow-light);
-	color: var(--clr-dark-blue-shadow);
+	color: var(--clr-dark-blue);
 	border-radius: 20px;
 	width: 100%;
 	max-width: 650px;
-	min-height: 100vh;
+	min-height: 85vh;
 }
 
 .form-title {
@@ -81,16 +85,20 @@ form {
 	padding: 1rem 2rem;
 	width: 100%;
 	display: flex;
-	flex-direction: column;
+	gap: 15px;
+	flex-direction: column;;
 
 
 	.form-content {
-		display: flex;
+		display: flex;		
 		flex-direction: column;
+	}
+	.title, .description {
+	padding: 0px 40px
 	}
 
 	label {
-		font-family: 'Atkinson Hyperlegible';
+		font-family: 'AtkinsonHyperlegible';
 		font-style: normal;
 		font-weight: 700;
 		font-size: 16px;
@@ -108,8 +116,6 @@ form {
 		min-width: 44px;
 		min-height: 44px;
 		padding: 0px 15px;
-		margin-bottom: 18px;
-		margin-right: 15px;
 		border-width: 3px;
 		outline: none;
 		border-radius: 20px;
@@ -120,6 +126,7 @@ form {
 		transition: border 0.2s ease;
 		box-shadow: (10px 10px 0px rgba(0, 0, 0, 0.15));
 		margin-bottom: 15px;
+		
 
 		&:hover,
 		&:focus {
@@ -140,39 +147,54 @@ form {
 	textarea {
 		padding-top: 0.5rem;
 		resize: none;
+		min-height: 25vh;
 	}
 
 	.time {
+		display: flex;
+		gap: 15px;
 		flex-direction: row;
-		justify-content: space-between;
+		justify-content: center;
 
-		.from,
-		.to {
+		.type, .date {
 			display: flex;
 			flex-direction: column;
-			min-width: 50%;
-			margin-right: 20px;
+			min-width: 45%;
+		}
+		.from, .to, {
+			display: flex;
+			flex-direction: column;
+			min-width: 25%;
 
 		}
 	}
 }
 
+.buttons {
+	display: flex;
+	justify-content: space-evenly;
+}
+
 button {
 
-	font-family: "AtkinsonHyperlegible", sans-serif;
-	font-style: normal;
-	font-weight: 500;
-	font-size: 25px;
-	line-height: 44px;
-	text-align: center;
-	letter-spacing: 0.0012em;
-	margin: 20px 0px;
-	border-radius: 20px;
-	font-size: 1.5rem;
-	color: var(--clr-yellow-light);
-	height: 50px;
-	background-color: var(--clr-dark-blue-shadow);
-	cursor: pointer;
+		font-style: normal;
+		font-weight: 500;
+		font-size: 25px;
+		line-height: 44px;
+		text-align: center;
+		letter-spacing: 0.0012em;
+		padding: 5px 10px;
+		border-radius: 20px;
+		background-color: var(--clr-dark-blue);
+		border: 3px solid transparent;
+		transition: background-color 0.5s ease;
+		color: var(--clr-yellow-light);
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    background-color: var(--clr-dark-blue-shadow);
+  }
 }
 
 @media (min-width:640px) {
