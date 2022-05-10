@@ -27,11 +27,13 @@ const register = async () => {
         <label class="login-block__label" for="">Repite tu contraseña</label>
         <input autocomplete="off" placeholder="Repite la contraseña" type="password" required />
       </div>
-      <div class="login-block" style="margin-top: 50px;">
+      <div class="login-block">
         <label class="login-block__label" for="">Datos personales</label>
-        <input autocomplete="off" placeholder="introduce tu nombre" type="text" required />
-        <input autocomplete="off" placeholder="introduce tus apellidos" type="text" required />
-        <input autocomplete="off" placeholder="introduce tu código postal" type="text" required />
+        <div class="login-block-personal">
+          <input autocomplete="off" placeholder="introduce tu nombre" type="text" required />
+          <input autocomplete="off" placeholder="introduce tus apellidos" type="text" required />
+          <input autocomplete="off" placeholder="introduce tu código postal" type="text" required />
+        </div>
       </div>
       <div class="login-buttons">
         <button class="login-submit">Registrarse</button>
@@ -48,14 +50,20 @@ const register = async () => {
 
 <style lang="scss" scoped>
 #app {
-  min-height: 90vh;
+  min-height: 10vh;
 
   main {
-    min-height: 90vh;
+    min-height: 10vh;
     flex: 1 1 0;
     padding: 1rem;
     padding-left: 5rem;
   }
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
 }
 
 .container {
@@ -69,10 +77,9 @@ const register = async () => {
   &-container {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     background-color: var(--clr-yellow-light);
-    color: var(--clr-dark-blue-shadow);
+    color: var(--clr-dark-blue);
     border-radius: 20px;
   }
 
@@ -82,7 +89,6 @@ const register = async () => {
 
   &-text {
     text-align: center;
-    margin: 8px 0px;
 
     a {
       color: inherit;
@@ -92,7 +98,6 @@ const register = async () => {
   &-block {
     display: flex;
     flex-flow: column;
-    margin: 0px 15px 0px 15px;
 
     &__label {
       font-style: normal;
@@ -108,20 +113,17 @@ const register = async () => {
       min-width: 44px;
       min-height: 44px;
       padding: 0px 15px;
-      margin-bottom: 18px;
-      margin-right: 15px;
       border-width: 3px;
       outline: none;
       border-style: solid;
       color: var(--clr-dark-blue-shadow);
       border-radius: 20px;
-      padding-inline: 1rem;
       background-color: var(--clr-emphasis-light);
       border: 3px solid var(--clr-dark-blue-shadow);
       font-size: 1rem;
       transition: border 0.2s ease;
       box-shadow: (10px 10px 0px rgba(0, 0, 0, 0.15));
-      margin-bottom: 16px;
+      gap: 1rem;
 
       &:hover,
       &:focus {
@@ -138,39 +140,43 @@ const register = async () => {
         background-color: #ffffffd1;
       }
     }
+    &-personal {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
   }
 
   &-buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		padding: 0px;
+		gap: 1.5rem;
   }
 
   &-submit {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 25px;
-    line-height: 44px;
-    text-align: center;
-    letter-spacing: 0.0012em;
-    padding: 5px 10px;
-    margin: 32px auto 32px auto;
-    width: 80%;
-    border-radius: 20px;
-    background-color: var(--clr-green-light);
-    border: none;
-    transition: background-color 0.5s ease;
-    color: var(--clr-dark-blue-shadow);
+		font-style: normal;
+		font-weight: 400;
+		font-size: 1.5625rem;
+		line-height: 2.34375rem;
+		text-align: center;
+		padding: 10px 10px;
+		border-radius: 20px;
+		background-color: var(--clr-dark-blue);
+		border: none;
+		transition: background-color 0.5s ease;
+		color: var(--clr-yellow-light);
 
-    &:hover,
-    &:focus {
-      background-color: var(--clr-dark-blue-shadow);
-      color: var(--clr-emphasis-light);
-      cursor: pointer;
-    }
-  }
+		&:hover,
+		&:focus {
+			background-color: var(--clr-dark-blue-shadow);
+			color: var(--clr-yellow-light);
+			cursor: pointer;
+		}
+	}
 
   &-nav {
     display: flex;

@@ -23,7 +23,7 @@ onBeforeMount(() => {
 <style lang="scss" scoped>
 #app {
 	main {
-		padding-left: 2rem;
+		padding-left: 1rem;
 	}
 }
 

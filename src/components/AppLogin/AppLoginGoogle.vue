@@ -15,6 +15,7 @@ const userStore = useUserStore();
 .google-btn {
   width: 100%;
   align-items: center;
+  font-family: Roboto;
   background-color: var(--clr-emphasis-light);
   color: var(--clr-dark-blue-shadow);
   display: flex;

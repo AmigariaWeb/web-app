@@ -32,8 +32,8 @@ const resetUserPassword = async () => {
     <div class="details">
       <label for="emailForResetPass">Email:</label>
       <input id="emailForResetPass" type="email" name="email" v-model="email" placeholder="email@email.com">
-      <button>Enviar</button>
     </div>
+      <button>Enviar</button>
     <img src="@/assets/images/forgot-password.svg" alt="recordar contraseña">
   </form>
 </template>
@@ -68,18 +68,19 @@ a {
   .details {
     display: flex;
     flex-direction: column;
-    width: min(100%, 15rem);
 
 
 
     label {
       font-weight: 700;
+      font-size: 1.5625rem;
     }
 
     input {
       font-family: "AtkinsonHyperlegible", sans-serif;
       color: var(--clr-dark-blue-shadow);
       min-height: 44px;
+      min-width: 220px;
       border-radius: 20px;
       padding-inline: 1rem;
       background-color: var(--clr-emphasis-light);
@@ -90,30 +91,33 @@ a {
       margin-bottom: 1rem;
     }
 
-    button {
-      width: min(100%, 10rem);
-      border-radius: 20px;
-      padding: 1rem;
-      border: 3px solid transparent;
-      color: var(--clr-dark-blue);
-      background-color: var(--clr-green-light);
-      font-size: 1.5rem;
-      align-self: center;
-
-      &:hover {
-        cursor: pointer;
-        background-color: var(--clr-green-dark);
-        color: var(--clr-emphasis-light);
       }
-    }
+button {
+    font-style: normal;
+		font-weight: 400;
+		font-size: 1.5625rem;
+		line-height: 2.34375rem;
+		text-align: center;
+		padding: 10px 10px;
+		border-radius: 20px;
+		background-color: var(--clr-dark-blue);
+		border: none;
+		transition: background-color 0.5s ease;
+		color: var(--clr-yellow-light);
 
-
-  }
-
+		&:hover,
+		&:focus {
+			background-color: var(--clr-dark-blue-shadow);
+			color: var(--clr-yellow-light);
+			cursor: pointer;
+		}
+	}
   img {
     position: relative;
+    max-height: 100px;
     bottom: 0px;
-    left: -100px;
+    align-self: flex-start;
+    margin-top: -100px;
     width: min(100%, 200px);
     transition: 0.3s ease-out;
   }
@@ -125,9 +129,14 @@ a {
     h3 {
       font-size: 1.8rem;
     }
+  }
+}
 
+@media(max-width:500px) {
+  .resetPasswordForm {
     img {
-      left: 0px;
+      margin-top: 0px;
+      align-self: center;
     }
   }
 }

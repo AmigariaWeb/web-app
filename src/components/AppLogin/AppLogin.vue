@@ -49,6 +49,12 @@ const login = async () => {
 	}
 }
 
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
 .container {
 	max-width: 800px;
 	margin: auto;
@@ -61,10 +67,9 @@ const login = async () => {
 	&-container {
 		display: flex;
 		align-items: center;
-		justify-content: center;
 		flex-direction: column;
 		background-color: var(--clr-yellow-light);
-		color: var(--clr-dark-blue-shadow);
+		color: var(--clr-dark-blue);
 		border-radius: 20px;
 	}
 
@@ -74,7 +79,6 @@ const login = async () => {
 
 	&-text {
 		text-align: center;
-		margin: 8px 0px;
 
 		a {
 			color: inherit;
@@ -84,7 +88,7 @@ const login = async () => {
 	&-block {
 		display: flex;
 		flex-flow: column;
-		margin: 0px 15px 0px 15px;
+
 
 		&__label {
 			font-style: normal;
@@ -100,8 +104,6 @@ const login = async () => {
 			min-width: 44px;
 			min-height: 44px;
 			padding: 0px 15px;
-			margin-bottom: 18px;
-			margin-right: 15px;
 			border-width: 3px;
 			outline: none;
 			border-style: solid;
@@ -113,7 +115,6 @@ const login = async () => {
 			font-size: 1rem;
 			transition: border 0.2s ease;
 			box-shadow: (10px 10px 0px rgba(0, 0, 0, 0.15));
-			margin-bottom: 16px;
 
 			&:hover,
 			&:focus {
@@ -135,32 +136,31 @@ const login = async () => {
 
 	&-buttons {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		flex-wrap: wrap;
 		justify-content: center;
 		align-items: center;
 		padding: 0px;
+		gap: 1.5rem;
 	}
 
 	&-submit {
 		font-style: normal;
-		font-weight: 500;
-		font-size: 25px;
-		line-height: 44px;
+		font-weight: 400;
+		font-size: 1.5625rem;
+		line-height: 2.34375rem;
 		text-align: center;
-		letter-spacing: 0.0012em;
-		padding: 5px 10px;
-		margin: 32px auto 32px auto;
-		width: 80%;
+		padding: 10px 10px;
 		border-radius: 20px;
-		background-color: var(--clr-green-light);
+		background-color: var(--clr-dark-blue);
 		border: none;
 		transition: background-color 0.5s ease;
-		color: var(--clr-dark-blue-shadow);
+		color: var(--clr-yellow-light);
 
 		&:hover,
 		&:focus {
 			background-color: var(--clr-dark-blue-shadow);
-			color: var(--clr-emphasis-light);
+			color: var(--clr-yellow-light);
 			cursor: pointer;
 		}
 	}
