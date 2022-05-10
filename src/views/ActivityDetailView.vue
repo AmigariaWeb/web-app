@@ -9,37 +9,33 @@ const {addLastActivityDetail} = useActivitiesStore()
     let lastActivity = JSON.parse(localStorage.getItem('lastActivity'));
     addLastActivityDetail(lastActivity)
   }
-
 </script>
+
 <template>
-<div class="container">
-  <div class="details">
-    <h3>{{ selectedActivity.title }}</h3>
-    <div class="description">
-      <!-- <h4>Descripción de la actividad:</h4> -->
-      <p>{{ selectedActivity.description }}</p>
-    </div>
-    <p class="type">
-      <!-- <h4>Tipo de actividad</h4> -->
-      <p> <strong>Tipo:</strong> {{ selectedActivity.type }}</p>
-    </p>
-    <!-- <div class="calendar"> -->
-      <!-- <p class="title-calendar">Calendario</p> -->
-      <p class="date">
-        <strong>Fecha: </strong> <span>{{ selectedActivity.date }}</span>
-      </p>
+  <main>
+    <div class="container">
+      <div class="details">
+        <h3>{{ selectedActivity.title }}</h3>
+        <div class="description">
+          <p>{{ selectedActivity.description }}</p>
+        </div>
+        <p class="type">
+          <p> <strong>Tipo:</strong> {{ selectedActivity.type }}</p>
+        </p>
+        <p class="date">
+          <strong>Fecha: </strong> <span>{{ selectedActivity.date }}</span>
+        </p>
         <p class="from">
           <strong>Desde</strong> <span>{{ selectedActivity.from }}</span>
         </p>
         <p class="to">
           <strong>Hasta</strong> <span>{{ selectedActivity.to }}</span>
         </p>
-
-    <!-- </div> -->
-    <RouterLink to="/workinprogress">Me apunto</RouterLink>
-      <img src="https://picsum.photos/250/200" alt="">
-  </div>
-</div>
+        <img src="https://picsum.photos/250/200" alt="">
+        <RouterLink to="/workinprogress">Me apunto</RouterLink>
+      </div>
+    </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
@@ -49,11 +45,10 @@ const {addLastActivityDetail} = useActivitiesStore()
   margin:1rem auto;
   max-width: 700px;
   justify-content: center;
-    transition: transform 0.5s ease;
 
-  &:hover{
-    transform: scale(1.05);
-  }
+  // &:hover{
+  //   transform: scale(1.05);
+  // }
 }
 .details {
   margin: 1rem;
@@ -81,6 +76,7 @@ const {addLastActivityDetail} = useActivitiesStore()
     background-color: white;
     border-radius: 15px;
     margin: 1rem;
+    margin-bottom: 2rem;
     padding: 1rem;
     text-align: center;
   }
@@ -94,19 +90,18 @@ const {addLastActivityDetail} = useActivitiesStore()
     font-size:1.5rem;
     text-decoration: none;
     text-align: center;
-    background-color: var(--clr-green-light);
+    background-color: var(--clr-dark-blue);
     padding: 1rem;
-    width: min(100%, 200px);
+    max-width: 200px;
     border: 3px solid transparent;
     border-radius: 20px;
-    color: var(--clr-dark-blue-shadow);
-    transition: background-color 0.5s ease, color 0.5s ease;
+    color: var(--clr-yellow-light);
+    transition: background-color 0.5s ease;
     margin:1rem;
 
 
     &:hover {
-      background-color: var(--clr-dark-blue);
-      color:white;
+      background-color: var(--clr-dark-blue-shadow);
     }
 
 
@@ -119,12 +114,14 @@ const {addLastActivityDetail} = useActivitiesStore()
   }
 }
 
-@media(min-width:640px) {
-  .details {
-    .calendar {
-      //align-self: flex-end;
-    }
-
+@media(max-width:640px) {
+  a{
+    height: auto;
+    width: auto;
+    margin: auto;
+  }
+  img{
+    visibility: hidden;
   }
 }
 </style>
