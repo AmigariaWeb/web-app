@@ -28,22 +28,22 @@ const sendForm = (e) => {
 			</div>
 			<div class="time form-content">
 				<div class="type form-content">
-				<label for="typeForm">Tipo</label>
-				<select id="typeForm" required v-model="newActivity.type">
-					<option selected disabled value="undefined">Selecciona un tipo</option>
-					<option value="social">Social</option>
-					<option value="entretenimiento">Entretenimiento</option>
-					<option value="transporte">Transporte</option>
-					<option value="ayuda">Ayuda</option>
-					<option value="otros">Otros</option>
-				</select>
+					<label for="typeForm">Tipo</label>
+					<select id="typeForm" required v-model="newActivity.type">
+						<option selected disabled value="undefined">Selecciona un tipo</option>
+						<option value="social">Social</option>
+						<option value="entretenimiento">Entretenimiento</option>
+						<option value="transporte">Transporte</option>
+						<option value="ayuda">Ayuda</option>
+						<option value="otros">Otros</option>
+					</select>
+				</div>
+				<div class="date form-content">
+					<label for="dateForm">Fecha</label>
+					<input class="" type="date" name="dateForm" id="dateForm" required v-model="newActivity.date">
+				</div>
 			</div>
-			<div class="date form-content">
-				<label for="dateForm">Fecha</label>
-				<input class="" type="date" name="dateForm" id="dateForm" required v-model="newActivity.date">
-			</div>
-			</div>
-		
+
 			<div class="time form-content">
 				<div class="from">
 					<label for="fromTimeForm">Desde</label>
@@ -86,15 +86,17 @@ form {
 	width: 100%;
 	display: flex;
 	gap: 15px;
-	flex-direction: column;;
+	flex-direction: column;
 
 
 	.form-content {
-		display: flex;		
+		display: flex;
 		flex-direction: column;
 	}
-	.title, .description {
-	padding: 0px 40px
+
+	.title,
+	.description {
+		padding: 0px 40px
 	}
 
 	label {
@@ -126,7 +128,7 @@ form {
 		transition: border 0.2s ease;
 		box-shadow: (10px 10px 0px rgba(0, 0, 0, 0.15));
 		margin-bottom: 15px;
-		
+
 
 		&:hover,
 		&:focus {
@@ -156,12 +158,16 @@ form {
 		flex-direction: row;
 		justify-content: center;
 
-		.type, .date {
+		.type,
+		.date {
 			display: flex;
 			flex-direction: column;
 			min-width: 45%;
 		}
-		.from, .to, {
+
+		.from,
+		.to,
+			{
 			display: flex;
 			flex-direction: column;
 			min-width: 25%;
@@ -177,24 +183,24 @@ form {
 
 button {
 
-		font-style: normal;
-		font-weight: 500;
-		font-size: 25px;
-		line-height: 44px;
-		text-align: center;
-		letter-spacing: 0.0012em;
-		padding: 5px 10px;
-		border-radius: 20px;
-		background-color: var(--clr-dark-blue);
-		border: 3px solid transparent;
-		transition: background-color 0.5s ease;
-		color: var(--clr-yellow-light);
+	font-style: normal;
+	font-weight: 500;
+	font-size: 25px;
+	line-height: 44px;
+	text-align: center;
+	letter-spacing: 0.0012em;
+	padding: 5px 10px;
+	border-radius: 20px;
+	background-color: var(--clr-dark-blue);
+	border: 3px solid transparent;
+	transition: background-color 0.5s ease;
+	color: var(--clr-yellow-light);
 
-  &:hover,
-  &:focus {
-    cursor: pointer;
-    background-color: var(--clr-dark-blue-shadow);
-  }
+	&:hover,
+	&:focus {
+		cursor: pointer;
+		background-color: var(--clr-dark-blue-shadow);
+	}
 }
 
 @media (min-width:640px) {
