@@ -95,3 +95,7 @@ p{
 strong{
   font-weight: bold;
 }
+
+.swal2-popup, .swal2-confirm {
+  font-family: var(--font-default)
+}

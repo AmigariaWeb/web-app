@@ -32,16 +32,16 @@ const toggleMenu = () => {
         <span class="text">Talleres</span>
       </RouterLink>
       <RouterLink class="navlink" to="/workinprogress">
-        <img  v-if="userStore.user.photoURL" :src="userStore.user.photoURL" alt="imagen de usuario">
-        <img v-else src="@/assets/images/amigaria-logo.svg">
-        <span class="text userName">{{userStore.user.displayName || "Usuario"}}</span>
+        <img v-if="userStore.user.photoURL" class="user-image" :src="userStore.user.photoURL" alt="imagen de usuario">
+        <img v-else class="user-image" src="@/assets/images/amigaria-logo.svg">
+        <span class="text userName">{{ userStore.user.displayName || "Usuario" }}</span>
       </RouterLink>
       <div class="navlink">
         <button class="logout text" @click="userStore.logout()">Cerrar sesión</button>
       </div>
     </div>
     <div class="menu-toggle-wrap">
-      <button class="menu-toggle"  @click="toggleMenu">
+      <button class="menu-toggle" @click="toggleMenu">
         <img src="@/assets/images/arrow.svg" alt="flecha para abrir menú ">
       </button>
     </div>
@@ -103,7 +103,6 @@ aside {
     }
   }
 
-
   .navlink .text {
     opacity: 0;
   }
@@ -126,13 +125,18 @@ aside {
         width: 37px;
       }
 
+      .user-image {
+        border-radius: 50%;
+      }
+
       .text {
         color: var(--clr-emphasis-light);
         font-weight: 700;
         white-space: nowrap;
         font-size: 0px;
       }
-      .logout{
+
+      .logout {
         font-size: 1rem;
       }
 
@@ -150,7 +154,7 @@ aside {
       background-color: transparent;
       color: var(--clr-emphasis-light);
       border: none;
-      
+
     }
   }
 
@@ -179,11 +183,16 @@ aside {
       .text {
         font-size: 1rem;
       }
-      .userName{
+
+      .userName {
         max-width: var(--aside-size);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+
+      & .logout {
+        cursor: pointer;
       }
     }
   }
