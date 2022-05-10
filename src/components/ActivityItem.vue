@@ -21,10 +21,7 @@ const saveActivity = () => {
     <h3>{{ activity.title }}</h3>
     <p class="postItContent">{{ activity.description }}</p>
     <div class="postItData">
-      <!-- <p><strong>Tipo: </strong>{{ activity.type }}</p> -->
-      <p><!--<strong>Cuándo: </strong>-->{{ activity.date }}</p>
-      <!-- <p><strong>Desde: </strong>{{ activity.from }}</p>
-      <p><strong>Hasta: </strong>{{ activity.to }}</p> -->
+      <p>{{ activity.date }}</p>
       <p><strong>Creado por:</strong> usuario</p>
     </div>
     <RouterLink to="/activityDetail" @click="saveActivity()" class="card">Saber más
@@ -37,18 +34,19 @@ const saveActivity = () => {
 .box{
   width: min(100%, 300px);
   filter: drop-shadow(var(--shadow));
+  display: flex;
 }
 .postit {
   align-items: center;
   background-color: var(--clr-yellow-light);
   border-radius: 15px;
-  //border: 15px solid white;
   box-shadow: var(--shadow);
   color: var(--clr-blue-dark);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   max-height: 450px;
+  min-height: 320px;
   overflow: hidden;
   padding: 1rem;
   position: relative;
@@ -62,6 +60,7 @@ const saveActivity = () => {
 
   h3 {
     font-size: 1.5rem;
+    line-height: 2.25rem;
     text-align: center;
     font-weight: bold;
     display: -webkit-box;
@@ -95,7 +94,7 @@ const saveActivity = () => {
     overflow: hidden;
     background-color: var(--clr-emphasis-light);
     border-radius: 0.5rem;
-    padding: 0.5rem;
+    padding: 0.4rem;
     margin: 0.5rem;
     width: 100%;
     text-align: center;
@@ -110,8 +109,8 @@ const saveActivity = () => {
     width: min(100%, 150px);
     border-radius: 20px;
     padding: 0.5rem;
-    background-color: var(--clr-emphasis-light);
-    color: var(--clr-green-dark);
+    background-color: var(--clr-dark-blue);
+    color: var(--clr-yellow-light);
     transition: background-color 0.5s ease, color 0.5s ease;
     text-align: center;
     text-decoration: none;
@@ -119,8 +118,8 @@ const saveActivity = () => {
 
     &:hover {
       cursor: pointer;
-      background-color: var(--clr-green-light);
-      color: var(--clr-dark-blue-shadow);
+      background-color: var(--clr-dark-blue-shadow);
+      color: var(--clr-yellow-light);
     }
   }
 }
