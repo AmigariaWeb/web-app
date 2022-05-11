@@ -1,5 +1,5 @@
 <script setup>
-    import { useWorkshopsStore } from '../stores/workShops';
+    import { useWorkshopsStore } from '@/stores/workShops';
     import { ref } from 'vue';
     import {useRoute, RouterView} from 'vue-router'
 
@@ -12,6 +12,7 @@
 
 <template>
     <main>
+        
         <div class="card">
             <div class="card__map" v-html="data.map"></div>
             <div class="card-body">

@@ -1,6 +1,6 @@
 <script setup>
-  import WorkshopList from '../components/WorkshopList.vue';
-  import { useWorkshopsStore } from '../stores/workShops';
+  import WorkshopList from '@/components/WorkshopList.vue';
+  import { useWorkshopsStore } from '@/stores/workShops';
   const storeWorkshops = useWorkshopsStore();
 </script>
 

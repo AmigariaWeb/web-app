@@ -30,14 +30,14 @@ const router = createRouter({
     {
       path: "/workshops",
       name: "Talleres",
-      component: () => import('@/views/WorkshopsListView.vue'),
+      component: () => import('@/views/workshops/WorkshopsListView.vue'),
       meta: {
         requiresAuth: true
       }
     },
     {
       path: '/workshops/:slug',
-      component: () => import('@/views/WorkshopShowView.vue'),
+      component: () => import('@/views/workshops/WorkshopShowView.vue'),
       meta: {
         requiresAuth: true
       }
