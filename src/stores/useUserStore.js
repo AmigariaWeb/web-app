@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import { auth } from '../services/firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth';
 import { swal } from '../utils/swal';
+import { addUpdateUser, getUser } from '../services/firebase/crud';
 
 export const useUserStore = defineStore("userStore", {
   state: () => ({
@@ -27,6 +28,34 @@ export const useUserStore = defineStore("userStore", {
       this.user = null;
     },
 
+    async createNewUser(user) {
+      const newUser = {
+        uid: user.uid,
+        name: user.displayName,
+        isAdmin: false,
+        email: user.email,
+        image: user.photoURL,
+        description: null,
+        location: null,
+        userActivities: [],
+        joinedActivities: [],
+        joinedWorkshops: []
+      }
+      try {
+        await addUpdateUser(newUser);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async updateUser(user) {
+      try {
+        await addUpdateUser(user)
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     async login(details) {
       const { email, password } = details
       try {
@@ -34,29 +63,34 @@ export const useUserStore = defineStore("userStore", {
       } catch (error) {
         switch (error.code) {
           case 'auth/user-not-found':
-            swal("error","Usuario no encontrado", "El usuario introducido no existe.")
+            swal("error", "Usuario no encontrado", "El usuario introducido no existe.")
             break;
           case "auth/wrong-password":
-            swal("error","Contraseña erronea", "La contraseña introducida es erronea. ¡Prueba con otra diferente!.")
+            swal("error", "Contraseña erronea", "La contraseña introducida es erronea. ¡Prueba con otra diferente!.")
             break
           default:
-            swal("error","Algo ha ido mal", "")
+            swal("error", "Algo ha ido mal", "")
             break;
         }
         return
       }
       if (!auth.currentUser.emailVerified) {
         await auth.signOut();
-        swal("info","Verifica primero tu email","Te hemos enviado un correo de confirmación. Si no lo encuentras, mira en tu bandeja de spam.")
+        swal("info", "Verifica primero tu email", "Te hemos enviado un correo de confirmación. Si no lo encuentras, mira en tu bandeja de spam.")
         this.CLEAR_USER();
         router.push("/login")
         return
       }
-      this.SET_USER(auth.currentUser);
-      router.push('/')
-      
+      try {
+        const user = await getUser(auth.currentUser);
+        this.SET_USER(user);
+        router.push('/')
+      } catch (error) {
+        return swal("error", "El usuario no existe", "")
+      }
+
     },
-    
+
     async register(details) {
       const { email, password } = details
       try {
@@ -67,13 +101,13 @@ export const useUserStore = defineStore("userStore", {
             swal("error", "El email ya está en uso", "Prueba con otro diferente o intenta iniciar sesión");
             break;
           case "auth/invalid-email":
-            swal("error","Email incorrecto", "Introduce un email válido.");
+            swal("error", "Email incorrecto", "Introduce un email válido.");
             break
           case "auth/operation-not-allowed":
-            swal("error","Operación no permitida", "");
+            swal("error", "Operación no permitida", "");
             break
           case "auth/weak-password":
-            swal("error","Contraseña debil","Pon una contraseña con mínimo 6 caracteres");
+            swal("error", "Contraseña debil", "Pon una contraseña con mínimo 6 caracteres");
             break
           default:
             console.error(error);
@@ -85,7 +119,8 @@ export const useUserStore = defineStore("userStore", {
         url: `https://app.amigaria.com`
       }
       await sendEmailVerification(auth.currentUser, actionCodeSettings);
-      swal("success","Registrado con éxito","Ahora confirma tu correo electrónico. Si no lo encuentras busca en la bandeja de spam.")
+      swal("success", "Registrado con éxito", "Ahora confirma tu correo electrónico. Si no lo encuentras busca en la bandeja de spam.")
+      this.createNewUser(auth.currentUser);
       auth.signOut();
       router.push("/login");
     },
@@ -99,17 +134,24 @@ export const useUserStore = defineStore("userStore", {
     async signInWithGoogle() {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider)
-      this.SET_USER(auth.currentUser);
+      let user = null;
+      user = await getUser(auth.currentUser)
+      if (!user) {
+        this.createNewUser(auth.currentUser);
+        user = await getUser(auth.currentUser)
+      }
+      this.SET_USER(user);
       router.push("/")
     },
-    
+
     fetchUser() {
       auth.onAuthStateChanged(async user => {
         if (user === null) {
           await signOut(auth);
           this.CLEAR_USER();
         } else {
-          this.SET_USER(auth.currentUser);
+          const userDB = await getUser(auth.currentUser);
+          this.SET_USER(userDB);
         }
       })
     }

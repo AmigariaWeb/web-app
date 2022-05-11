@@ -4,12 +4,15 @@ import { storeToRefs } from 'pinia';
 import ActivityItem from '@/components/ActivityItem.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import Spinner from '../components/Spinner/Spinner.vue';
+import { onBeforeMount } from 'vue';
+
 
 const { activities, queryActivities, searchQuery, loading } = storeToRefs(useActivitiesStore())
-const { fetchActivities } = useActivitiesStore();
-// Rellenar actividades
-fetchActivities()
+const activitiesStore = useActivitiesStore();
 
+onBeforeMount(() => {
+  activitiesStore.fetchActivities();
+})
 </script>
 
 <template>
@@ -18,8 +21,18 @@ fetchActivities()
     <div class="containerPostits">
       <Spinner v-if="loading" />
       <p v-else-if="activities.length === 0">Aun no hay actividades</p>
-      <ActivityItem v-else-if="searchQuery" v-for="activity in queryActivities" :activity="activity" :key="activity.id" />
-      <ActivityItem v-else v-for="activity in activities" :activity="activity" :key="activity.title"/>
+      <ActivityItem
+        v-else-if="searchQuery"
+        v-for="activity in queryActivities"
+        :activity="activity"
+        :key="activity.id"
+      />
+      <ActivityItem
+        v-else
+        v-for="activity in activities"
+        :activity="activity"
+        :key="activity.title"
+      />
     </div>
   </main>
 </template>
@@ -38,7 +51,7 @@ fetchActivities()
   justify-content: center;
   gap: 3rem;
 
-  p{
+  p {
     color: var(--clr-emphasis-light);
     font-size: 2rem;
   }
