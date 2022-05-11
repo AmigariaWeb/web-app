@@ -10,10 +10,10 @@
 <template>
 
     <RouterLink :to="'/workshops/' + data.slug" class="card" :class="index % 2 ? 'card-right' : 'card-left'">
+            <h2 class="card__title">{{data.index}} {{data.title}}</h2>
         <img class="card-header" :src="data.img" :alt="data.title" loading="lazy">
         <div class="card-body">
-            <h2>{{data.index}} {{data.title}}</h2>
-            <p>
+            <p class="card-body__text">
                 {{data.description}}
             </p>
             <p class="card__link">ver mas</p>
@@ -28,37 +28,54 @@
         text-decoration: none;
         background-color:var(--clr-green-light);
         border-radius: 20px;
-        padding: 15px;
+        padding: 20px;
         margin: 0px 0px;
         display: flex;
         flex-flow: column;
-        gap:15px;
+        gap:20px;
         box-shadow:10px 10px 0px rgba(0, 0, 0, 0.15);
         color:var(--clr-dark-blue);
-
-        @media screen and (min-width: 1024px) {
-            flex-flow: row;
+        max-width: 918px;
+        margin: auto;
+        &__title{
+            font-weight: 700;
+            font-size: 25px;
+            line-height: 44px;
+            text-align: center;
+            letter-spacing: 0.0012em;
+            flex: 100%;
+            width: 100%;
+        }
+        @media screen and (min-width: 768px) {
+            flex-flow: row wrap;
             &-right{
-                // flex-flow: row-reverse;
+
             }
         }
         &-header,&-body{
             background-color: var(--clr-emphasis-light);
-            padding: 15px;
             border-radius: 20px;
         }
         &-header{
             object-fit: cover;
-            max-height: 300px;
-            min-width: 300px;
-            width: 100%;
+            min-width: 245px;
+            flex: 1;
         }
         &-body{
+            flex: 2;
+                padding: 10px;
+            &__text{
+                line-height: 35px;
+                text-align: center;
+                letter-spacing: 0.0012em;
+            }
         }
         &__link{
             font-weight: 900;
             cursor: pointer;
             text-decoration: underline;
+            text-align: right;
+            margin: 10px;
         }
     }
 </style>

@@ -14,8 +14,6 @@
 
 <style lang="scss" scoped>
   main{
-      padding-top: 40px;
-      padding-bottom: 40px;
       display: flex;
       flex-flow: column;
       gap:60px;
