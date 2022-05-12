@@ -183,8 +183,8 @@ form {
 	}
 }
 
-.google-container{
- 	display: flex;
+.google-container {
+	display: flex;
 	margin-top: 1.5rem;
 	flex-direction: column;
 	gap: 1.5rem;

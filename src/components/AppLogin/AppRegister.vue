@@ -37,14 +37,16 @@ const register = async () => {
       </div>
       <div class="login-buttons">
         <button class="login-submit">Registrarse</button>
-        <div class="login-google">
-          <AppLoginGoogle></AppLoginGoogle>
-        </div>
       </div>
     </form>
-    <p class="login-text">
-      ¿Ya estas registrado? <RouterLink :to="{ path: '/login' }">Inicia sesión</RouterLink>
-    </p>
+    <div class="google-container">
+      <div class="login-google">
+        <AppLoginGoogle></AppLoginGoogle>
+      </div>
+      <p class="login-text">
+        ¿Ya estas registrado? <RouterLink :to="{ path: '/login' }">Inicia sesión</RouterLink>
+      </p>
+    </div>
   </main>
 </template>
 
@@ -61,9 +63,9 @@ const register = async () => {
 }
 
 form {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .container {
@@ -140,6 +142,7 @@ form {
         background-color: #ffffffd1;
       }
     }
+
     &-personal {
       display: flex;
       flex-direction: column;
@@ -148,35 +151,35 @@ form {
   }
 
   &-buttons {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-items: center;
-		padding: 0px;
-		gap: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 1.5rem;
   }
 
   &-submit {
-		font-style: normal;
-		font-weight: 400;
-		font-size: 1.5625rem;
-		line-height: 2.34375rem;
-		text-align: center;
-		padding: 10px 10px;
-		border-radius: 20px;
-		background-color: var(--clr-dark-blue);
-		border: none;
-		transition: background-color 0.5s ease;
-		color: var(--clr-yellow-light);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5625rem;
+    line-height: 2.34375rem;
+    text-align: center;
+    padding: 10px 10px;
+    border-radius: 20px;
+    background-color: var(--clr-dark-blue);
+    border: none;
+    transition: background-color 0.5s ease;
+    color: var(--clr-yellow-light);
 
-		&:hover,
-		&:focus {
-			background-color: var(--clr-dark-blue-shadow);
-			color: var(--clr-yellow-light);
-			cursor: pointer;
-		}
-	}
+    &:hover,
+    &:focus {
+      background-color: var(--clr-dark-blue-shadow);
+      color: var(--clr-yellow-light);
+      cursor: pointer;
+    }
+  }
 
   &-nav {
     display: flex;
@@ -193,6 +196,13 @@ form {
       display: block;
     }
   }
+}
+
+.google-container {
+  display: flex;
+  margin-top: 1.5rem;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 @media (min-width:1440px) {
