@@ -5,7 +5,7 @@ import CreateActivityForm from '../components/AppActivity/CreateActivityForm.vue
 
 <template>
 	<main class="content">
-		<CreateActivityForm />
+		<RouterView />
 	</main>
 </template>
 

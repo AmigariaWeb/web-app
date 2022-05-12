@@ -53,7 +53,16 @@ const router = createRouter({
     {
       path: "/myactivities/form",
       name: "Crear Actividad",
-      component: () => import('@/views/ActivityFormView.vue'),
+      component: () => import('@/components/AppActivity/CreateActivityForm.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/myactivities/edit/:",
+      name: "Editar Actividad",
+      component: () => import('@/components/AppActivity/EditActivityForm.vue'),
+      props: true,
       meta: {
         requiresAuth: true
       }

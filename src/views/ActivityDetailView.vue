@@ -1,13 +1,44 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useActivitiesStore } from '../stores/useActivitiesStore';
+import { useUserStore } from "../stores/useUserStore";
+import { swal } from '@/utils/swal.js'
+import { useRouter } from 'vue-router'
+import { updateActivity } from '@/services/firebase/crud.js'
+import { ref, onMounted, onBeforeMount } from 'vue';
 
+
+const router = useRouter()
+const userStore = useUserStore()
 const { selectedActivity } = storeToRefs(useActivitiesStore());
 const {addLastActivityDetail} = useActivitiesStore()
+const activityIsMine = ref(selectedActivity.value.activityIsMine || false);
 
+onBeforeMount(() => {
   if (Object.keys(selectedActivity.value).length === 0) {
     let lastActivity = JSON.parse(localStorage.getItem('lastActivity'));
-    addLastActivityDetail(lastActivity)
+    addLastActivityDetail(lastActivity);
+  }
+})
+  
+  onMounted(() => {
+    if(userStore.user !== null){
+      userStore.user.userActivities.forEach(activity => {
+        if(activity.userId === selectedActivity.value.userId){
+          selectedActivity.value.activityIsMine = true
+          localStorage.setItem('lastActivity', JSON.stringify(selectedActivity.value))
+        }
+      })
+    }
+  })
+
+  const addParticipation = () =>{
+        selectedActivity.value.isAssigned = true;
+        updateActivity(selectedActivity.value)
+        userStore.user.joinedActivities.push(selectedActivity.value)
+        userStore.updateUser(userStore.user)
+        swal("success","¡Actividad aceptada!","Se te ha asignado la actividad correctamente.");
+        router.push('/myactivities')  
   }
 </script>
 
@@ -31,8 +62,8 @@ const {addLastActivityDetail} = useActivitiesStore()
         <p class="to">
           <strong>Hasta</strong> <span>{{ selectedActivity.to }}</span>
         </p>
-        <img src="https://picsum.photos/250/200" alt="">
-        <RouterLink to="/workinprogress">Me apunto</RouterLink>
+        <img class="type-img" src="../assets/images/entretenimiento.svg" alt="">
+        <button @click="addParticipation()" :disabled="selectedActivity.activityIsMine">Me apunto</button>
       </div>
     </div>
   </main>
@@ -45,11 +76,8 @@ const {addLastActivityDetail} = useActivitiesStore()
   margin:1rem auto;
   max-width: 700px;
   justify-content: center;
-
-  // &:hover{
-  //   transform: scale(1.05);
-  // }
 }
+
 .details {
   margin: 1rem;
   display: flex;
@@ -106,11 +134,13 @@ const {addLastActivityDetail} = useActivitiesStore()
 
 
   }
-  img{
+
+  .type-img{
     position:absolute;
     bottom: 2rem;
     right: 2rem;
     border-radius: 15px;
+    max-width:12.25rem
   }
 }
 

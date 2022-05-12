@@ -1,31 +1,49 @@
 <script setup>
 import { ref } from 'vue'
-import { addNewActivity } from '@/services/firebase/crud'
+import { updateActivity } from '@/services/firebase/crud'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/useUserStore.js'
 import { swal } from '@/utils/swal.js'
 
 const router = useRouter()
-const newActivity = ref({})
+const activity = router.currentRoute.value.params
+
 const userStore = useUserStore()
+const newActivity = ref({
+  title: activity.title,
+  description: activity.description,
+  type: activity.type,
+  date: activity.date,
+  from: activity.from,
+  to: activity.to,
+  id: activity.id,
+  userId: activity.userId,
+  isAssigned: activity.isAssigned === "true",
+})
 
 const sendForm = async (e) => {
-  e.preventDefault()
-  newActivity.value.userId = userStore.user.uid
-  newActivity.value.isAssigned = false;
-  const activityId = await addNewActivity(newActivity.value)
-  const newActivityWithId = { ...newActivity.value, id: activityId }
-  userStore.user.userActivities.push(newActivityWithId)
-  userStore.updateUser(userStore.user)
-  swal("success","Actividad creada","La actividad se ha creado correctamente.")
-  router.push('/myactivities')
+  if (Object.keys(activity).length !== 0) {
+    e.preventDefault()
+    userStore.user.userActivities = userStore.user.userActivities.filter(
+      (oldActivity) => oldActivity.id !== newActivity.value.id
+    )
+    userStore.user.userActivities.push(newActivity.value)
+    await updateActivity(newActivity.value)
+    userStore.updateUser(userStore.user)
+    swal(
+      'success',
+      'Actividad editada',
+      'La actividad se ha actualizado correctamente.'
+    )
+    router.push('/')
+  }
 }
 </script>
 
 <template>
   <main>
     <div class="form-container">
-      <h3 class="form-title">Crear Nueva Actividad</h3>
+      <h3 class="form-title">Editar Actividad</h3>
       <form @submit="sendForm" id="activity-form">
         <div class="title form-content">
           <label for="titleForm">Título</label>
