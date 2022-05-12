@@ -1,6 +1,6 @@
 <script setup>
-  import WorkshopList from '../components/WorkshopList.vue';
-  import { useWorkshopsStore } from '../stores/workShops';
+  import WorkshopList from '@/components/WorkshopList.vue';
+  import { useWorkshopsStore } from '@/stores/workShops';
   const storeWorkshops = useWorkshopsStore();
 </script>
 
@@ -14,8 +14,6 @@
 
 <style lang="scss" scoped>
   main{
-      padding-top: 40px;
-      padding-bottom: 40px;
       display: flex;
       flex-flow: column;
       gap:60px;
