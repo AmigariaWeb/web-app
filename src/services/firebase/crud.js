@@ -12,6 +12,15 @@ export const addNewActivity = async (newActivity) => {
     console.error("Error adding document: ", error);
   }
 }
+export const updateActivity = async (newActivity) => {
+  const { id } = newActivity;
+  try {
+    await setDoc(doc(db, "activities", id), newActivity);
+  }
+  catch (error) {
+    return console.error("Error adding documents ", error);
+  }
+}
 
 export const getAllActivities = () => {
   try {

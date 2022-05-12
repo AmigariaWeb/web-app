@@ -24,12 +24,14 @@ onBeforeMount(() => {
       <ActivityItem
         v-else-if="searchQuery"
         v-for="activity in queryActivities"
+        v-show="activity.isAssigned === false"
         :activity="activity"
         :key="activity.id"
       />
       <ActivityItem
         v-else
         v-for="activity in activities"
+        v-show="activity.isAssigned === false"
         :activity="activity"
         :key="activity.title"
       />

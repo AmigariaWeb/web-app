@@ -32,7 +32,7 @@ const toggleMenu = () => {
         <span class="text">Talleres</span>
       </RouterLink>
       <RouterLink class="navlink" to="/workinprogress">
-        <img v-if="userStore.user.image" class="user-image" :src="userStore.user.image" alt="imagen de usuario">
+        <img v-if="userStore.user.image" class="user-image" :src="userStore.user.image" referrerpolicy="no-referrer" alt="imagen de usuario">
         <img v-else class="user-image" src="@/assets/images/amigaria-logo.svg">
         <span class="text userName">{{ userStore.user.name || "Usuario" }}</span>
       </RouterLink>
