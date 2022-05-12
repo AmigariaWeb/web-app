@@ -26,6 +26,14 @@
     url(./fonts/JosefinSans/JosefinSans-Bold.ttf) format("truetype")
 }
 @font-face {
+  font-family: "Roboto";
+  font-weight: regular;
+  src:
+    url(./fonts/Roboto/roboto.woff2) format("woff2"),
+    url(./fonts/Roboto/roboto.woff) format("woff"),
+    url(./fonts/Roboto/roboto.ttf) format("truetype")
+}
+@font-face {
   font-family: "JosefinSans";
   font-weight: regular;
   src:

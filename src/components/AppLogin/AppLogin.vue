@@ -28,12 +28,14 @@ const login = async () => {
 				</RouterLink>?</p>
 			<div class="login-buttons">
 				<button class="login-submit">Iniciar Sesión</button>
-				<div class="login-google">
-					<AppLoginGoogle></AppLoginGoogle>
-				</div>
+			</div>
+		</form>
+		<div class="google-container">
+			<div class="login-google">
+				<AppLoginGoogle></AppLoginGoogle>
 			</div>
 			<p class="login-text">¿Aun no te has <RouterLink :to="{ name: 'Registrarse' }">registrado</RouterLink>?</p>
-		</form>
+		</div>
 	</main>
 </template>
 
@@ -179,6 +181,13 @@ form {
 			height: 44px;
 		}
 	}
+}
+
+.google-container{
+ 	display: flex;
+	margin-top: 1.5rem;
+	flex-direction: column;
+	gap: 1.5rem;
 }
 
 @media (min-width:1440px) {
