@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="card__btn" href="https://www.gooogle.es/">Apuntate</a>
+                <!-- <a class="card__btn" href="https://www.gooogle.es/">Apuntate</a> -->
             </div>
         </div>
     </main>

@@ -82,7 +82,7 @@ aside {
       background-color: var(--clr-dark-blue);
       border-radius: 50%;
       border: none;
-      bottom: 2rem;
+      bottom: 4rem;
       box-shadow: -2px 0px 0px 2px var(--clr-dark-blue-shadow);
       cursor: pointer;
       display: flex;
