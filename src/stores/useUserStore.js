@@ -1,7 +1,7 @@
 import router from '../router';
 import { defineStore } from "pinia";
 import { auth } from '../services/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendEmailVerification, sendPasswordResetEmail } from 'firebase/auth';
 import { swal } from '../utils/swal';
 import { addUpdateUser, getUser } from '../services/firebase/crud';
 
@@ -122,6 +122,16 @@ export const useUserStore = defineStore("userStore", {
       this.createNewUser(auth.currentUser);
       auth.signOut();
       router.push("/login");
+    },
+
+    async resetPassword() {
+      await sendPasswordResetEmail(auth, this.user.email)
+        .then(() => {
+          swal("info", "Comprueba tu email", "Para cambiar la contraseña comprueba tu correo electrónico.");
+        })
+        .catch((error) => {
+          swal("error", "Algo ha salido mal", "No se ha podido cambiar la contraseña");
+        });
     },
 
     async logout() {
