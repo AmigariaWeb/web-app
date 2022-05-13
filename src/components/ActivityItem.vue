@@ -1,103 +1,84 @@
 <script setup>
-import { useActivitiesStore } from '../stores/useActivitiesStore';
+import { useRouter } from 'vue-router';
 
-const activitiesStore = useActivitiesStore();
-const { addLastActivityDetail } = activitiesStore;
+const router = useRouter();
 
 const props = defineProps({
-  activity: Object
+  activity: Object,
 })
 
 const saveActivity = () => {
-  addLastActivityDetail(props.activity)
-  localStorage.setItem('lastActivity', JSON.stringify(props.activity));
+  router.push({ name: 'Actividad', params: props.activity });
+  localStorage.setItem('lastActivity', JSON.stringify(props.activity))
 }
-
 </script>
 
 <template>
-  <div class="postit">
-    <h3>{{ activity.title }}</h3>
-    <p class="postItContent">{{ activity.description }}</p>
-    <div class="postItData">
-      <p><strong>Tipo: </strong>{{ activity.type }}</p>
-      <p><strong>Cuándo: </strong>{{ activity.date }}</p>
-      <p><strong>Desde: </strong>{{ activity.from }}</p>
-      <p><strong>Hasta: </strong>{{ activity.to }}</p>
+  <div class="box">
+    <div class="postit">
+      <h3>{{ activity.title }}</h3>
+      <p class="postItContent">{{ activity.description }}</p>
+      <div class="postItData">
+        <p>{{ activity.date }}</p>
+        <p><strong>Creado por:</strong> {{activity.userName || "anónimo"}}</p>
+      </div>
+      <button @click="saveActivity()" class="card"
+        >Saber más
+      </button>
     </div>
-    <RouterLink :to="'/activityDetail/' + activity.id" @click="saveActivity()" class="card">Saber más
-    </RouterLink>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.box {
+  width: min(100%, 300px);
+  filter: drop-shadow(var(--shadow));
+  display: flex;
+}
 .postit {
   align-items: center;
   background-color: var(--clr-yellow-light);
   border-radius: 15px;
-  border: 15px solid white;
   box-shadow: var(--shadow);
   color: var(--clr-blue-dark);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   max-height: 450px;
+  min-height: 320px;
   overflow: hidden;
   padding: 1rem;
   position: relative;
   width: min(100%, 300px);
   transition: transform 0.5s ease;
+  clip-path: polygon(0% 0%, 0% 100%, 85% 100%, 100% 85%, 100% 0%);
 
-h3{
-  font-size: 1.5rem;
-  text-align: center;
-}
-  &::before {
-    background-color: white;
-    bottom: -2px;
-    content: '';
-    display: flex;
-    height: 15%;
-    position: absolute;
-    right: -1px;
-    width: 50%;
-    clip-path: polygon(100% 44%,
-        100% 100%,
-        0% 100%,
-        43% 95.5%,
-        63% 84.5%,
-        77% 73%,
-        90% 60%);
+  h3 {
+    font-size: 1.5rem;
+    line-height: 2.25rem;
+    text-align: center;
+    font-weight: bold;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   &::after {
-    background-color: #00000033;
-    bottom: -2px;
+    background-color: var(--clr-yellow-shadow);
+    border-radius: 15px 0 0 0;
+    bottom: 0;
     content: '';
     display: flex;
-    height: 15%;
     mix-blend-mode: multiply;
     position: absolute;
-    right: -1px;
-    width: 50%;
-    clip-path: polygon(88% 0%,
-        93% 11%,
-        97.5% 27%,
-        100% 44%,
-        90% 60%,
-        77% 73%,
-        63% 84.5%,
-        43% 95.5%,
-        0% 100%,
-        31% 91%,
-        50% 75.5%,
-        63.5% 58%,
-        76% 35.5%,
-        84% 15.5%);
+    right: 0;
+    width: 15%;
+    height: 15%;
   }
 
   &:hover {
-    transform: scale(1.015);
+    transform: scale(1.05);
   }
 
   & .postItContent {
@@ -105,32 +86,35 @@ h3{
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    background-color: var(--clr-emphasis-light);
+    border-radius: 0.5rem;
+    padding: 0.4rem;
+    margin: 0.5rem;
+    width: 100%;
+    text-align: center;
   }
 
   & .postItData {
-    background-color: var(--clr-emphasis-light);
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    margin: 0.5rem;
-    width: 100%;
+    text-align: center;
   }
 
-  & a {
+  & button {
     font-size: 1.5rem;
     width: min(100%, 150px);
-    border-radius: 50px;
-    border: 1px solid transparent;
+    border-radius: 20px;
     padding: 0.5rem;
-    background-color: var(--clr-emphasis-light);
-    color: var(--clr-green-dark);
+    background-color: var(--clr-dark-blue);
+    color: var(--clr-yellow-light);
     transition: background-color 0.5s ease, color 0.5s ease;
     text-align: center;
     text-decoration: none;
+    margin-top: 0.5rem;
+    border: 3px solid transparent;
 
     &:hover {
       cursor: pointer;
-      background-color: var(--clr-green-light);
-      color: var(--clr-emphasis-light);
+      background-color: var(--clr-dark-blue-shadow);
+      color: var(--clr-yellow-light);
     }
   }
 }

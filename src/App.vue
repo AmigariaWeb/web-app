@@ -1,31 +1,36 @@
 <script setup>
-import AppHeader from './components/AppHeader/AppHeader.vue';
-import { ref, watch } from 'vue';
-import { useRoute, RouterView } from 'vue-router'
-import { useHeaderNavStore } from "@/stores/HeaderNavBar.js"
+import { onBeforeMount } from 'vue';
+import { RouterView } from 'vue-router'
+import { useUserStore } from "@/stores/useUserStore"
+import Sidebar from '@/components/Sidebar/Sidebar.vue';
 
-/* Navbar */
-const navbarStore = useHeaderNavStore();
+const userStore = useUserStore()
 
-const route = useRoute();
-const currentSection = ref(route.name);
-
-watch(() => route.name, (newRouteName) => {
-  currentSection.value = newRouteName;
-  navbarStore.removeActive();
+onBeforeMount(() => {
+  userStore.fetchUser();
 })
 </script>
 
 <template>
-  <AppHeader :headerTitle="currentSection" />
+  <Sidebar v-if="userStore.user"/>
   <RouterView />
 </template>
 
-<style>
+<style lang="scss">
 @import '@/assets/base.css';
 
+#app {
+  min-height: 100vh;
+  main {
+    min-height: 100vh;
+    flex: 1 1 0;
+    padding: 0.8rem;
+    padding-left: 5rem;
+  }
+}
+
 @media (min-width:1440px) {
-  #app {
+  main {
     max-width: 1440px;
     margin: 0 auto;
   }

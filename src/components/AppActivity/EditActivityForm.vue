@@ -1,33 +1,49 @@
 <script setup>
 import { ref } from 'vue'
-import { addNewActivity } from '@/services/firebase/crud'
+import { updateActivity } from '@/services/firebase/crud'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/useUserStore.js'
 import { swal } from '@/utils/swal.js'
 
 const router = useRouter()
-const newActivity = ref({})
+const activity = router.currentRoute.value.params
+
 const userStore = useUserStore()
-const todayDate = new Date().toISOString().split('T')[0];
+const newActivity = ref({
+  title: activity.title,
+  description: activity.description,
+  type: activity.type,
+  date: activity.date,
+  from: activity.from,
+  to: activity.to,
+  id: activity.id,
+  userId: activity.userId,
+  isAssigned: activity.isAssigned === "true",
+})
 
 const sendForm = async (e) => {
-  e.preventDefault()
-  newActivity.value.userId = userStore.user.uid;
-  newActivity.value.isAssigned = false;
-  newActivity.value.userName = userStore.user.name;
-  const activityId = await addNewActivity(newActivity.value)
-  const newActivityWithId = { ...newActivity.value, id: activityId }
-  userStore.user.userActivities.push(newActivityWithId)
-  userStore.updateUser(userStore.user)
-  swal("success","Actividad creada","La actividad se ha creado correctamente.")
-  router.push('/myactivities')
+  if (Object.keys(activity).length !== 0) {
+    e.preventDefault()
+    userStore.user.userActivities = userStore.user.userActivities.filter(
+      (oldActivity) => oldActivity.id !== newActivity.value.id
+    )
+    userStore.user.userActivities.push(newActivity.value)
+    await updateActivity(newActivity.value)
+    userStore.updateUser(userStore.user)
+    swal(
+      'success',
+      'Actividad editada',
+      'La actividad se ha actualizado correctamente.'
+    )
+    router.push('/')
+  }
 }
 </script>
 
 <template>
-  <main class="container">
-  <h3>Crear Actividad</h3>
+  <main>
     <div class="form-container">
+      <h3 class="form-title">Editar Actividad</h3>
       <form @submit="sendForm" id="activity-form">
         <div class="title form-content">
           <label for="titleForm">Título</label>
@@ -37,7 +53,6 @@ const sendForm = async (e) => {
             placeholder="Título..."
             required
             v-model="newActivity.title"
-            maxlength="50"
           />
         </div>
         <div class="description form-content">
@@ -49,7 +64,6 @@ const sendForm = async (e) => {
             placeholder="Introduzca una descripción..."
             required
             v-model="newActivity.description"
-            maxlength="300"
           ></textarea>
         </div>
         <div class="time form-content">
@@ -75,7 +89,6 @@ const sendForm = async (e) => {
               id="dateForm"
               required
               v-model="newActivity.date"
-              :min="todayDate"
             />
           </div>
         </div>
@@ -115,13 +128,6 @@ const sendForm = async (e) => {
 </template>
 
 <style lang="scss" scoped>
-
-.container{
-    h3{
-    text-align: center;
-    color: var(--clr-emphasis-light);
-  }
-}
 .form-container {
   display: flex;
   align-items: center;
@@ -132,15 +138,11 @@ const sendForm = async (e) => {
   border-radius: 20px;
   width: 100%;
   max-width: 650px;
-  padding-block:1.5rem;
+  min-height: 85vh;
 }
 
 .form-title {
   text-align: center;
-   &:h3{
-    text-align: center;
-    color: var(--clr-emphasis-light);
-  }
 }
 
 form {
@@ -211,14 +213,12 @@ form {
     gap: 15px;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
 
     .type,
     .date {
       display: flex;
       flex-direction: column;
-      min-width: 25%;
+      min-width: 45%;
     }
 
     .from,

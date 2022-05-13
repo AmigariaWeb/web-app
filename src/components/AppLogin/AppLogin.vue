@@ -12,26 +12,51 @@ const login = async () => {
 
 </script>
 <template>
-	<div class="login-google" style="border-bottom: 3px solid var(--clr-yellow-light);">
-			<AppLoginGoogle></AppLoginGoogle>
-		<h4 class="login-title">o</h4>
-	</div>
-	<h3 class="login-title">{{ $route.name }}</h3>
-	<form @submit.prevent="login">
-		<div class="login-block">
-			<label class="login-block__label" for="">Email</label>
-			<input v-model="login_form.email" autocomplete="off" placeholder="Email" type="email" required>
+	<main class="login-container">
+		<h3 class="login-title">{{ $route.name }}</h3>
+		<form @submit.prevent="login">
+			<div class="login-block">
+				<label class="login-block__label" for="">Email</label>
+				<input v-model="login_form.email" autocomplete="off" placeholder="Email" type="email" required>
+			</div>
+			<div class="login-block">
+				<label class="login-block__label" for="">Contraseña</label>
+				<input v-model="login_form.password" autocomplete="off" placeholder="Contraseña" type="password"
+					required>
+			</div>
+			<p class="login-text">¿Has olvidado la <RouterLink :to="{ name: 'Recuperar contraseña' }">contraseña
+				</RouterLink>?</p>
+			<div class="login-buttons">
+				<button class="login-submit">Iniciar Sesión</button>
+			</div>
+		</form>
+		<div class="google-container">
+			<div class="login-google">
+				<AppLoginGoogle></AppLoginGoogle>
+			</div>
+			<p class="login-text">¿Aun no te has <RouterLink :to="{ name: 'Registrarse' }">registrado</RouterLink>?</p>
 		</div>
-		<div class="login-block">
-			<label class="login-block__label" for="">Contraseña</label>
-			<input v-model="login_form.password" autocomplete="off" placeholder="Contraseña" type="password" required>
-		</div>
-		<button class="login-submit">Enviar</button>
-		<p class="login-text">¿Aun no te has <RouterLink :to="{ name: 'Registrarse' }">registrado</RouterLink>?</p>
-	</form>
+	</main>
 </template>
 
 <style lang="scss" scoped>
+#app {
+	min-height: 50vh;
+
+	main {
+		min-height: 50vh;
+		flex: 1 1 0;
+		padding: 1rem;
+		padding-left: 5rem;
+	}
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
 .container {
 	max-width: 800px;
 	margin: auto;
@@ -41,6 +66,14 @@ const login = async () => {
 
 .login {
 
+	&-container {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		background-color: var(--clr-yellow-light);
+		color: var(--clr-dark-blue);
+		border-radius: 20px;
+	}
 
 	&-title {
 		text-align: center;
@@ -48,7 +81,6 @@ const login = async () => {
 
 	&-text {
 		text-align: center;
-		margin: 8px 0px;
 
 		a {
 			color: inherit;
@@ -58,42 +90,26 @@ const login = async () => {
 	&-block {
 		display: flex;
 		flex-flow: column;
-		margin: 0px 15px 0px 15px;
+
 
 		&__label {
 			font-style: normal;
-			font-weight: 700;
-			font-size: 36px;
-			line-height: 63px;
 			letter-spacing: 0.0012em;
-
-			font-weight: 400;
+			font-weight: 550;
 			font-size: 25px;
 			line-height: 44px;
+			text-align: center;
 
 		}
 
 		input {
-			min-width: 300px;
+			min-width: 44px;
 			min-height: 44px;
-			border-radius: 50px;
 			padding: 0px 15px;
-			margin-bottom: 18px;
 			border-width: 3px;
 			outline: none;
 			border-style: solid;
-
-			&:hover,
-			&:focus,
-			&:focus-visible,
-			&:focus-within {
-				border-color: var(--clr-green-light);
-			}
-		}
-
-		input {
 			color: var(--clr-dark-blue-shadow);
-			min-height: 44px;
 			border-radius: 20px;
 			padding-inline: 1rem;
 			background-color: var(--clr-emphasis-light);
@@ -101,7 +117,6 @@ const login = async () => {
 			font-size: 1rem;
 			transition: border 0.2s ease;
 			box-shadow: (10px 10px 0px rgba(0, 0, 0, 0.15));
-			margin-bottom: 16PX;
 
 			&:hover,
 			&:focus {
@@ -121,28 +136,35 @@ const login = async () => {
 
 	}
 
+	&-buttons {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		padding: 0px;
+		gap: 1.5rem;
+	}
+
 	&-submit {
 		font-style: normal;
 		font-weight: 400;
-		font-size: 25px;
-		line-height: 44px;
+		font-size: 1.5625rem;
+		line-height: 2.34375rem;
 		text-align: center;
-		letter-spacing: 0.0012em;
-		min-height: 44px;
-		margin: 32px auto 32px auto;
-		width: 100%;
-		border-radius: 0px;
-		background-color: var(--clr-yellow-light);
+		padding: 10px 10px;
+		border-radius: 20px;
+		background-color: var(--clr-dark-blue);
 		border: none;
 		transition: background-color 0.5s ease;
-		color: var(--clr-dark-blue-shadow);
+		color: var(--clr-yellow-light);
 
 		&:hover,
 		&:focus {
-			background-color: var(--clr-yellow-shadow);
+			background-color: var(--clr-dark-blue-shadow);
+			color: var(--clr-yellow-light);
 			cursor: pointer;
 		}
-
 	}
 
 	&-nav {
@@ -157,8 +179,21 @@ const login = async () => {
 			background-color: var(--clr-yellow-light);
 			border-radius: 15px;
 			height: 44px;
-			display: block;
 		}
+	}
+}
+
+.google-container {
+	display: flex;
+	margin-top: 1.5rem;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+@media (min-width:1440px) {
+	main {
+		max-width: 1440px;
+		margin: 0 auto;
 	}
 }
 </style>

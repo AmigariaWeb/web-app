@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia'
-import { getAllActivities } from '@/services/firebase/crud';
+import { getAllActivities, deleteActivityById } from '@/services/firebase/crud';
+import { swal } from '../utils/swal';
 
 
-export const useActivitiesStore = defineStore({
-  id: "activities",
+export const useActivitiesStore = defineStore("activitiesStore", {
   state: () => ({
-    activities: [],
-    selectedActivity:{},
+    activities: null,
     queryActivities: [],
     searchQuery: "",
     loading: false,
@@ -20,13 +19,16 @@ export const useActivitiesStore = defineStore({
   },
   actions: {
     async fetchActivities() {
-      this.posts = []
       this.loading = true
       try {
         const activities = [];
         const querySnapshot = await getAllActivities();
         querySnapshot.forEach(doc => {
-          activities.push(doc.data());
+          const activityWithId = {
+            ...doc.data(),
+            id: doc.id
+          };
+          activities.push(activityWithId);
         })
         this.activities = activities;
       } catch (error) {
@@ -35,20 +37,26 @@ export const useActivitiesStore = defineStore({
         this.loading = false;
       }
     },
+
     findSearchQuery() {
-      this.queryActivities = this.activities.filter(activity => {
-        if (activity.title.toLowerCase().includes(this.searchQuery.toLowerCase())) {
-          return true
-        }
-        if (activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())) {
-          return true
-        }
-        return false
-      })
+      if (this.activities) {
+        this.queryActivities = this.activities.filter(activity => {
+          if (activity.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+          || activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())){
+            return true
+          }
+          return false
+        })
+      }
+      return null
     },
-    addLastActivityDetail(lastActivity) {
-      this.selectedActivity = lastActivity;
+
+    deleteActivity(activity) {
+      swal("success", "Actividad eliminada", "Se ha eliminado la actividad correctamente.");
+      deleteActivityById(activity.id);
+      this.activities = this.activities.filter(currentActivity => activity.id !== currentActivity.id);
     }
   },
+
 });
 

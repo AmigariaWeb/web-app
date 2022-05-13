@@ -1,58 +1,124 @@
-
 <script setup>
-import { storeToRefs } from 'pinia';
-import { useActivitiesStore } from '../stores/useActivitiesStore';
+import ayudaImg from '../assets/images/amigariaTypes_Ayuda.svg'
+import socialImg from '../assets/images/amigariaTypes_Social.svg'
+import entretenimientoImg from '../assets/images/amigariaTypes_Entretenimiento.svg'
+import transporteImg from '../assets/images/amigariaTypes_Transporte.svg'
+import otrosImg from '../assets/images/amigariaTypes_Otros.svg'
 
-const { selectedActivity } = storeToRefs(useActivitiesStore());
-const {addLastActivityDetail} = useActivitiesStore()
+import { useUserStore } from '../stores/useUserStore'
+import { swal } from '@/utils/swal.js'
+import { useRouter } from 'vue-router'
+import { updateActivity } from '@/services/firebase/crud.js'
+import { onMounted, onBeforeMount, ref } from 'vue'
 
-  if (Object.keys(selectedActivity.value).length === 0) {
-    let lastActivity = JSON.parse(localStorage.getItem('lastActivity'));
-    addLastActivityDetail(lastActivity)
+
+const userStore = useUserStore()
+const router = useRouter()
+const activity = ref(router.currentRoute.value.params)
+
+const TYPE_IMAGES = {
+  "ayuda":  ayudaImg,
+  "social":  socialImg,
+  "entretenimiento":  entretenimientoImg,
+  "transporte":  transporteImg,
+  "otros":  otrosImg,
+}
+
+let typeImg = TYPE_IMAGES[activity.value.type]
+
+
+onBeforeMount(() => {
+  if (Object.keys(activity.value).length === 0) {
+    activity.value = JSON.parse(localStorage.getItem('lastActivity'))
   }
+})
 
+onMounted(() => {
+  if (userStore.user !== null) {
+    userStore.user.userActivities.forEach((element) => {
+      if (element.userId === activity.value.userId) {
+        activity.value.activityIsMine = true
+        localStorage.setItem('lastActivity', JSON.stringify(activity.value))
+      }
+    })
+  }
+})
+
+const addParticipation = () => {
+  activity.value.isAssigned = true
+  updateActivity(activity.value)
+  userStore.user.joinedActivities.push(activity.value)
+  userStore.updateUser(userStore.user)
+  swal(
+    'success',
+    '¡Actividad aceptada!',
+    'Se te ha asignado la actividad correctamente.'
+  )
+  router.push('/myactivities')
+}
 </script>
-<template>
-  <div class="details">
 
-    <h3>{{ selectedActivity.title }}</h3>
-    <div class="description">
-      <h4>Descripción de la actividad:</h4>
-      <p>{{ selectedActivity.description }}</p>
+<template>
+  <main>
+    <div class="container">
+      <div class="details">
+        <h3>{{ activity.title }}</h3>
+        <div class="description">
+          <p>{{ activity.description }}</p>
+        </div>
+        <div class="info-box">
+          <div class="info">
+            <div class="type">
+              <p><strong>Tipo:</strong> {{ activity.type }}</p>
+            </div>
+            <div class="date">
+              <strong>Fecha: </strong> <span>{{ activity.date }}</span>
+            </div>
+            <div class="from">
+              <strong>Desde</strong> <span>{{ activity.from }}</span>
+            </div>
+            <div class="to">
+              <strong>Hasta</strong> <span>{{ activity.to }}</span>
+            </div>
+            <button
+              @click="addParticipation()"
+              :disabled="
+                activity.activityIsMine ||
+                activity.isAssigned === 'true' ||
+                activity.isAssigned === true
+              "
+            >
+              Me apunto
+            </button>
+          </div>
+          <img class="type-img" :src="typeImg" :alt="activity.type" />
+        </div>
+      </div>
     </div>
-    <div class="type">
-      <h4>Tipo de actividad</h4>
-      <p>{{ selectedActivity.type }}</p>
-    </div>
-    <div class="calendar">
-      <p class="title-calendar">Calendario</p>
-      <p>
-        <strong>Fecha: </strong>
-        <span>{{ selectedActivity.date }}</span>
-      </p>
-      <p>
-        <strong>Desde las:</strong> <span>{{ selectedActivity.from }}</span>
-      </p>
-      <p>
-        <strong>Hasta las:</strong> <span>{{ selectedActivity.to }}</span>
-      </p>
-    </div>
-    <RouterLink to="/workinprogress">Me apunto</RouterLink>
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
+.container {
+  display: flex;
+  margin: 1rem auto;
+  max-width: 700px;
+  justify-content: center;
+}
+
 .details {
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  color: var(--clr-emphasis-light);
-  width: min(100%, 640px);
-  gap: 1.5rem;
+  color: var(--clr-dark-blue);
+  width: 100%;
+  background-color: var(--clr-yellow-light);
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  position: relative;
 
-  // :(
   h3 {
+    font-weight: bold;
     text-align: center;
   }
 
@@ -60,60 +126,54 @@ const {addLastActivityDetail} = useActivitiesStore()
     font-weight: 700;
   }
 
-  .description,
-  .type {
-    p {
-      border-top: 3px solid var(--clr-yellow-light);
-      padding-inline: 2rem;
-      color: var(--clr-emphasis-light);
-    }
-  }
-
-  .calendar {
-    background-color: var(--clr-emphasis-light);
-    width: min(100%, 200px);
-    border-radius: 20px;
+  .description {
     color: var(--clr-dark-blue);
+    background-color: white;
+    border-radius: 15px;
+    margin: 1rem;
+    margin-bottom: 2rem;
     padding: 1rem;
-    align-self: center;
-    box-shadow: var(--shadow);
-
-    .title-calendar {
-      text-align: center;
-      border-bottom: 5px solid var(--clr-green-light);
-    }
-
-    strong {
-      color: var(--clr-dark-blue-shadow);
-    }
-  }
-
-  a {
-    text-decoration: none;
     text-align: center;
-    background-color: var(--clr-green-light);
-    padding: 1rem;
-    width: min(100%, 300px);
-    align-self: center;
-    background-color: var(--clr-yellow-light);
-    border: 3px solid transparent;
-    border-radius: 20px;
-    font-size: 1.4rem;
-    color: var(--clr-dark-blue-shadow);
-    transition: background-color 0.5s ease;
-
-    &:hover {
-      background-color: var(--clr-yellow-shadow);
-    }
   }
-}
 
-@media(min-width:640px) {
-  .details {
-    .calendar {
-      align-self: flex-end;
+  .info-box {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    flex-wrap: wrap;
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      button {
+        margin-top: 1rem;
+        font-size: 1.5rem;
+        text-decoration: none;
+        text-align: center;
+        background-color: var(--clr-dark-blue);
+        padding: 10px 20px;
+        max-width: 200px;
+        border: 3px solid transparent;
+        border-radius: 20px;
+        color: var(--clr-yellow-light);
+        transition: background-color 0.5s ease;
+
+        &:hover {
+          background-color: var(--clr-dark-blue-shadow);
+          cursor: pointer;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
     }
-
+    .type-img {
+      border-radius: 20px;
+      width: min(100%, 15rem);
+    }
   }
 }
 </style>

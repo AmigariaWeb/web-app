@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { auth } from '../services/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import ActivitiesView from '@/views/ActivitiesView.vue';
 import AppLogin from '@/components/AppLogin/AppLogin.vue';
 import AppRegister from '@/components/AppLogin/AppRegister.vue';
 import ActivityDetailView from '@/views/ActivityDetailView.vue';
-import { onAuthStateChanged } from 'firebase/auth';
+import RememberPassword from '@/components/AppLogin/RememberPassword.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +19,7 @@ const router = createRouter({
       }
     },
     {
-      path: "/activityDetail/:id",
+      path: "/activityDetail/:",
       name: "Actividad",
       component: ActivityDetailView,
       props: true,
@@ -29,14 +30,14 @@ const router = createRouter({
     {
       path: "/workshops",
       name: "Talleres",
-      component: () => import('@/views/WorkshopsListView.vue'),
+      component: () => import('@/views/workshops/WorkshopsListView.vue'),
       meta: {
         requiresAuth: true
       }
     },
     {
       path: '/workshops/:slug',
-      component: () => import('@/views/WorkshopShowView.vue'),
+      component: () => import('@/views/workshops/WorkshopShowView.vue'),
       meta: {
         requiresAuth: true
       }
@@ -52,7 +53,24 @@ const router = createRouter({
     {
       path: "/myactivities/form",
       name: "Crear Actividad",
-      component: () => import('@/views/ActivityFormView.vue'),
+      component: () => import('@/components/AppActivity/CreateActivityForm.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/myactivities/edit/:",
+      name: "Editar Actividad",
+      component: () => import('@/components/AppActivity/EditActivityForm.vue'),
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/userprofile",
+      name: "Perfil de Usuario",
+      component: () => import('@/views/UserProfileView.vue'),
       meta: {
         requiresAuth: true
       }
@@ -70,7 +88,13 @@ const router = createRouter({
         name: "Registrarse",
         path: 'register',
         component: AppRegister,
-      }]
+      },
+      {
+        name: "Recuperar contraseña",
+        path: 'resetpassword',
+        component: RememberPassword
+      }
+      ]
     },
     {
       path: '/workinprogress',
@@ -100,16 +124,11 @@ const getCurrentUser = () => {
 }
 
 router.beforeEach(async (to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (await getCurrentUser()) {
-      next()
-    } else {
-      console.log("You dont have access");
-      next('/login');
-    }
-  } else {
-    next();
+  if ((await getCurrentUser() === null) && (to.matched.some(record => record.meta.requiresAuth))) {
+    next('/login')
+    return
   }
+  next();
 })
 
 export default router

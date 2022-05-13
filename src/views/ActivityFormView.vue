@@ -4,9 +4,9 @@ import CreateActivityForm from '../components/AppActivity/CreateActivityForm.vue
 </script>
 
 <template>
-	<section class="content">
-		<CreateActivityForm />
-	</section>
+	<main class="content">
+		<RouterView />
+	</main>
 </template>
 
 <style lang="scss">

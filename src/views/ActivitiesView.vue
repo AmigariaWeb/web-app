@@ -1,48 +1,72 @@
 <script setup>
 import { useActivitiesStore } from '@/stores/useActivitiesStore.js';
 import { storeToRefs } from 'pinia';
-import ActivityItem from '../components/ActivityItem.vue';
-import SearchBar from '../components/SearchBar.vue';
+import ActivityItem from '@/components/ActivityItem.vue';
+import SearchBar from '@/components/SearchBar.vue';
+import Spinner from '../components/Spinner/Spinner.vue';
+import { onBeforeMount } from 'vue';
 
-const { activities, queryActivities, searchQuery } = storeToRefs(useActivitiesStore())
-const { fetchActivities } = useActivitiesStore();
-// Rellenar actividades
-fetchActivities()
+
+const { activities, queryActivities, searchQuery, loading } = storeToRefs(useActivitiesStore())
+const activitiesStore = useActivitiesStore();
+
+onBeforeMount(() => {
+  activitiesStore.fetchActivities();
+})
 </script>
 
-
 <template>
-  <div class="container">
+  <main class="container">
+  <h3 class="title">Actividades disponibles</h3>
     <SearchBar />
     <div class="containerPostits">
-    <TransitionGroup name="fade">
-      <p v-if="!activities">Aun no hay actividades</p>
-      <ActivityItem v-else-if="searchQuery" v-for="activity in queryActivities" :activity="activity" />
-      <ActivityItem v-else v-for="activity in activities" :activity="activity" />
-    </TransitionGroup> 
+      <Spinner v-if="loading" />
+      <p v-else-if="activities.length === 0">Aun no hay actividades</p>
+      <ActivityItem
+        v-else-if="searchQuery"
+        v-for="activity in queryActivities"
+        v-show="activity.isAssigned === false"
+        :activity="activity"
+        :key="activity.id"
+      />
+      <ActivityItem
+        v-else
+        v-for="activity in activities"
+        v-show="activity.isAssigned === false"
+        :activity="activity"
+        :key="activity.title"
+      />
     </div>
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
 .container {
-  background-color: var(--clr-dark-blue);
   padding: 1rem;
   display: flex;
   flex-direction: column;
   color: var(--clr-dark-blue);
+
+  h3{
+    text-align: center;
+    color: var(--clr-emphasis-light);
+  }
 }
+
 .containerPostits {
   margin-block: 1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 3rem;
+
+  p {
+    color: var(--clr-emphasis-light);
+    font-size: 2rem;
+  }
 }
 
-.fade-enter-active{
-  transition: opacity 0.1s ease;
-}
+.fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
 }
