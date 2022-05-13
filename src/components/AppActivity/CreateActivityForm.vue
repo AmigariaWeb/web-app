@@ -8,11 +8,13 @@ import { swal } from '@/utils/swal.js'
 const router = useRouter()
 const newActivity = ref({})
 const userStore = useUserStore()
+const todayDate = new Date().toISOString().split('T')[0];
 
 const sendForm = async (e) => {
   e.preventDefault()
-  newActivity.value.userId = userStore.user.uid
+  newActivity.value.userId = userStore.user.uid;
   newActivity.value.isAssigned = false;
+  newActivity.value.userName = userStore.user.name;
   const activityId = await addNewActivity(newActivity.value)
   const newActivityWithId = { ...newActivity.value, id: activityId }
   userStore.user.userActivities.push(newActivityWithId)
@@ -25,7 +27,7 @@ const sendForm = async (e) => {
 <template>
   <main>
     <div class="form-container">
-      <h3 class="form-title">Crear Nueva Actividad</h3>
+      <h3 class="form-title">Crear Actividad</h3>
       <form @submit="sendForm" id="activity-form">
         <div class="title form-content">
           <label for="titleForm">Título</label>
@@ -35,6 +37,7 @@ const sendForm = async (e) => {
             placeholder="Título..."
             required
             v-model="newActivity.title"
+            maxlength="50"
           />
         </div>
         <div class="description form-content">
@@ -46,6 +49,7 @@ const sendForm = async (e) => {
             placeholder="Introduzca una descripción..."
             required
             v-model="newActivity.description"
+            maxlength="300"
           ></textarea>
         </div>
         <div class="time form-content">
@@ -71,6 +75,7 @@ const sendForm = async (e) => {
               id="dateForm"
               required
               v-model="newActivity.date"
+              :min="todayDate"
             />
           </div>
         </div>
@@ -120,7 +125,7 @@ const sendForm = async (e) => {
   border-radius: 20px;
   width: 100%;
   max-width: 650px;
-  min-height: 85vh;
+  padding-block:1.5rem;
 }
 
 .form-title {

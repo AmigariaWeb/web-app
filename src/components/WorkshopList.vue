@@ -5,7 +5,6 @@
         data:Object,
         index:Number
     })
-    console.log('Lista Talleres')
 </script>
 <template>
 

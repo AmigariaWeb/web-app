@@ -19,7 +19,7 @@ const router = createRouter({
       }
     },
     {
-      path: "/activityDetail",
+      path: "/activityDetail/:",
       name: "Actividad",
       component: ActivityDetailView,
       props: true,

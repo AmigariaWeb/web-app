@@ -1,44 +1,47 @@
 <script setup>
-import { storeToRefs } from 'pinia';
-import { useActivitiesStore } from '../stores/useActivitiesStore';
 import { useUserStore } from "../stores/useUserStore";
 import { swal } from '@/utils/swal.js'
 import { useRouter } from 'vue-router'
 import { updateActivity } from '@/services/firebase/crud.js'
-import { ref, onMounted, onBeforeMount } from 'vue';
+import { onMounted, onBeforeMount, ref } from 'vue';
 
 
-const router = useRouter()
 const userStore = useUserStore()
-const { selectedActivity } = storeToRefs(useActivitiesStore());
-const {addLastActivityDetail} = useActivitiesStore()
-const activityIsMine = ref(selectedActivity.value.activityIsMine || false);
+const router = useRouter()
+const activity = ref(router.currentRoute.value.params)
+
+const TYPE_IMAGES={
+  "ayuda":"amigariaTypes_Ayuda",
+  "social":"amigariaTypes_Social",
+  "entretenimiento":"amigariaTypes_Entretenimiento",
+  "transporte":"amigariaTypes_Transporte",
+  "otros":"amigariaTypes_Otros",
+}
 
 onBeforeMount(() => {
-  if (Object.keys(selectedActivity.value).length === 0) {
-    let lastActivity = JSON.parse(localStorage.getItem('lastActivity'));
-    addLastActivityDetail(lastActivity);
+  if (Object.keys(activity.value).length === 0) {
+    activity.value = JSON.parse(localStorage.getItem('lastActivity'));
   }
 })
   
-  onMounted(() => {
+  onMounted(() => { 
     if(userStore.user !== null){
-      userStore.user.userActivities.forEach(activity => {
-        if(activity.userId === selectedActivity.value.userId){
-          selectedActivity.value.activityIsMine = true
-          localStorage.setItem('lastActivity', JSON.stringify(selectedActivity.value))
+      userStore.user.userActivities.forEach(element => {
+        if(element.userId === activity.value.userId){
+          activity.value.activityIsMine = true
+          localStorage.setItem('lastActivity', JSON.stringify(activity.value))
         }
       })
     }
   })
 
   const addParticipation = () =>{
-        selectedActivity.value.isAssigned = true;
-        updateActivity(selectedActivity.value)
-        userStore.user.joinedActivities.push(selectedActivity.value)
-        userStore.updateUser(userStore.user)
-        swal("success","¡Actividad aceptada!","Se te ha asignado la actividad correctamente.");
-        router.push('/myactivities')  
+    activity.value.isAssigned = true;
+    updateActivity(activity.value)
+    userStore.user.joinedActivities.push(activity.value)
+    userStore.updateUser(userStore.user)
+    swal("success","¡Actividad aceptada!","Se te ha asignado la actividad correctamente.");
+    router.push('/myactivities')  
   }
 </script>
 
@@ -46,24 +49,28 @@ onBeforeMount(() => {
   <main>
     <div class="container">
       <div class="details">
-        <h3>{{ selectedActivity.title }}</h3>
+        <h3>{{ activity.title }}</h3>
         <div class="description">
-          <p>{{ selectedActivity.description }}</p>
+          <p>{{ activity.description }}</p>
         </div>
-        <p class="type">
-          <p> <strong>Tipo:</strong> {{ selectedActivity.type }}</p>
-        </p>
-        <p class="date">
-          <strong>Fecha: </strong> <span>{{ selectedActivity.date }}</span>
-        </p>
-        <p class="from">
-          <strong>Desde</strong> <span>{{ selectedActivity.from }}</span>
-        </p>
-        <p class="to">
-          <strong>Hasta</strong> <span>{{ selectedActivity.to }}</span>
-        </p>
-        <img class="type-img" src="../assets/images/entretenimiento.svg" alt="">
-        <button @click="addParticipation()" :disabled="selectedActivity.activityIsMine">Me apunto</button>
+        <div class="info-box">
+          <div class="info">
+            <div class="type">
+              <p> <strong>Tipo:</strong> {{ activity.type }}</p>
+            </div>
+            <div class="date">
+              <strong>Fecha: </strong> <span>{{ activity.date }}</span>
+            </div>
+            <div class="from">
+              <strong>Desde</strong> <span>{{ activity.from }}</span>
+            </div>
+            <div class="to">
+              <strong>Hasta</strong> <span>{{ activity.to }}</span>
+            </div>
+            <button @click="addParticipation()" :disabled="activity.activityIsMine || activity.isAssigned === 'true' || activity.isAssigned === true">Me apunto</button>
+          </div>
+          <img class="type-img" :src="`/src/assets/images/${TYPE_IMAGES[activity.type]}.svg`" alt="">
+        </div>
       </div>
     </div>
   </main>
@@ -79,7 +86,6 @@ onBeforeMount(() => {
 }
 
 .details {
-  margin: 1rem;
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -109,49 +115,44 @@ onBeforeMount(() => {
     text-align: center;
   }
 
-  .date, .type, .from, .to{
-    margin-left: 2rem;
-  }
+  .info-box{
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    flex-wrap: wrap;
+    .info{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
 
+      button {
+        margin-top:1rem;
+        font-size:1.5rem;
+        text-decoration: none;
+        text-align: center;
+        background-color: var(--clr-dark-blue);
+        padding: 10px 20px;
+        max-width: 200px;
+        border: 3px solid transparent;
+        border-radius: 20px;
+        color: var(--clr-yellow-light);
+        transition: background-color 0.5s ease;
 
-  a {
-    font-size:1.5rem;
-    text-decoration: none;
-    text-align: center;
-    background-color: var(--clr-dark-blue);
-    padding: 1rem;
-    max-width: 200px;
-    border: 3px solid transparent;
-    border-radius: 20px;
-    color: var(--clr-yellow-light);
-    transition: background-color 0.5s ease;
-    margin:1rem;
+        &:hover {
+          background-color: var(--clr-dark-blue-shadow);
+          cursor:pointer;
+        }
 
-
-    &:hover {
-      background-color: var(--clr-dark-blue-shadow);
+        &:disabled{
+          opacity:0.6;
+          cursor:not-allowed;
+        }
+      }
     }
-
-
-  }
-
-  .type-img{
-    position:absolute;
-    bottom: 2rem;
-    right: 2rem;
-    border-radius: 15px;
-    max-width:12.25rem
-  }
-}
-
-@media(max-width:640px) {
-  a{
-    height: auto;
-    width: auto;
-    margin: auto;
-  }
-  img{
-    visibility: hidden;
-  }
+    .type-img{
+      border-radius: 20px;
+      width: min(100%, 15rem);
+    }
+  } 
 }
 </style>
