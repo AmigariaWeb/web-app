@@ -26,14 +26,14 @@ const register = async () => {
         <label class="login-block__label" for="">Repite tu contraseña</label>
         <input autocomplete="off" placeholder="Repite la contraseña" type="password" required />
       </div>
-      <div class="login-block">
+      <!-- <div class="login-block">
         <label class="login-block__label" for="">Datos personales</label>
         <div class="login-block-personal">
           <input autocomplete="off" placeholder="introduce tu nombre" type="text" required />
           <input autocomplete="off" placeholder="introduce tus apellidos" type="text" required />
           <input autocomplete="off" placeholder="introduce tu código postal" type="text" required />
         </div>
-      </div>
+      </div> -->
       <div class="login-buttons">
         <button class="login-submit">Registrarse</button>
       </div>

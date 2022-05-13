@@ -31,7 +31,7 @@ const toggleMenu = () => {
         <img src="@/assets/images/workshops-icon.svg" alt="ir talleres">
         <span class="text">Talleres</span>
       </RouterLink>
-      <RouterLink class="navlink" to="/workinprogress">
+      <RouterLink class="navlink" to="/userprofile">
         <img v-if="userStore.user.image" class="user-image" :src="userStore.user.image" referrerpolicy="no-referrer" alt="imagen de usuario">
         <img v-else class="user-image" src="@/assets/images/amigaria-logo.svg">
         <span class="text userName">{{ userStore.user.name || "Usuario" }}</span>
