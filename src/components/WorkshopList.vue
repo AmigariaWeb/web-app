@@ -7,7 +7,6 @@
     })
 </script>
 <template>
-
     <RouterLink :to="'/workshops/' + data.slug" class="card" :class="index % 2 ? 'card-right' : 'card-left'">
             <h2 class="card__title">{{data.index}} {{data.title}}</h2>
         <img class="card-header" :src="data.img" :alt="data.title" loading="lazy">

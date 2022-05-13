@@ -25,9 +25,9 @@ const sendForm = async (e) => {
 </script>
 
 <template>
-  <main>
+  <main class="container">
+  <h3>Crear Actividad</h3>
     <div class="form-container">
-      <h3 class="form-title">Crear Actividad</h3>
       <form @submit="sendForm" id="activity-form">
         <div class="title form-content">
           <label for="titleForm">Título</label>
@@ -115,6 +115,13 @@ const sendForm = async (e) => {
 </template>
 
 <style lang="scss" scoped>
+
+.container{
+    h3{
+    text-align: center;
+    color: var(--clr-emphasis-light);
+  }
+}
 .form-container {
   display: flex;
   align-items: center;
@@ -130,6 +137,10 @@ const sendForm = async (e) => {
 
 .form-title {
   text-align: center;
+   &:h3{
+    text-align: center;
+    color: var(--clr-emphasis-light);
+  }
 }
 
 form {

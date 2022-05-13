@@ -6,6 +6,7 @@
 
 <template>
   <main>
+  <h3>Talleres disponibles</h3>
     <div class="workshop__item" v-for="(item, index) in storeWorkshops.data" :key="index">
       <WorkshopList :data="item" :index="index"/>
     </div>
@@ -17,5 +18,10 @@
       display: flex;
       flex-flow: column;
       gap:60px;
+
+    h3{
+      text-align: center;
+      color: var(--clr-emphasis-light);
+    }
   }
 </style>
