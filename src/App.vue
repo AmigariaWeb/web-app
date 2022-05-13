@@ -2,7 +2,6 @@
 import { onBeforeMount } from 'vue';
 import { RouterView } from 'vue-router'
 import { useUserStore } from "@/stores/useUserStore"
-import { useActivitiesStore } from "@/stores/useActivitiesStore"
 import Sidebar from '@/components/Sidebar/Sidebar.vue';
 
 const userStore = useUserStore()

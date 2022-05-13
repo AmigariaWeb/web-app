@@ -1,48 +1,61 @@
 <script setup>
-import { useUserStore } from "../stores/useUserStore";
+import ayudaImg from '../assets/images/amigariaTypes_Ayuda.svg'
+import socialImg from '../assets/images/amigariaTypes_Social.svg'
+import entretenimientoImg from '../assets/images/amigariaTypes_Entretenimiento.svg'
+import transporteImg from '../assets/images/amigariaTypes_Transporte.svg'
+import otrosImg from '../assets/images/amigariaTypes_Otros.svg'
+
+import { useUserStore } from '../stores/useUserStore'
 import { swal } from '@/utils/swal.js'
 import { useRouter } from 'vue-router'
 import { updateActivity } from '@/services/firebase/crud.js'
-import { onMounted, onBeforeMount, ref } from 'vue';
+import { onMounted, onBeforeMount, ref } from 'vue'
 
 
 const userStore = useUserStore()
 const router = useRouter()
 const activity = ref(router.currentRoute.value.params)
 
-const TYPE_IMAGES={
-  "ayuda":"amigariaTypes_Ayuda",
-  "social":"amigariaTypes_Social",
-  "entretenimiento":"amigariaTypes_Entretenimiento",
-  "transporte":"amigariaTypes_Transporte",
-  "otros":"amigariaTypes_Otros",
+const TYPE_IMAGES = {
+  "ayuda":  ayudaImg,
+  "social":  socialImg,
+  "entretenimiento":  entretenimientoImg,
+  "transporte":  transporteImg,
+  "otros":  otrosImg,
 }
+
+let typeImg = TYPE_IMAGES[activity.value.type]
+
 
 onBeforeMount(() => {
   if (Object.keys(activity.value).length === 0) {
-    activity.value = JSON.parse(localStorage.getItem('lastActivity'));
+    activity.value = JSON.parse(localStorage.getItem('lastActivity'))
   }
 })
-  
-  onMounted(() => { 
-    if(userStore.user !== null){
-      userStore.user.userActivities.forEach(element => {
-        if(element.userId === activity.value.userId){
-          activity.value.activityIsMine = true
-          localStorage.setItem('lastActivity', JSON.stringify(activity.value))
-        }
-      })
-    }
-  })
 
-  const addParticipation = () =>{
-    activity.value.isAssigned = true;
-    updateActivity(activity.value)
-    userStore.user.joinedActivities.push(activity.value)
-    userStore.updateUser(userStore.user)
-    swal("success","¡Actividad aceptada!","Se te ha asignado la actividad correctamente.");
-    router.push('/myactivities')  
+onMounted(() => {
+  if (userStore.user !== null) {
+    userStore.user.userActivities.forEach((element) => {
+      if (element.userId === activity.value.userId) {
+        activity.value.activityIsMine = true
+        localStorage.setItem('lastActivity', JSON.stringify(activity.value))
+      }
+    })
   }
+})
+
+const addParticipation = () => {
+  activity.value.isAssigned = true
+  updateActivity(activity.value)
+  userStore.user.joinedActivities.push(activity.value)
+  userStore.updateUser(userStore.user)
+  swal(
+    'success',
+    '¡Actividad aceptada!',
+    'Se te ha asignado la actividad correctamente.'
+  )
+  router.push('/myactivities')
+}
 </script>
 
 <template>
@@ -56,7 +69,7 @@ onBeforeMount(() => {
         <div class="info-box">
           <div class="info">
             <div class="type">
-              <p> <strong>Tipo:</strong> {{ activity.type }}</p>
+              <p><strong>Tipo:</strong> {{ activity.type }}</p>
             </div>
             <div class="date">
               <strong>Fecha: </strong> <span>{{ activity.date }}</span>
@@ -67,9 +80,18 @@ onBeforeMount(() => {
             <div class="to">
               <strong>Hasta</strong> <span>{{ activity.to }}</span>
             </div>
-            <button @click="addParticipation()" :disabled="activity.activityIsMine || activity.isAssigned === 'true' || activity.isAssigned === true">Me apunto</button>
+            <button
+              @click="addParticipation()"
+              :disabled="
+                activity.activityIsMine ||
+                activity.isAssigned === 'true' ||
+                activity.isAssigned === true
+              "
+            >
+              Me apunto
+            </button>
           </div>
-          <img class="type-img" :src="`/src/assets/images/${TYPE_IMAGES[activity.type]}.svg`" alt="">
+          <img class="type-img" :src="typeImg" :alt="activity.type" />
         </div>
       </div>
     </div>
@@ -77,10 +99,9 @@ onBeforeMount(() => {
 </template>
 
 <style lang="scss" scoped>
-
-.container{
-  display:flex;
-  margin:1rem auto;
+.container {
+  display: flex;
+  margin: 1rem auto;
   max-width: 700px;
   justify-content: center;
 }
@@ -94,7 +115,7 @@ onBeforeMount(() => {
   background-color: var(--clr-yellow-light);
   border-radius: 15px;
   box-shadow: var(--shadow);
-  position:relative;
+  position: relative;
 
   h3 {
     font-weight: bold;
@@ -105,7 +126,7 @@ onBeforeMount(() => {
     font-weight: 700;
   }
 
-  .description{
+  .description {
     color: var(--clr-dark-blue);
     background-color: white;
     border-radius: 15px;
@@ -115,19 +136,19 @@ onBeforeMount(() => {
     text-align: center;
   }
 
-  .info-box{
+  .info-box {
     display: flex;
     justify-content: space-around;
     gap: 1rem;
     flex-wrap: wrap;
-    .info{
+    .info {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
 
       button {
-        margin-top:1rem;
-        font-size:1.5rem;
+        margin-top: 1rem;
+        font-size: 1.5rem;
         text-decoration: none;
         text-align: center;
         background-color: var(--clr-dark-blue);
@@ -140,19 +161,19 @@ onBeforeMount(() => {
 
         &:hover {
           background-color: var(--clr-dark-blue-shadow);
-          cursor:pointer;
+          cursor: pointer;
         }
 
-        &:disabled{
-          opacity:0.6;
-          cursor:not-allowed;
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
       }
     }
-    .type-img{
+    .type-img {
       border-radius: 20px;
       width: min(100%, 15rem);
     }
-  } 
+  }
 }
 </style>

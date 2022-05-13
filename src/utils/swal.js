@@ -1,4 +1,8 @@
 import Swal from 'sweetalert2/dist/sweetalert2.all'
+import iconSucces from '../assets/images/modal-success.svg'
+import iconInfo from '../assets/images/modal-info.svg'
+import iconError from '../assets/images/modal-error.svg'
+
 
 export const swal = (type, title, message) => {
   if (type === "success") {
@@ -7,7 +11,7 @@ export const swal = (type, title, message) => {
       text: message,
       confirmButtonText: "Aceptar",
       confirmButtonColor: "#71CC98",
-      iconHtml: "<img width='100px' src='/src/assets/images/modal-success.svg'>",
+      iconHtml: `<img width='100px' src='${iconSucces}'>`,
       imageAlt: 'éxito',
       background: "#fff"
     })
@@ -18,7 +22,7 @@ export const swal = (type, title, message) => {
       text: message,
       confirmButtonText: "Aceptar",
       confirmButtonColor: "#71CC98",
-      iconHtml: "<img width='100px' src='/src/assets/images/modal-error.svg'>",
+      iconHtml: `<img width='100px' src='${iconError}'>`,
       imageAlt: 'error',
       background: "#fff"
     })
@@ -29,7 +33,7 @@ export const swal = (type, title, message) => {
       text: message,
       confirmButtonText: "Aceptar",
       confirmButtonColor: "#71CC98",
-      iconHtml: "<img width='100px' src='/src/assets/images/modal-info.svg'>",
+      iconHtml: `<img width='100px' src='${iconInfo}'>`,
       imageAlt: 'info',
       background: "#fff"
     })
