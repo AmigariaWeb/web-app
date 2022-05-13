@@ -211,12 +211,14 @@ form {
     gap: 15px;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 
     .type,
     .date {
       display: flex;
       flex-direction: column;
-      min-width: 45%;
+      min-width: 25%;
     }
 
     .from,
