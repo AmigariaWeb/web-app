@@ -9,7 +9,9 @@ const userStore = useUserStore()
     <div class="container">
       <div class="user-details">
         <div class="user-image">
-          <img :src="userStore.user.image" alt="imagen de usuario" />
+          <img v-if="userStore.user.image" :src="userStore.user.image" alt="imagen de usuario" />
+          <img v-else src="../assets/images/amigaria-logo.svg" alt="imagen de usuario" />
+
         </div>
         <div class="user-name">
           <p>
@@ -40,7 +42,8 @@ const userStore = useUserStore()
     color: var(--clr-emphasis-light);
 
     .user-image {
-      align-self: center;
+      display: flex;
+      justify-content: center;
       img {
         border-radius: 50%;
         width: min(100%, 8rem);
