@@ -42,6 +42,14 @@ const router = createRouter({
         requiresAuth: true
       }
     },
+        {
+      path: "/workshops/form",
+      name: "Crear Taller",
+      component: () => import('@/views/workshops/WorkshopFormView.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
     {
       path: "/myactivities",
       name: "Mis Actividades",

@@ -34,4 +34,15 @@ export const swal = (type, title, message) => {
       background: "#fff"
     })
   }
+    if (type === "infoMaps") {
+    Swal.fire({
+      title: title,
+      html: message,
+      iconHtml: "<img width='100px' src='/src/assets/images/modal-info.svg'>",
+      confirmButtonText: "Aceptar",
+      confirmButtonColor: "#71CC98",
+      imageAlt: 'info',
+      background: "#fff"
+    })
+  }
 }
