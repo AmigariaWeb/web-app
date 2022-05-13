@@ -1,37 +1,36 @@
 <script setup>
-import { useActivitiesStore } from '../stores/useActivitiesStore';
+import { useRouter } from 'vue-router';
 
-const activitiesStore = useActivitiesStore();
-const { addLastActivityDetail } = activitiesStore;
+const router = useRouter();
 
 const props = defineProps({
-  activity: Object
+  activity: Object,
 })
 
 const saveActivity = () => {
-  addLastActivityDetail(props.activity)
-  localStorage.setItem('lastActivity', JSON.stringify(props.activity));
+  router.push({ name: 'Actividad', params: props.activity });
+  localStorage.setItem('lastActivity', JSON.stringify(props.activity))
 }
-
 </script>
 
 <template>
-<div class="box">
-  <div class="postit">
-    <h3>{{ activity.title }}</h3>
-    <p class="postItContent">{{ activity.description }}</p>
-    <div class="postItData">
-      <p>{{ activity.date }}</p>
-      <p><strong>Creado por:</strong> usuario</p>
+  <div class="box">
+    <div class="postit">
+      <h3>{{ activity.title }}</h3>
+      <p class="postItContent">{{ activity.description }}</p>
+      <div class="postItData">
+        <p>{{ activity.date }}</p>
+        <p><strong>Creado por:</strong> {{activity.userName || "anónimo"}}</p>
+      </div>
+      <button @click="saveActivity()" class="card"
+        >Saber más
+      </button>
     </div>
-    <RouterLink to="/activityDetail" @click="saveActivity()" class="card">Saber más
-    </RouterLink>
   </div>
-</div>
 </template>
 
 <style lang="scss" scoped>
-.box{
+.box {
   width: min(100%, 300px);
   filter: drop-shadow(var(--shadow));
   display: flex;
@@ -52,11 +51,7 @@ const saveActivity = () => {
   position: relative;
   width: min(100%, 300px);
   transition: transform 0.5s ease;
-  clip-path: polygon(0% 0%,
-        0% 100%,
-        85% 100%,
-        100% 85%,
-        100% 0%);
+  clip-path: polygon(0% 0%, 0% 100%, 85% 100%, 100% 85%, 100% 0%);
 
   h3 {
     font-size: 1.5rem;
@@ -68,7 +63,6 @@ const saveActivity = () => {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-
 
   &::after {
     background-color: var(--clr-yellow-shadow);
@@ -104,7 +98,7 @@ const saveActivity = () => {
     text-align: center;
   }
 
-  & a {
+  & button {
     font-size: 1.5rem;
     width: min(100%, 150px);
     border-radius: 20px;
@@ -114,7 +108,8 @@ const saveActivity = () => {
     transition: background-color 0.5s ease, color 0.5s ease;
     text-align: center;
     text-decoration: none;
-    margin-top:0.5rem;
+    margin-top: 0.5rem;
+    border: 3px solid transparent;
 
     &:hover {
       cursor: pointer;

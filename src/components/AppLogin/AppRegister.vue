@@ -7,7 +7,6 @@ const register_form = ref({});
 const userStore = useUserStore();
 
 const register = async () => {
-  console.log(register_form.value);
   userStore.register(register_form.value);
 };
 </script>

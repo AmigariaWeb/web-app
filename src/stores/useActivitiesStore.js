@@ -6,7 +6,6 @@ import { swal } from '../utils/swal';
 export const useActivitiesStore = defineStore("activitiesStore", {
   state: () => ({
     activities: null,
-    selectedActivity:{},
     queryActivities: [],
     searchQuery: "",
     loading: false,
@@ -52,10 +51,6 @@ export const useActivitiesStore = defineStore("activitiesStore", {
       return null
     },
 
-    addLastActivityDetail(lastActivity) {
-      this.selectedActivity = lastActivity;
-    },
-    
     deleteActivity(activity) {
       swal("success", "Actividad eliminada", "Se ha eliminado la actividad correctamente.");
       deleteActivityById(activity.id);

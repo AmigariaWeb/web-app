@@ -8,7 +8,6 @@ import CreatedActivities from '@/components/MyActivities/CreatedActivities.vue'
 import { updateActivity } from '@/services/firebase/crud.js'
 import { swal } from '@/utils/swal.js'
 
-
 const userStore = useUserStore()
 const activitiesStore = useActivitiesStore()
 const router = useRouter()
@@ -29,14 +28,23 @@ const editActivity = (activity) => {
   router.push({ name: 'Editar Actividad', params: activity })
 }
 
+const showActivity = (activity) => {
+  router.push({ name: 'Actividad', params: activity })
+  localStorage.setItem('lastActivity', JSON.stringify(activity))
+}
+
 const removeParticipation = (activity) => {
-  activity.isAssigned = false;
+  activity.isAssigned = false
   updateActivity(activity)
   userStore.user.joinedActivities = userStore.user.joinedActivities.filter(
     (currentActivity) => currentActivity.id !== activity.id
   )
   userStore.updateUser(userStore.user)
-  swal("success", "Participación eliminada", "La actividad quedará disponible en mis actividades.")
+  swal(
+    'success',
+    'Participación eliminada',
+    'La actividad quedará disponible en mis actividades.'
+  )
 }
 </script>
 
@@ -49,6 +57,7 @@ const removeParticipation = (activity) => {
     />
     <ParticipatedActivities
       :activities="userStore.user.joinedActivities"
+      :showActivity="showActivity"
       :removeParticipation="removeParticipation"
     />
   </main>
@@ -60,10 +69,10 @@ const removeParticipation = (activity) => {
   justify-content: space-between;
   flex-wrap: wrap;
 
-  .created-activities {
+  .card-activities {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
     width: min(100%, 40rem);
 
     .title {
@@ -71,38 +80,90 @@ const removeParticipation = (activity) => {
       text-align: center;
     }
 
-    .created-activity {
+    .card-activity {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
       background-color: var(--clr-yellow-light);
       padding: 1rem;
       border-radius: 20px;
       width: 100%;
+      min-height: 10.5rem;
+      gap: 2rem;
 
       .details {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
+        width: min(100%, 19rem);
+        gap: 0.8rem;
+        overflow:hidden;
 
         .activity-title {
-          width: 100%;
-          text-align: center;
+          font-size: 1.563rem;
           font-weight: 700;
-          overflow-wrap: break-word;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-align:center;
+        }
+        .description {
+          background-color: var(--clr-emphasis-light);
+          border-radius: 20px;
+          width: 100%;
+          height: 6.625rem;
+          text-align: center;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 2rem;
+          padding:0.5rem;
         }
       }
-      .buttons {
+      .info-and-btns {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
+        flex-direction: column;
+        gap: 0.8rem;
+        width: min(100%, 12.5rem);
+        text-align: center;
 
-        button {
-          padding: 0.8rem 1rem;
-          border: none;
-          background-color: #fff;
-          border-radius: 20px;
+        .buttons {
+          display: flex;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+          justify-content: center;
 
-          &:hover {
-            cursor: pointer;
+          button {
+            font-weight: 500;
+            font-size: 1.5625rem;
+            line-height: 44px;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background-color: var(--clr-dark-blue);
+            border: 3px solid transparent;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            color: var(--clr-yellow-light);
+
+            &:hover,
+            &:focus {
+              cursor: pointer;
+              background-color: var(--clr-dark-blue-shadow);
+            }
+            &.edit-btn {
+              background-color: var(--clr-green-light);
+              color: var(--clr-dark-blue);
+
+              &:hover,
+              &:focus {
+                cursor: pointer;
+                background-color: var(--clr-green-dark);
+                color: var(--clr-emphasis-light);
+              }
+            }
           }
         }
       }
@@ -110,8 +171,11 @@ const removeParticipation = (activity) => {
   }
 }
 .no-activities {
+  margin-top:1rem;
   color: var(--clr-emphasis-light);
   text-align: center;
+  font-size:1.2rem;
+  font-weight: 700;
 }
 @media (max-width: 1440px) {
   .my-activities-container {

@@ -13,7 +13,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <Sidebar />
+  <Sidebar v-if="userStore.user"/>
   <RouterView />
 </template>
 

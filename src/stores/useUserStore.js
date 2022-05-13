@@ -10,7 +10,6 @@ export const useUserStore = defineStore("userStore", {
     user: null,
   }),
   getters: {
-    actualUser: (state) => console.log(state.user),
     isEmailVerified: (state) => {
       if (state.user) {
         if (state.user.emailVerified) {
