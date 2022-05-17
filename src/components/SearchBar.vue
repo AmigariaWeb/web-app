@@ -1,16 +1,14 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useActivitiesStore } from '../stores/useActivitiesStore'
-import { useWindowSize } from '@vueuse/core'
 
 const { searchQuery } = storeToRefs(useActivitiesStore())
 const { findSearchQuery } = useActivitiesStore()
-const windowSize = useWindowSize()
 </script>
 
 <template>
   <div class="searchBarContainer">
-    <label  for="searchBar">Buscar</label>
+    <label for="searchBar">Buscar</label>
     <input
       id="searchBar"
       class="searchBar"
