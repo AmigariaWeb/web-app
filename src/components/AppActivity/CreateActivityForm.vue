@@ -14,7 +14,7 @@ const sendForm = async (e) => {
   e.preventDefault()
   newActivity.value.userId = userStore.user.uid;
   newActivity.value.isAssigned = false;
-  newActivity.value.userName = userStore.user.name;
+  newActivity.value.userName = userStore.user.name || "Anónimo";
   const activityId = await addNewActivity(newActivity.value)
   const newActivityWithId = { ...newActivity.value, id: activityId }
   userStore.user.userActivities.push(newActivityWithId)

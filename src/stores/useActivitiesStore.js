@@ -42,7 +42,9 @@ export const useActivitiesStore = defineStore("activitiesStore", {
       if (this.activities) {
         this.queryActivities = this.activities.filter(activity => {
           if (activity.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-          || activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())){
+            || activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())
+            || activity.userName.toLowerCase().includes(this.searchQuery.toLowerCase())
+            || activity.description.toLowerCase().includes(this.searchQuery.toLowerCase())){
             return true
           }
           return false
