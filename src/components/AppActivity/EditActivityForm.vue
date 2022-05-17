@@ -146,7 +146,7 @@ const sendForm = async (e) => {
 }
 
 form {
-  padding: 1rem 2rem;
+  padding: 1rem 0.5rem;
   width: 100%;
   display: flex;
   gap: 15px;
@@ -260,6 +260,9 @@ button {
   main {
     max-width: 640px;
     margin: 0 auto;
+  }
+  form{
+    padding-inline: 2rem;
   }
 }
 </style>
