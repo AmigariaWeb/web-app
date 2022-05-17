@@ -80,10 +80,11 @@ onBeforeMount(() => {
   text-align: center;
   padding: 10px 10px;
   border-radius: 20px;
-  background-color: var(--clr-dark-blue);
+  margin-top: 10px;
+  background-color: var(--clr-yellow-light);
   border: none;
   transition: background-color 0.5s ease;
-  color: var(--clr-yellow-light);
+  color: var(--clr-dark-blue);
   cursor: pointer;
 }
 </style>

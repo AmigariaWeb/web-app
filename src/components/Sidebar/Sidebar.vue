@@ -1,4 +1,3 @@
-
 <script setup>
 import { useUserStore } from '@/stores/useUserStore';
 import { onMounted, ref } from 'vue';
@@ -15,8 +14,8 @@ const toggleMenu = () => {
 }
 
 onMounted(() => {
-  if(width.value >= 1720){
-    is_expanded.value=true;
+  if (width.value >= 1720) {
+    is_expanded.value = true;
     localStorage.setItem("is_expanded", is_expanded.value)
   }
 })
@@ -43,7 +42,8 @@ onMounted(() => {
         <span class="text">Talleres</span>
       </RouterLink>
       <RouterLink class="navlink" to="/userprofile">
-        <img v-if="userStore.user.image" class="user-image" :src="userStore.user.image" referrerpolicy="no-referrer" alt="imagen de usuario">
+        <img v-if="userStore.user.image" class="user-image" :src="userStore.user.image" referrerpolicy="no-referrer"
+          alt="imagen de usuario">
         <img v-else class="user-image" src="@/assets/images/amigaria-logo.svg">
         <span class="text userName">{{ userStore.user.name || "Usuario" }}</span>
       </RouterLink>
