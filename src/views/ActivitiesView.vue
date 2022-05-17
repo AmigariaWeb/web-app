@@ -23,9 +23,12 @@ onBeforeMount(() => {
       <Spinner v-if="loading" />
       <div v-else-if="activities.length === 0">
         <p>No hay actividades creadas en este momento, haz clic en el botón de abajo para crear una nueva actividad</p>
-        <RouterLink class="navlink" to="/myactivities/form">
-          <button class="crearActividad">Crear Actividad</button>
-        </RouterLink>
+        <div class="button">
+          <img src="@/assets/images/create-activity-icon.svg" alt="ir actividades">
+          <RouterLink class="navlink" to="/myactivities/form">
+            <button class="crearActividad">Crear Actividad</button>
+          </RouterLink>
+        </div>
       </div>
       <ActivityItem v-else-if="searchQuery" v-for="activity in queryActivities" v-show="activity.isAssigned === false"
         :activity="activity" :key="activity.id" />
@@ -72,19 +75,48 @@ onBeforeMount(() => {
   opacity: 0;
 }
 
+p {
+  font-weight: 700;
+}
+
+img {
+  display: none;
+  width: 35px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 5px 0px 0px 0px;
+}
+
 .crearActividad {
+  max-width: fit-content;
   font-style: normal;
   font-weight: 400;
-  font-size: 1.5625rem;
+  font-size: 1.5rem;
   line-height: 2.34375rem;
   text-align: center;
   padding: 10px 10px;
   border-radius: 20px;
-  margin-top: 10px;
   background-color: var(--clr-yellow-light);
   border: none;
-  transition: background-color 0.5s ease;
   color: var(--clr-dark-blue);
   cursor: pointer;
+}
+
+@media (min-width: 400px) {
+  img {
+    display: inline-block;
+  }
+
+  .button {
+    margin: 5px 40px 0px 0px;
+  }
+
+  .crearActividad {
+    font-size: 1.5625rem;
+  }
 }
 </style>
