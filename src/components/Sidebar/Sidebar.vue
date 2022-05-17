@@ -125,7 +125,7 @@ aside {
       z-index: 11;
 
       .menu-arrow{
-        width: 25px;
+        width: 20px;
       }
 
       &:hover {
