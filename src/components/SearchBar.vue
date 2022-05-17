@@ -58,7 +58,7 @@ const windowSize = useWindowSize()
       align-items: flex-end;
       gap: 0;
       label{
-        min-width: 195px;
+        min-width: 200px;
       }
     }
   }
