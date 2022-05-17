@@ -148,6 +148,7 @@ aside {
     flex-direction: column;
     justify-content: center;
     gap: 5vh ;
+    padding-bottom: 2rem;
 
     @media(max-height:375px){
       &{

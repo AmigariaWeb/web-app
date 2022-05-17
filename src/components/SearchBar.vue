@@ -32,6 +32,7 @@ const { findSearchQuery } = useActivitiesStore()
     font-weight: 700;
     font-size: 1.2rem;
     color: var(--clr-emphasis-light);
+
   }
   .searchBar {
     font-size: 1rem;
@@ -41,6 +42,7 @@ const { findSearchQuery } = useActivitiesStore()
     box-shadow: var(--shadow);
     color: var(--clr-dark-blue);
     transition: border 0.5s ease;
+    width: min(100%, 12.5rem);
 
     &:hover,
     &:focus {
@@ -56,7 +58,8 @@ const { findSearchQuery } = useActivitiesStore()
       align-items: flex-end;
       gap: 0;
       label{
-        min-width: 200px;
+            width: min(100%, 12.5rem);
+
       }
     }
   }
