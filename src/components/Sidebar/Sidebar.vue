@@ -1,7 +1,10 @@
 
 <script setup>
 import { useUserStore } from '@/stores/useUserStore';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useWindowSize } from '@vueuse/core'
+
+const { width } = useWindowSize()
 
 const userStore = useUserStore()
 const is_expanded = ref(localStorage.getItem("is_expanded") === "true")
@@ -10,7 +13,15 @@ const toggleMenu = () => {
   is_expanded.value = !is_expanded.value;
   localStorage.setItem("is_expanded", is_expanded.value)
 }
+
+onMounted(() => {
+  if(width.value >= 1720){
+    is_expanded.value=true;
+    localStorage.setItem("is_expanded", is_expanded.value)
+  }
+})
 </script>
+
 
 <template>
   <aside :class="`${is_expanded && 'is-expanded'}`">

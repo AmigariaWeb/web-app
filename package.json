@@ -11,6 +11,7 @@
     "deploy-prod": "vercel --prod"
   },
   "dependencies": {
+    "@vueuse/core": "^8.5.0",
     "firebase": "^9.8.0",
     "pinia": "^2.0.13",
     "sweetalert2": "^11.4.13",
