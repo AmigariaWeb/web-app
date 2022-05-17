@@ -68,12 +68,12 @@ onMounted(() => {
           userStore.user.name || 'Usuario'
         }}</span>
       </RouterLink>
-      <div class="navlink" @click="userStore.logout()">
+      <button  class="navlink" @click="userStore.logout()">
         <img src="@/assets/images/logout-icon.svg" alt="cerrar sesión" />
         <span class="text" >
           Cerrar sesión
         </span>
-      </div>
+      </button>
     </div>
   </aside>
 </template>
@@ -163,6 +163,8 @@ aside {
       text-decoration: none;
       padding: 0.5rem 1rem;
       transition: 0.2s ease-out;
+      background-color: transparent;
+      border: none;
 
       img {
         width: 37px;
