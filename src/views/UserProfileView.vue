@@ -1,5 +1,6 @@
 <script setup>
 import { useUserStore } from '../stores/useUserStore'
+import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue';
 
 const userStore = useUserStore()
 </script>
@@ -24,6 +25,7 @@ const userStore = useUserStore()
         <button @click="userStore.resetPassword()">Cambiar contraseña</button>
       </div>
     </div>
+    <PageInfoModal />
   </main>
 </template>
 

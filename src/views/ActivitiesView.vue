@@ -5,6 +5,7 @@ import ActivityItem from '@/components/ActivityItem.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import Spinner from '../components/Spinner/Spinner.vue';
 import { onBeforeMount } from 'vue';
+import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue';
 
 
 const { activities, queryActivities, searchQuery, loading } = storeToRefs(useActivitiesStore())
@@ -35,6 +36,7 @@ onBeforeMount(() => {
       <ActivityItem v-else v-for="activity in activities" v-show="activity.isAssigned === false" :activity="activity"
         :key="activity.title" />
     </div>
+    <PageInfoModal />
   </main>
 </template>
 

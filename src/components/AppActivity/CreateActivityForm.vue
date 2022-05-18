@@ -4,6 +4,7 @@ import { addNewActivity } from '@/services/firebase/crud'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/useUserStore.js'
 import { swal } from '@/utils/swal.js'
+import PageInfoModal from '../PageInfoModal/PageInfoModal.vue'
 
 const router = useRouter()
 const newActivity = ref({})
@@ -115,6 +116,7 @@ const sendForm = async (e) => {
         </div>
       </form>
     </div>
+    <PageInfoModal />
   </main>
 </template>
 
