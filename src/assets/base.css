@@ -64,6 +64,10 @@
   margin: 0;
   padding: 0;
   font-weight: normal;
+
+}
+*:focus{
+  outline: 3px solid var(--clr-green-light);
 }
 
 body {
