@@ -13,7 +13,7 @@ const todayDate = new Date().toISOString().split('T')[0];
 
 const sendForm = async (e) => {
   e.preventDefault()
-  if(userStore.user.userActivities.length <= 2 && !userStore.user.isAdmin){
+  if(userStore.user.userActivities.length <= 2 || userStore.user.isAdmin === true){
     newActivity.value.userId = userStore.user.uid;
     newActivity.value.isAssigned = false;
     newActivity.value.userName = userStore.user.name || "Anónimo";
