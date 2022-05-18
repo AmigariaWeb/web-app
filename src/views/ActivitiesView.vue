@@ -26,8 +26,8 @@ onBeforeMount(() => {
         <p>No hay actividades creadas en este momento, haz clic en el botón de abajo para crear una nueva actividad</p>
         <div class="button">
           <img src="@/assets/images/create-activity-icon.svg" alt="ir actividades">
-          <RouterLink class="navlink" to="/myactivities/form">
-            <button class="crearActividad">Crear Actividad</button>
+          <RouterLink class="crearActividad" to="/myactivities/form">
+            Crear Actividad
           </RouterLink>
         </div>
       </div>
