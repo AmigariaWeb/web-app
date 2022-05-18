@@ -30,8 +30,8 @@ const props = defineProps({
         asignarte una</p>
       <div class="button">
         <img src="@/assets/images/activities-icon.svg" alt="ir actividades">
-        <RouterLink class="navlink" to="/">
-          <button class="irActividad">Actividades</button>
+        <RouterLink class="irActividad" to="/">
+          Actividades
         </RouterLink>
       </div>
     </div>
@@ -79,6 +79,7 @@ img {
 .irActividad {
   max-width: fit-content;
   font-style: normal;
+  text-decoration: none;
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 2.34375rem;

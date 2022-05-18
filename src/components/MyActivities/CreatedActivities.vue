@@ -30,8 +30,8 @@ const props = defineProps({
       <p>No has creado ninguna actividad, haz clic en el botón de abajo para crear una nueva actividad</p>
       <div class="button">
         <img src="@/assets/images/create-activity-icon.svg" alt="ir actividades">
-        <RouterLink class="navlink" to="/myactivities/form">
-          <button class="crearActividad">Crear Actividad</button>
+        <RouterLink class="crearActividad" to="/myactivities/form">
+          Crear Actividad
         </RouterLink>
       </div>
     </div>
@@ -61,6 +61,7 @@ img {
   font-size: 1.5rem;
   line-height: 2.34375rem;
   text-align: center;
+  text-decoration: none;
   padding: 10px 10px;
   border-radius: 20px;
   background-color: var(--clr-yellow-light);

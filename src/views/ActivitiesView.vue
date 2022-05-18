@@ -5,6 +5,7 @@ import ActivityItem from '@/components/ActivityItem.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import Spinner from '../components/Spinner/Spinner.vue';
 import { onBeforeMount } from 'vue';
+import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue';
 
 
 const { activities, queryActivities, searchQuery, loading } = storeToRefs(useActivitiesStore())
@@ -25,8 +26,8 @@ onBeforeMount(() => {
         <p>No hay actividades creadas en este momento, haz clic en el botón de abajo para crear una nueva actividad</p>
         <div class="button">
           <img src="@/assets/images/create-activity-icon.svg" alt="ir actividades">
-          <RouterLink class="navlink" to="/myactivities/form">
-            <button class="crearActividad">Crear Actividad</button>
+          <RouterLink class="crearActividad" to="/myactivities/form">
+            Crear Actividad
           </RouterLink>
         </div>
       </div>
@@ -35,6 +36,7 @@ onBeforeMount(() => {
       <ActivityItem v-else v-for="activity in activities" v-show="activity.isAssigned === false" :activity="activity"
         :key="activity.title" />
     </div>
+    <PageInfoModal />
   </main>
 </template>
 

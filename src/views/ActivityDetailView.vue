@@ -10,6 +10,7 @@ import { swal } from '@/utils/swal.js'
 import { useRouter } from 'vue-router'
 import { updateActivity } from '@/services/firebase/crud.js'
 import { onMounted, onBeforeMount, ref } from 'vue'
+import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
 
 const TYPE_IMAGES = {
   ayuda: ayudaImg,
@@ -43,7 +44,10 @@ onMounted(() => {
 })
 
 const addParticipation = () => {
-  if (userStore.user.joinedActivities.length <= 2 || userStore.user.isAdmin === true) {
+  if (
+    userStore.user.joinedActivities.length <= 2 ||
+    userStore.user.isAdmin === true
+  ) {
     activity.value.isAssigned = true
     updateActivity(activity.value)
     userStore.user.joinedActivities.push(activity.value)
@@ -54,8 +58,12 @@ const addParticipation = () => {
       'Se te ha asignado la actividad correctamente.'
     )
     router.push('/myactivities')
-  }else{
-    return swal("error", "Has llegado al límite", "Solo puedes apuntarte a tres actividades al mismo tiempo.")
+  } else {
+    return swal(
+      'error',
+      'Has llegado al límite',
+      'Solo puedes apuntarte a tres actividades al mismo tiempo.'
+    )
   }
 }
 </script>
@@ -97,6 +105,7 @@ const addParticipation = () => {
         </div>
       </div>
     </div>
+    <PageInfoModal />
   </main>
 </template>
 

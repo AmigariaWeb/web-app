@@ -4,6 +4,7 @@ import { addNewActivity } from '@/services/firebase/crud'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/useUserStore.js'
 import { swal } from '@/utils/swal.js'
+import PageInfoModal from '../PageInfoModal/PageInfoModal.vue'
 
 const router = useRouter()
 const newActivity = ref({})
@@ -12,7 +13,7 @@ const todayDate = new Date().toISOString().split('T')[0];
 
 const sendForm = async (e) => {
   e.preventDefault()
-  if(userStore.user.userActivities.length <= 2 && !userStore.user.isAdmin){
+  if(userStore.user.userActivities.length <= 2 || userStore.user.isAdmin === true){
     newActivity.value.userId = userStore.user.uid;
     newActivity.value.isAssigned = false;
     newActivity.value.userName = userStore.user.name || "Anónimo";
@@ -115,6 +116,7 @@ const sendForm = async (e) => {
         </div>
       </form>
     </div>
+    <PageInfoModal />
   </main>
 </template>
 

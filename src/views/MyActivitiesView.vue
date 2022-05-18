@@ -7,6 +7,7 @@ import ParticipatedActivities from '@/components/MyActivities/ParticipatedActivi
 import CreatedActivities from '@/components/MyActivities/CreatedActivities.vue'
 import { updateActivity } from '@/services/firebase/crud.js'
 import { swal } from '@/utils/swal.js'
+import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
 
 const userStore = useUserStore()
 const activitiesStore = useActivitiesStore()
@@ -60,6 +61,7 @@ const removeParticipation = (activity) => {
       :showActivity="showActivity"
       :removeParticipation="removeParticipation"
     />
+    <PageInfoModal />
   </main>
 </template>
 
