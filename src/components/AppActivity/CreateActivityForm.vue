@@ -12,15 +12,19 @@ const todayDate = new Date().toISOString().split('T')[0];
 
 const sendForm = async (e) => {
   e.preventDefault()
-  newActivity.value.userId = userStore.user.uid;
-  newActivity.value.isAssigned = false;
-  newActivity.value.userName = userStore.user.name || "Anónimo";
-  const activityId = await addNewActivity(newActivity.value)
-  const newActivityWithId = { ...newActivity.value, id: activityId }
-  userStore.user.userActivities.push(newActivityWithId)
-  userStore.updateUser(userStore.user)
-  swal("success","Actividad creada","La actividad se ha creado correctamente.")
-  router.push('/myactivities')
+  if(userStore.user.userActivities.length <= 2 && !userStore.user.isAdmin){
+    newActivity.value.userId = userStore.user.uid;
+    newActivity.value.isAssigned = false;
+    newActivity.value.userName = userStore.user.name || "Anónimo";
+    const activityId = await addNewActivity(newActivity.value)
+    const newActivityWithId = { ...newActivity.value, id: activityId }
+    userStore.user.userActivities.push(newActivityWithId)
+    userStore.updateUser(userStore.user)
+    swal("success","Actividad creada","La actividad se ha creado correctamente.")
+    router.push('/myactivities')
+  }else{
+    return swal("error", "Has llegado al límite", "Ya tienes 3 actividades creadas, borra alguna si quieres agregar nuevas.")
+  }
 }
 </script>
 

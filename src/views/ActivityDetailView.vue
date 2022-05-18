@@ -11,25 +11,23 @@ import { useRouter } from 'vue-router'
 import { updateActivity } from '@/services/firebase/crud.js'
 import { onMounted, onBeforeMount, ref } from 'vue'
 
+const TYPE_IMAGES = {
+  ayuda: ayudaImg,
+  social: socialImg,
+  entretenimiento: entretenimientoImg,
+  transporte: transporteImg,
+  otros: otrosImg,
+}
 
 const userStore = useUserStore()
 const router = useRouter()
 const activity = ref(router.currentRoute.value.params)
-
-const TYPE_IMAGES = {
-  "ayuda":  ayudaImg,
-  "social":  socialImg,
-  "entretenimiento":  entretenimientoImg,
-  "transporte":  transporteImg,
-  "otros":  otrosImg,
-}
-
-let typeImg = TYPE_IMAGES[activity.value.type]
-
+const typeImg = ref(TYPE_IMAGES[activity.value.type])
 
 onBeforeMount(() => {
   if (Object.keys(activity.value).length === 0) {
     activity.value = JSON.parse(localStorage.getItem('lastActivity'))
+    typeImg.value = TYPE_IMAGES[activity.value.type]
   }
 })
 
@@ -45,16 +43,20 @@ onMounted(() => {
 })
 
 const addParticipation = () => {
-  activity.value.isAssigned = true
-  updateActivity(activity.value)
-  userStore.user.joinedActivities.push(activity.value)
-  userStore.updateUser(userStore.user)
-  swal(
-    'success',
-    '¡Actividad aceptada!',
-    'Se te ha asignado la actividad correctamente.'
-  )
-  router.push('/myactivities')
+  if (userStore.user.joinedActivities.length <= 2 || userStore.user.isAdmin === true) {
+    activity.value.isAssigned = true
+    updateActivity(activity.value)
+    userStore.user.joinedActivities.push(activity.value)
+    userStore.updateUser(userStore.user)
+    swal(
+      'success',
+      '¡Actividad aceptada!',
+      'Se te ha asignado la actividad correctamente.'
+    )
+    router.push('/myactivities')
+  }else{
+    return swal("error", "Has llegado al límite", "Solo puedes apuntarte a tres actividades al mismo tiempo.")
+  }
 }
 </script>
 
