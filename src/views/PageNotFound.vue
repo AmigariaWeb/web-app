@@ -5,7 +5,7 @@
 <template>
 <main class="pageNotFound">
   <div id="container">
-    <img id="svg" src="src/assets/images/amigaria_404.svg" alt="404: página no encontrada">
+    <img id="svg" src="../assets/images/amigaria_404.svg" alt="404: página no encontrada">
     <div id="text">
       <h3>Página no encontrada</h3>
       <h4>porque ¡me la comí!</h4>
