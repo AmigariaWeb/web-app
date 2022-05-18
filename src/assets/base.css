@@ -18,14 +18,6 @@
 }
 
 @font-face {
-  font-family: "JosefinSans";
-  font-weight: bold;
-  src:
-    url(./fonts/JosefinSans/JosefinSans-Bold.woff2) format("woff2"),
-    url(./fonts/JosefinSans/JosefinSans-Bold.woff) format("woff"),
-    url(./fonts/JosefinSans/JosefinSans-Bold.ttf) format("truetype")
-}
-@font-face {
   font-family: "Roboto";
   font-weight: regular;
   src:
@@ -34,12 +26,12 @@
     url(./fonts/Roboto/roboto.ttf) format("truetype")
 }
 @font-face {
-  font-family: "JosefinSans";
+  font-family: "Pacifico";
   font-weight: regular;
   src:
-    url(./fonts/JosefinSans/JosefinSans-Bold.woff2) format("woff2"),
-    url(./fonts/JosefinSans/JosefinSans-Bold.woff) format("woff"),
-    url(./fonts/JosefinSans/JosefinSans-Bold.ttf) format("truetype")
+    url(./fonts/Pacifico/Pacifico-Regular.woff2) format("woff2"),
+    url(./fonts/Pacifico/Pacifico-Regular.woff) format("woff"),
+    url(./fonts/Pacifico/Pacifico-Regular.ttf) format("truetype")
 }
 @font-face {
   font-family: "AtkinsonHyperlegible";
