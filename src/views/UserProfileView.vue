@@ -7,9 +7,6 @@ import { swal } from '../utils/swal'
 const userStore = useUserStore()
 const editMode = ref(false)
 
-  console.log(userStore.user);
-
-
 const initialValues = ref({})
 
 const addInitialValues = (newValues) => {
