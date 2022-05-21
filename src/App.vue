@@ -8,6 +8,9 @@ const userStore = useUserStore()
 
 onBeforeMount(() => {
   userStore.fetchUser();
+  if (userStore.user) {
+   localStorage.setItem('localUser', JSON.stringify(userStore.user))
+  }
 })
 </script>
 

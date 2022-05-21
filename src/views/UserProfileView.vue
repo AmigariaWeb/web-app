@@ -16,14 +16,9 @@ const addInitialValues = (newValues) => {
   initialValues.value.email = newValues.email
 }
 
-if (userStore.user) {
-  addInitialValues(userStore.user)
-  localStorage.setItem('userInfo', JSON.stringify(initialValues.value))
-}
-
 onBeforeMount(() => {
   if (userStore.user === null) {
-    const localValues = JSON.parse(localStorage.getItem('userInfo'))
+    const localValues = JSON.parse(localStorage.getItem('localUser'))
     addInitialValues(localValues)
   }
 })
@@ -36,7 +31,7 @@ const sendNewValues = () => {
     'Se han actualizado tus datos correctamente.'
   )
   addInitialValues(userStore.user)
-  localStorage.setItem('userInfo', JSON.stringify(initialValues.value))
+  localStorage.setItem('userStore', JSON.stringify(initialValues.value))
   editMode.value = false
 }
 

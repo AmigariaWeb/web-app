@@ -16,6 +16,7 @@ const sendForm = async (e) => {
   if(userStore.user.userActivities.length <= 2 || userStore.user.isAdmin === true){
     newActivity.value.userId = userStore.user.uid;
     newActivity.value.isAssigned = false;
+    newActivity.value.messages = [];
     newActivity.value.userName = userStore.user.name || "Anónimo";
     const activityId = await addNewActivity(newActivity.value)
     const newActivityWithId = { ...newActivity.value, id: activityId }

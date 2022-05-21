@@ -11,6 +11,7 @@ import { useRouter } from 'vue-router'
 import { updateActivity } from '@/services/firebase/crud.js'
 import { onMounted, onBeforeMount, ref } from 'vue'
 import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
+import Chat from '../components/Chat/Chat.vue'
 
 const TYPE_IMAGES = {
   ayuda: ayudaImg,
@@ -105,6 +106,7 @@ const addParticipation = () => {
         </div>
       </div>
     </div>
+    <Chat :activity="activity" />
     <PageInfoModal />
   </main>
 </template>
