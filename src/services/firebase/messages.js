@@ -1,7 +1,7 @@
 
-import { useUserStore } from '../../stores/useUserStore';
-import { addDoc, arrayUnion, collection, doc, getDoc, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, updateDoc, where } from "firebase/firestore";
-import { ref, onUnmounted, onBeforeMount } from 'vue'
+
+import {  doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { ref, onUnmounted } from 'vue'
 import { db } from '@/services/firebase';
 import { storeToRefs } from 'pinia';
 
@@ -12,36 +12,42 @@ export function useChat(userStore, activity) {
     user.value = JSON.parse(localStorage.getItem('localUser'))
   }
 
-  const userDoc = doc(db, 'users', user.value.uid)
+  const activitiesDoc = doc(db, 'activities', activity.id)
   const messages = ref([])
   const refActivity = ref(null)
-  const unsubscribe = onSnapshot(userDoc, (doc) => {
-    const { joinedActivities } = doc.data()
-    const [joinedActivity] = joinedActivities.filter(joinedActivity => joinedActivity.id === activity.id)
-    refActivity.value = joinedActivity
-
-    if (refActivity.value) {
-      refActivity.value.messages
-        ? messages.value = (refActivity.value.messages)
-        : messages.value = ""
-    }
+  const unsubscribe = onSnapshot(activitiesDoc, (doc) => {
+    refActivity.value = doc.data()
+    refActivity.value.messages.length > 0
+      ? messages.value = (refActivity.value.messages)
+      : messages.value = ""
   })
   onUnmounted(unsubscribe)
 
 
-
   const sendMessage = async text => {
     const newMessage = {
+      image: user.value.image,
       text: text,
+      userId: user.value.uid,
+      userName: user.value.name,
       createdAt: new Date().toISOString()
     }
+
     user.value.joinedActivities.forEach(joinedActivity => {
-      joinedActivity.id === refActivity.value.id
-      joinedActivity.messages.push(newMessage)
+      if (joinedActivity.id === refActivity.value.id) {
+        refActivity.value.messages.push(newMessage)
+      }
     })
 
-    const docRef = await updateDoc(userDoc, {
-      joinedActivities: user.value.joinedActivities
+    user.value.userActivities.forEach(createdActivity => {
+      if (createdActivity.id === refActivity.value.id) {
+        refActivity.value.messages.push(newMessage)
+      }
+    })
+
+
+    const docRef = await updateDoc(activitiesDoc, {
+      messages: refActivity.value.messages
     })
   }
 

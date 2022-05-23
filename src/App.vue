@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount } from 'vue';
+import { computed, onBeforeMount, onMounted } from 'vue';
 import { RouterView } from 'vue-router'
 import { useUserStore } from "@/stores/useUserStore"
 import Sidebar from '@/components/Sidebar/Sidebar.vue';
@@ -8,10 +8,9 @@ const userStore = useUserStore()
 
 onBeforeMount(() => {
   userStore.fetchUser();
-  if (userStore.user) {
-   localStorage.setItem('localUser', JSON.stringify(userStore.user))
-  }
 })
+
+
 </script>
 
 <template>

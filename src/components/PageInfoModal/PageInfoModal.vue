@@ -38,7 +38,7 @@ const showInfo = () => {
 <style lang="scss" scoped>
 .info-modal {
   position: fixed;
-  bottom: 5%;
+  bottom: 10%;
   right: 5%;
 
   button {

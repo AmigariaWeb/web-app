@@ -18,19 +18,18 @@ export const useActivitiesStore = defineStore("activitiesStore", {
 
   },
   actions: {
-    async fetchActivities() {
+    SET_ACTIVITIES(activities) {
+      this.activities = activities;
+    },
+    CLEAR_ACTIVITIES() {
+      this.activities = null;
+    },
+     fetchActivities() {
       this.loading = true
       try {
-        const activities = [];
-        const querySnapshot = await getAllActivities();
-        querySnapshot.forEach(doc => {
-          const activityWithId = {
-            ...doc.data(),
-            id: doc.id
-          };
-          activities.push(activityWithId);
-        })
-        this.activities = activities;
+        const activities = getAllActivities();
+        this.CLEAR_ACTIVITIES()
+        this.SET_ACTIVITIES(activities.value)
       } catch (error) {
         this.error = error;
       } finally {
@@ -44,7 +43,7 @@ export const useActivitiesStore = defineStore("activitiesStore", {
           if (activity.title.toLowerCase().includes(this.searchQuery.toLowerCase())
             || activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())
             || activity.userName.toLowerCase().includes(this.searchQuery.toLowerCase())
-            || activity.description.toLowerCase().includes(this.searchQuery.toLowerCase())){
+            || activity.description.toLowerCase().includes(this.searchQuery.toLowerCase())) {
             return true
           }
           return false
@@ -52,11 +51,21 @@ export const useActivitiesStore = defineStore("activitiesStore", {
       }
       return null
     },
+    updateActivities(activity) {
+      const updatedActivities = this.activities.map(currentActivity => {
+        if (activity.id === currentActivity.id) {
+          currentActivity = activity;
+       }
+       return currentActivity
+      })
+      this.SET_ACTIVITIES(updatedActivities)
+    },
 
     deleteActivity(activity) {
       swal("success", "Actividad eliminada", "Se ha eliminado la actividad correctamente.");
       deleteActivityById(activity.id);
-      this.activities = this.activities.filter(currentActivity => activity.id !== currentActivity.id);
+      const newActivities = this.activities.filter(currentActivity => activity.id !== currentActivity.id);
+      this.SET_ACTIVITIES(newActivities)
     }
   },
 

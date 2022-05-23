@@ -1,19 +1,26 @@
 <script setup>
-import { useActivitiesStore } from '@/stores/useActivitiesStore.js';
-import { storeToRefs } from 'pinia';
-import ActivityItem from '@/components/ActivityItem.vue';
-import SearchBar from '@/components/SearchBar.vue';
-import Spinner from '../components/Spinner/Spinner.vue';
-import { onBeforeMount } from 'vue';
-import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue';
+import { computed, onBeforeMount,  } from 'vue'
+import { useActivitiesStore } from '@/stores/useActivitiesStore.js'
+import { storeToRefs } from 'pinia'
+import ActivityItem from '@/components/ActivityItem.vue'
+import SearchBar from '@/components/SearchBar.vue'
+import Spinner from '../components/Spinner/Spinner.vue'
+import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
 
-
-const { activities, queryActivities, searchQuery, loading } = storeToRefs(useActivitiesStore())
-const activitiesStore = useActivitiesStore();
+const { queryActivities, searchQuery, loading } = storeToRefs(
+  useActivitiesStore()
+)
+const activitiesStore = useActivitiesStore()
 
 onBeforeMount(() => {
-  activitiesStore.fetchActivities();
+  activitiesStore.fetchActivities()
 })
+
+const activities = computed(() => {
+  const updatedActivities = activitiesStore.getActivities
+  return updatedActivities
+})
+
 </script>
 
 <template>
@@ -23,18 +30,34 @@ onBeforeMount(() => {
     <div class="containerPostits">
       <Spinner v-if="loading" />
       <div v-else-if="activities.length === 0">
-        <p>No hay actividades creadas en este momento, haz clic en el botón de abajo para crear una nueva actividad</p>
+        <p>
+          No hay actividades creadas en este momento, haz clic en el botón de
+          abajo para crear una nueva actividad
+        </p>
         <div class="button">
-          <img src="@/assets/images/create-activity-icon.svg" alt="ir actividades">
+          <img
+            src="@/assets/images/create-activity-icon.svg"
+            alt="ir actividades"
+          />
           <RouterLink class="crearActividad" to="/myactivities/form">
             Crear Actividad
           </RouterLink>
         </div>
       </div>
-      <ActivityItem v-else-if="searchQuery" v-for="activity in queryActivities" v-show="activity.isAssigned === false"
-        :activity="activity" :key="activity.id" />
-      <ActivityItem v-else v-for="activity in activities" v-show="activity.isAssigned === false" :activity="activity"
-        :key="activity.title" />
+      <ActivityItem
+        v-else-if="searchQuery"
+        v-for="activity in queryActivities"
+        v-show="activity.isAssigned === false"
+        :activity="activity"
+        :key="activity.id"
+      />
+      <ActivityItem
+        v-else
+        v-for="activity in activities"
+        v-show="activity.isAssigned === false"
+        :activity="activity"
+        :key="activity.title"
+      />
     </div>
     <PageInfoModal />
   </main>

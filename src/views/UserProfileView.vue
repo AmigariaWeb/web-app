@@ -20,6 +20,8 @@ onBeforeMount(() => {
   if (userStore.user === null) {
     const localValues = JSON.parse(localStorage.getItem('localUser'))
     addInitialValues(localValues)
+  }else{
+    addInitialValues(userStore.user)
   }
 })
 

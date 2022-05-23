@@ -83,6 +83,7 @@ export const useUserStore = defineStore("userStore", {
       try {
         const user = await getUser(auth.currentUser);
         this.SET_USER(user);
+        localStorage.setItem('localUser', JSON.stringify(user))
         router.push('/')
       } catch (error) {
         return swal("error", "El usuario no existe", "")
@@ -150,6 +151,7 @@ export const useUserStore = defineStore("userStore", {
         user = await getUser(auth.currentUser)
       }
       this.SET_USER(user);
+      localStorage.setItem('localUser', JSON.stringify(user))
       router.push("/")
     },
 

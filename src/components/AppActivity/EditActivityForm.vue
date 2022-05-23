@@ -18,7 +18,7 @@ const newActivity = ref({
   to: activity.to,
   id: activity.id,
   userId: activity.userId,
-  isAssigned: activity.isAssigned === "true",
+  isAssigned: activity.isAssigned,
 })
 
 const sendForm = async (e) => {

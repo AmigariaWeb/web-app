@@ -17,12 +17,14 @@ onBeforeMount(() => {
   activitiesStore.fetchActivities()
 })
 
-const deleteActivity = (activity) => {
+
+const deleteActivity =  (activity) => {
   activitiesStore.deleteActivity(activity)
   userStore.user.userActivities = userStore.user.userActivities.filter(
     (currentActivity) => currentActivity.id !== activity.id
   )
   userStore.updateUser(userStore.user)
+
 }
 
 const editActivity = (activity) => {
@@ -37,10 +39,14 @@ const showActivity = (activity) => {
 const removeParticipation = (activity) => {
   activity.isAssigned = false
   updateActivity(activity)
+  activitiesStore.updateActivities(activity)
+
   userStore.user.joinedActivities = userStore.user.joinedActivities.filter(
     (currentActivity) => currentActivity.id !== activity.id
   )
   userStore.updateUser(userStore.user)
+  localStorage.setItem('lastActivity', JSON.stringify(activity))
+
   swal(
     'success',
     'Participación eliminada',
@@ -54,6 +60,7 @@ const removeParticipation = (activity) => {
     <CreatedActivities
       :activities="userStore.user.userActivities"
       :editActivity="editActivity"
+      :showActivity="showActivity"
       :deleteActivity="deleteActivity"
     />
     <ParticipatedActivities
