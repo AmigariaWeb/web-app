@@ -7,7 +7,7 @@ import SearchBar from '@/components/SearchBar.vue'
 import Spinner from '../components/Spinner/Spinner.vue'
 import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
 
-const { activities, queryActivities, searchQuery, loading } = storeToRefs(
+const { activities, queryActivities, searchQuery, loading, getAreAvailableActivities} = storeToRefs(
   useActivitiesStore()
 )
 const activitiesStore = useActivitiesStore()
@@ -15,8 +15,6 @@ const activitiesStore = useActivitiesStore()
 onBeforeMount(() => {
   activitiesStore.fetchActivities()
 })
-
-
 </script>
 
 <template>
@@ -25,7 +23,7 @@ onBeforeMount(() => {
     <SearchBar />
     <div class="containerPostits">
       <Spinner v-if="loading" />
-      <div v-else-if="activities.length === 0">
+      <div v-else-if="!getAreAvailableActivities">
         <p>
           No hay actividades creadas en este momento, haz clic en el botón de
           abajo para crear una nueva actividad

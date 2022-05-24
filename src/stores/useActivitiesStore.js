@@ -16,6 +16,16 @@ export const useActivitiesStore = defineStore('activitiesStore', {
     getActivities() {
       return this.activities
     },
+    getAreAvailableActivities() {
+      let foo = false;
+      this.activities.forEach(a => {
+        if (!a.isAssigned) {
+          foo = true;
+          return;
+        }
+      });
+      return foo;
+    }
   },
   actions: {
     SET_ACTIVITIES(activities) {
@@ -55,7 +65,7 @@ export const useActivitiesStore = defineStore('activitiesStore', {
       } catch (error) {
         this.error = error
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
 
