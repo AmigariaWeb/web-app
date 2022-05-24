@@ -1,14 +1,29 @@
 <script setup>
-  import WorkshopList from '@/components/WorkshopList.vue';
-  import { useWorkshopsStore } from '@/stores/workShops';
-  const storeWorkshops = useWorkshopsStore();
+import { onBeforeMount, onMounted, reactive } from 'vue';
+import { useWorkshopsStore } from '@/stores/useworkShopsStore.js';
+import { storeToRefs } from 'pinia';
+import WorkshopList from '@/components/AppWorkshop/WorkshopList.vue';
+import Spinner from '@/components/Spinner/Spinner.vue';
+
+const { workshops, loading} = storeToRefs(useWorkshopsStore())
+const { fetchWorkshops } = useWorkshopsStore();
+
+// Rellenar actividades
+    onBeforeMount( async () => {
+      await fetchWorkshops()
+    })
+    onMounted(() => {
+      
+    })
+
+
 </script>
 
 <template>
   <main>
-    <div class="workshop__item" v-for="(item, index) in storeWorkshops.data" :key="index">
-      <WorkshopList :data="item" :index="index"/>
-    </div>
+    <Spinner v-if="loading" />
+    <p v-else-if="workshops.length === 0">Aun no hay talleres registrados</p>
+    <WorkshopList v-else v-for="(workshop, index) in workshops" :data="workshop" :index="index" :key="index"/>
   </main>
 </template>
 
