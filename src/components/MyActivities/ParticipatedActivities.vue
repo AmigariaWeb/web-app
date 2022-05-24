@@ -8,7 +8,7 @@ const props = defineProps({
 
 <template>
   <div class="card-activities">
-    <h3 class="title">Participaciones</h3>
+    <h1 class="title">Participaciones</h1>
     <div v-if="activities.length !== 0" class="card-activity" v-for="activity in activities" :key="activity.id">
       <div class="details">
         <p class="activity-title">{{ activity.title }}</p>

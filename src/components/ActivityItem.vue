@@ -16,7 +16,7 @@ const saveActivity = () => {
 <template>
   <div class="box">
     <div class="postit">
-      <h3>{{ activity.title }}</h3>
+      <p class="title">{{ activity.title }}</p>
       <p class="postItContent">{{ activity.description }}</p>
       <div class="postItData">
         <p>{{ activity.date }}</p>
@@ -53,7 +53,7 @@ const saveActivity = () => {
   transition: transform 0.5s ease;
   clip-path: polygon(0% 0%, 0% 100%, 85% 100%, 100% 85%, 100% 0%);
 
-  h3 {
+  .title {
     font-size: 1.5rem;
     line-height: 2.25rem;
     text-align: center;

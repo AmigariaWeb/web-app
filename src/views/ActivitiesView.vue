@@ -21,7 +21,7 @@ onBeforeMount(() => {
 
 <template>
   <main class="container">
-    <h3 class="title">Actividades disponibles</h3>
+    <h1 class="title">Actividades disponibles</h1>
     <SearchBar />
     <div class="containerPostits">
       <Spinner v-if="loading" />
@@ -67,7 +67,7 @@ onBeforeMount(() => {
   flex-direction: column;
   color: var(--clr-dark-blue);
 
-  h3 {
+  h1 {
     text-align: center;
     color: var(--clr-emphasis-light);
   }

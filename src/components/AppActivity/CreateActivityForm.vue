@@ -31,7 +31,7 @@ const sendForm = async (e) => {
 
 <template>
   <main class="container">
-  <h3>Crear Actividad</h3>
+  <h1>Crear Actividad</h1>
     <div class="form-container">
       <form @submit="sendForm" id="activity-form">
         <div class="title form-content">
@@ -123,7 +123,7 @@ const sendForm = async (e) => {
 <style lang="scss" scoped>
 
 .container{
-    h3{
+    h1{
     text-align: center;
     color: var(--clr-emphasis-light);
   }
