@@ -72,7 +72,7 @@ const addParticipation = () => {
   <main>
     <div class="container">
       <div class="details">
-        <h3>{{ activity.title }}</h3>
+        <h1>{{ activity.title }}</h1>
         <div class="description">
           <p>{{ activity.description }}</p>
         </div>
@@ -128,7 +128,7 @@ const addParticipation = () => {
   box-shadow: var(--shadow);
   position: relative;
 
-  h3 {
+  h1 {
     font-weight: bold;
     text-align: center;
   }

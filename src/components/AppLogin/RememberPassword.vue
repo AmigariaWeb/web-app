@@ -27,7 +27,7 @@ const resetUserPassword = async () => {
 <template>
   <RouterLink to="/login">&lt- Volver a inicio de sesión</RouterLink>
   <form class="resetPasswordForm" @submit.prevent="resetUserPassword">
-    <h3>¿Has olvidado la contraseña?</h3>
+    <h1>¿Has olvidado la contraseña?</h1>
     <p>Introduce tu correo electrónico para obtener una nueva.</p>
     <div class="details">
       <label for="emailForResetPass">Email:</label>
@@ -143,7 +143,7 @@ a {
 @media(max-width:640px) {
   .resetPasswordForm {
 
-    h3 {
+    h1 {
       font-size: 1.8rem;
     }
   }

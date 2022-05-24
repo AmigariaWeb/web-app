@@ -13,7 +13,7 @@ const props = defineProps({
     class="card"
     :class="index % 2 ? 'card-right' : 'card-left'"
   >
-    <h2 class="card__title">{{ data.index }} {{ data.title }}</h2>
+    <p class="card__title">{{ data.index }} {{ data.title }}</p>
     <img class="card-header" :src="data.img" :alt="data.title" loading="lazy" />
     <div class="card-body">
       <p class="card-body__text">

@@ -43,7 +43,7 @@ const sendForm = async (e) => {
 <template>
   <main>
     <div class="form-container">
-      <h3 class="form-title">Editar Actividad</h3>
+      <h1 class="form-title">Editar Actividad</h1>
       <form @submit="sendForm" id="activity-form">
         <div class="title form-content">
           <label for="titleForm">Título</label>

@@ -12,7 +12,7 @@ const register = async () => {
 </script>
 <template>
   <main class="login-container">
-    <h3 class="login-title">{{ $route.name }}</h3>
+    <h1 class="login-title">{{ $route.name }}</h1>
     <form @submit.prevent="register">
       <div class="login-block">
         <label class="login-block__label" for="">Email</label>

@@ -15,7 +15,7 @@
         <div class="container">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="card-header__title">{{data.title}}</h1>            
+                    <h1 class="card-header__title">{{data.title}}</h1>
                 </div>
                 <div class="card-body">
                     <img class="card-body__img" :src="data.img" :alt="data.title">
@@ -32,11 +32,11 @@
                 </div>
                 <div class="card-footer">
                     <div class="card-footer__item">
-                        <h2 class="card-footer__title">cómo llegar</h2>
+                        <p class="card-footer__title">Cómo llegar</p>
                         <div class="card-footer__map" v-html="data.map"></div>
                     </div>
                     <div class="card-footer__item">
-                        <h2 class="card-footer__title">Detalles del organizador</h2>
+                        <p class="card-footer__title">Detalles del organizador</p>
                         <div class="card-footer__wrap">
                             <img class="card-footer__img" src="https://picsum.photos/250/162" :alt="data.title">
                             <div class="card-footer__detall">
@@ -92,14 +92,14 @@
                 /* or 176% */
 
                 text-align: center;
-                
+
 
                 @media screen and (min-width: 1024px) {
                     font-weight: 700;
                     font-size: 36px;
                     line-height: 63px;
                     text-align: center;
-                    
+
                 }
 
             }
