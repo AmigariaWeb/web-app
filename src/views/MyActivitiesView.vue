@@ -37,10 +37,14 @@ const showActivity = (activity) => {
 const removeParticipation = (activity) => {
   activity.isAssigned = false
   updateActivity(activity)
+  activitiesStore.updateActivities(activity)
+
   userStore.user.joinedActivities = userStore.user.joinedActivities.filter(
     (currentActivity) => currentActivity.id !== activity.id
   )
   userStore.updateUser(userStore.user)
+  localStorage.setItem('lastActivity', JSON.stringify(activity))
+
   swal(
     'success',
     'Participación eliminada',
@@ -54,6 +58,7 @@ const removeParticipation = (activity) => {
     <CreatedActivities
       :activities="userStore.user.userActivities"
       :editActivity="editActivity"
+      :showActivity="showActivity"
       :deleteActivity="deleteActivity"
     />
     <ParticipatedActivities
@@ -100,7 +105,7 @@ const removeParticipation = (activity) => {
         align-items: center;
         width: min(100%, 19rem);
         gap: 0.8rem;
-        overflow:hidden;
+        overflow: hidden;
 
         .activity-title {
           font-size: 1.563rem;
@@ -109,7 +114,7 @@ const removeParticipation = (activity) => {
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
-          text-align:center;
+          text-align: center;
         }
         .description {
           background-color: var(--clr-emphasis-light);
@@ -122,7 +127,7 @@ const removeParticipation = (activity) => {
           -webkit-box-orient: vertical;
           overflow: hidden;
           line-height: 2rem;
-          padding:0.5rem;
+          padding: 0.5rem;
         }
       }
       .info-and-btns {
@@ -173,10 +178,10 @@ const removeParticipation = (activity) => {
   }
 }
 .no-activities {
-  margin-top:1rem;
+  margin-top: 1rem;
   color: var(--clr-emphasis-light);
   text-align: center;
-  font-size:1.2rem;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 @media (max-width: 1440px) {
