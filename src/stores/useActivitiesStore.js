@@ -1,50 +1,81 @@
 import { defineStore } from 'pinia'
-import { getAllActivities, deleteActivityById } from '@/services/firebase/crud';
-import { swal } from '../utils/swal';
+import { deleteActivityById } from '@/services/firebase/crud'
+import { swal } from '../utils/swal'
+import { collection, onSnapshot} from "firebase/firestore";
+import { db } from '../services/firebase'
 
-
-export const useActivitiesStore = defineStore("activitiesStore", {
+export const useActivitiesStore = defineStore('activitiesStore', {
   state: () => ({
-    activities: null,
+    activities: [],
     queryActivities: [],
-    searchQuery: "",
+    searchQuery: '',
     loading: false,
-    error: null
+    error: null,
   }),
   getters: {
     getActivities() {
-      return this.activities;
+      return this.activities
     },
-
   },
   actions: {
-    async fetchActivities() {
+    SET_ACTIVITIES(activities) {
+      this.activities = activities
+    },
+    CLEAR_ACTIVITIES() {
+      this.activities = []
+    },
+    fetchActivities() {
       this.loading = true
       try {
-        const activities = [];
-        const querySnapshot = await getAllActivities();
-        querySnapshot.forEach(doc => {
-          const activityWithId = {
-            ...doc.data(),
-            id: doc.id
-          };
-          activities.push(activityWithId);
+        this.activities = []
+        onSnapshot(collection(db, "activities"), snapshot => {
+          snapshot.docChanges().forEach(changedDoc => {
+            const activityWithId = {
+              ...changedDoc.doc.data(),
+              id: changedDoc.doc.id
+            };
+            if (changedDoc.type === "added") {
+              this.activities.push(activityWithId)
+            }
+            if (changedDoc.type === "removed") {
+              this.activities = this.activities.filter(
+                (currentActivity) => changedDoc.doc.id !== currentActivity.id
+              )
+            }
+            if (changedDoc.type === "modified") {
+              this.activities = this.activities.map(currentActivity => {
+                if (changedDoc.doc.id === currentActivity.id) {
+                  currentActivity = activityWithId
+                }
+                return currentActivity
+              })
+            }
+          });
         })
-        this.activities = activities;
       } catch (error) {
-        this.error = error;
+        this.error = error
       } finally {
-        this.loading = false;
+        this.loading = false
       }
     },
 
     findSearchQuery() {
       if (this.activities) {
-        this.queryActivities = this.activities.filter(activity => {
-          if (activity.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-            || activity.type.toLowerCase().includes(this.searchQuery.toLowerCase())
-            || activity.userName.toLowerCase().includes(this.searchQuery.toLowerCase())
-            || activity.description.toLowerCase().includes(this.searchQuery.toLowerCase())){
+        this.queryActivities = this.activities.filter((activity) => {
+          if (
+            activity.title
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase()) ||
+            activity.type
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase()) ||
+            activity.userName
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase()) ||
+            activity.description
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase())
+          ) {
             return true
           }
           return false
@@ -52,13 +83,27 @@ export const useActivitiesStore = defineStore("activitiesStore", {
       }
       return null
     },
+    updateActivities(activity) {
+      const updatedActivities = this.activities.map((currentActivity) => {
+        if (activity.id === currentActivity.id) {
+          currentActivity = activity
+        }
+        return currentActivity
+      })
+      this.SET_ACTIVITIES(updatedActivities)
+    },
 
     deleteActivity(activity) {
-      swal("success", "Actividad eliminada", "Se ha eliminado la actividad correctamente.");
-      deleteActivityById(activity.id);
-      this.activities = this.activities.filter(currentActivity => activity.id !== currentActivity.id);
-    }
+      swal(
+        'success',
+        'Actividad eliminada',
+        'Se ha eliminado la actividad correctamente.'
+      )
+      deleteActivityById(activity.id)
+      const newActivities = this.activities.filter(
+        (currentActivity) => activity.id !== currentActivity.id
+      )
+      this.SET_ACTIVITIES(newActivities)
+    },
   },
-
-});
-
+})

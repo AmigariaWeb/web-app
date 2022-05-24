@@ -18,12 +18,13 @@ const newActivity = ref({
   to: activity.to,
   id: activity.id,
   userId: activity.userId,
-  isAssigned: activity.isAssigned === "true",
+  messages: activity.messages,
+  isAssigned: activity.isAssigned === true,
 })
 
 const sendForm = async (e) => {
+  e.preventDefault()
   if (Object.keys(activity).length !== 0) {
-    e.preventDefault()
     userStore.user.userActivities = userStore.user.userActivities.filter(
       (oldActivity) => oldActivity.id !== newActivity.value.id
     )

@@ -11,6 +11,10 @@ import { useRouter } from 'vue-router'
 import { updateActivity } from '@/services/firebase/crud.js'
 import { onMounted, onBeforeMount, ref } from 'vue'
 import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
+import Chat from '../components/Chat/Chat.vue'
+import { useActivitiesStore } from '../stores/useActivitiesStore'
+
+const activitiesStore = useActivitiesStore();
 
 const TYPE_IMAGES = {
   ayuda: ayudaImg,
@@ -43,15 +47,18 @@ onMounted(() => {
   }
 })
 
-const addParticipation = () => {
+const addParticipation = async () => {
   if (
     userStore.user.joinedActivities.length <= 2 ||
     userStore.user.isAdmin === true
   ) {
     activity.value.isAssigned = true
     updateActivity(activity.value)
+    activitiesStore.updateActivities(activity.value)
     userStore.user.joinedActivities.push(activity.value)
     userStore.updateUser(userStore.user)
+    localStorage.setItem('lastActivity', JSON.stringify(activity.value))
+
     swal(
       'success',
       '¡Actividad aceptada!',
@@ -104,6 +111,15 @@ const addParticipation = () => {
           <img class="type-img" :src="typeImg" :alt="activity.type" />
         </div>
       </div>
+    <Chat
+    class="chat"
+      v-if="
+        activity.isAssigned === 'true' ||
+        activity.isAssigned === true ||
+        activity.activityIsMine
+      "
+      :activity="activity"
+    />
     </div>
     <PageInfoModal />
   </main>
@@ -112,9 +128,11 @@ const addParticipation = () => {
 <style lang="scss" scoped>
 .container {
   display: flex;
+  flex-direction: column;
   margin: 1rem auto;
   max-width: 700px;
   justify-content: center;
+  gap: 1rem;
 }
 
 .details {
