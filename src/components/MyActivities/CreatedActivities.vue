@@ -3,12 +3,18 @@ const props = defineProps({
   activities: Object,
   editActivity: Function,
   deleteActivity: Function,
+  showActivity: Function,
 })
 </script>
 <template>
   <div class="card-activities">
-    <h1 class="title">Actividades creadas</h1>
-    <div v-if="activities.length !== 0" class="card-activity" v-for="activity in activities" :key="activity.id">
+    <h3 class="title">Actividades creadas</h3>
+    <div
+      v-if="activities.length !== 0"
+      class="card-activity"
+      v-for="activity in activities"
+      :key="activity.id"
+    >
       <div class="details">
         <p class="activity-title">{{ activity.title }}</p>
         <p class="description">{{ activity.description }}</p>
@@ -17,6 +23,9 @@ const props = defineProps({
         <p>{{ activity.date }}</p>
         <p>{{ activity.from }}h a {{ activity.to }}h</p>
         <div class="buttons">
+          <button class="edit-btn" @click="showActivity(activity)">
+            Ver
+          </button>
           <button class="edit-btn" @click="editActivity(activity)">
             Editar
           </button>
@@ -27,9 +36,15 @@ const props = defineProps({
       </div>
     </div>
     <div class="no-activities" v-else>
-      <p>No has creado ninguna actividad, haz clic en el botón de abajo para crear una nueva actividad</p>
+      <p>
+        No has creado ninguna actividad, haz clic en el botón de abajo para
+        crear una nueva actividad
+      </p>
       <div class="button">
-        <img src="@/assets/images/create-activity-icon.svg" alt="ir actividades">
+        <img
+          src="@/assets/images/create-activity-icon.svg"
+          alt="ir actividades"
+        />
         <RouterLink class="crearActividad" to="/myactivities/form">
           Crear Actividad
         </RouterLink>
