@@ -1,13 +1,28 @@
 <script setup>
-    import { useWorkshopsStore } from '@/stores/workShops';
-    import { ref } from 'vue';
+    import { useWorkshopsStore } from '@/stores/useworkShopsStore.js';
+    import { storeToRefs } from 'pinia';
+    import Spinner from '@/components/Spinner/Spinner.vue';
+
+    import { onBeforeMount, onMounted, ref, reactive } from 'vue';
     import {useRoute, RouterView, RouterLink} from 'vue-router'
 
-    const route= useRoute();
-    const currentSection = ref(route.params);
-    const storeWorkshops = useWorkshopsStore()
-    const data =storeWorkshops.workshopBySlug(currentSection.value.slug)[0]
+    const route = useRoute()
 
+    const { workshops, loading,selectedWorkshop } = storeToRefs(useWorkshopsStore())
+    const { fetchWorkshops,workshopBySlug } = useWorkshopsStore();
+    let workshop = reactive({ 
+        
+    })
+
+    // // Rellenar actividades
+    onBeforeMount(async () => {
+        await fetchWorkshops()
+
+        workshop = await workshopBySlug(route.params.slug)
+    })
+    onMounted(() => {
+      workshop = selectedWorkshop.value
+    })
 </script>
 
 <template>
@@ -15,40 +30,46 @@
         <div class="container">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="card-header__title">{{data.title}}</h1>
+                    <h1 class="card-header__title">{{selectedWorkshop.title}}</h1>            
                 </div>
                 <div class="card-body">
-                    <img class="card-body__img" :src="data.img" :alt="data.title">
-                    <div class="card-body__text">
-                        <p>
-                            {{data.description}}
-                        </p>
-                    <div class="card-body__detall">
-                        <p><strong>Modalidad:</strong> {{"[insert text]"}}</p>
-                        <p><strong>Fecha:</strong> {{"[00-00-000]"}}</p>
-                        <p><strong>Horario:</strong> {{"[00 - 00]"}}</p>
-                    </div>
+                    <img class="card-body__img" :src="selectedWorkshop.image" :alt="selectedWorkshop.title">
+                    <div class="card-body__text" >
+                            <div v-html="selectedWorkshop.description"></div>
+                        <div class="card-body__detall">
+                            <p><strong>Modalidad:</strong> {{selectedWorkshop.type}}</p>
+                            <p><strong>Fecha:</strong> {{selectedWorkshop.date}}</p>
+                            <p><strong>Horario:</strong> {{selectedWorkshop.from}} - {{selectedWorkshop.to}}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="card-footer__item">
-                        <p class="card-footer__title">Cómo llegar</p>
-                        <div class="card-footer__map" v-html="data.map"></div>
+                        <h2 class="card-footer__title">cómo llegar</h2>
+                        <div class="card-footer__map" v-html="selectedWorkshop.map"></div>
                     </div>
                     <div class="card-footer__item">
                         <p class="card-footer__title">Detalles del organizador</p>
                         <div class="card-footer__wrap">
-                            <img class="card-footer__img" src="https://picsum.photos/250/162" :alt="data.title">
+                            <img class="card-footer__img" :src="selectedWorkshop.imageLogo" :alt="workshop.title">
                             <div class="card-footer__detall">
-                                <p><strong>Nombre:</strong> {{"[insert text]"}}</p>
-                                <p><strong>Dirección:</strong> {{"c/ falsa 1 2 3, av. de la piruleta"}}</p>
-                                <p><strong>Email:</strong> {{"xXamigariaXx@gmail.com"}}</p>
-                                <p><strong>Teléfono:</strong> {{"[000 00 00 00]"}}</p>
+                                <p><strong>Nombre:</strong> {{selectedWorkshop.asociationName}}</p>
+                                <p><strong>Dirección:</strong> {{selectedWorkshop.direction}}</p>
+                                <p>
+                                    <a :href="`mailto:`+selectedWorkshop.email">
+                                        <strong>Email:</strong> {{selectedWorkshop.email}}
+                                    </a>
+                                </p>
+                                <p>
+                                    <a :href="`tel:+`+selectedWorkshop.phone">
+                                        <strong>Teléfono:</strong> {{selectedWorkshop.phone}}
+                                    </a>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <a class="card__btn" href="https://www.gooogle.es/">Apuntate</a> -->
+                <a v-if="selectedWorkshop.link" class="card__btn" :href="selectedWorkshop.link" target="_blank">Apuntate</a>
             </div>
         </div>
     </main>
@@ -59,11 +80,22 @@
 </template>
 
 <style lang="scss" scoped>
+    .card-footer__map ::v-deep(iframe){
+        height: 100%!important;
+        width: 100%!important;
+    }
+    ::v-deep(h1),
+    ::v-deep(h2),
+    ::v-deep(h3){
+        word-wrap: break-word;
+    }
     .container{
         background-color:var(--clr-green-light);
         border-radius: 20px;
         box-shadow:10px 10px 0px rgba(0, 0, 0, 0.15);
-        padding:20px;
+        @media screen and (min-width: 768px) {
+            padding:20px;
+        }
     }
     .card{
         max-width: 979px;
@@ -147,12 +179,19 @@
             &__item{
                 font-size: 16px;
                 line-height: 35px;
+                width:100%;
+                @media screen and (min-width: 768px) {
+                    width:auto;
+                }
             }
             &__map{
                 height: 163px;
-                width: 265px;
+                width: 100%;
                 border-radius: 20px;
                 overflow: hidden;
+                @media screen and (min-width: 768px) {
+                    width:265px;
+                }
             }
             &__title{
                 margin:20px 0px;
@@ -163,20 +202,38 @@
             }
             &__img{
                 height:162px;
-                width:250px;
+                width:100%;
                 border-radius:20px;
+                object-fit: contain;
+                @media screen and (min-width: 768px) {
+                    width:250px;
+                }
             }
             &__wrap{
                 display:flex;
                 flex-wrap:wrap;
                 gap:20px;
+                justify-content: center;
+                align-items: center;
             }
             &__detall{
                 display:flex;
                 flex-direction:column;
-                justify-content:space-evenly;
-                justify-items:space-evenly;
-                align-content:space-evenly;
+                justify-content:center;
+                align-content:center;
+                word-wrap: break-word;
+                width:100%;
+                @media screen and (min-width: 768px) {
+                    width:auto;
+                }
+                ::v-deep(a){
+                    color:var(--clr-dark-blue);
+
+                }
+                ::v-deep(p){
+                    padding:0px 10px;
+                }
+                
             }
         }
         &__btn{
