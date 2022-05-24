@@ -1,5 +1,5 @@
 <script setup>
-    import { useWorkshopsStore } from '@/stores/useworkShopsStore.js';
+    import { useWorkshopsStore } from '@/stores/useWorkshopsStore.js';
     import { storeToRefs } from 'pinia';
     import Spinner from '@/components/Spinner/Spinner.vue';
 
