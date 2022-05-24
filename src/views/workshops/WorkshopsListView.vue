@@ -1,6 +1,6 @@
 <script setup>
 import { onBeforeMount, onMounted, reactive } from 'vue';
-import { useWorkshopsStore } from '@/stores/useWorkShopsStore.js';
+import { useWorkshopsStore } from '@/stores/useWorkshopsStore.js';
 import { storeToRefs } from 'pinia';
 import WorkshopList from '@/components/AppWorkshop/WorkshopList.vue';
 import Spinner from '@/components/Spinner/Spinner.vue';
