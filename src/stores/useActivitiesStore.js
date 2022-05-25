@@ -40,12 +40,17 @@ export const useActivitiesStore = defineStore('activitiesStore', {
       this.loading = true
       try {
         this.activities = []
+        const firstime = true;
         onSnapshot(collection(db, "activities"), snapshot => {
           snapshot.docChanges().forEach(changedDoc => {
             const activityWithId = {
               ...changedDoc.doc.data(),
               id: changedDoc.doc.id
             };
+            if (firstime === false || changedDoc.type === "added") {
+              this.activities.push(activityWithId)
+              return
+            }
             if (changedDoc.type === "added") {
               this.activities.push(activityWithId)
             }
@@ -62,6 +67,7 @@ export const useActivitiesStore = defineStore('activitiesStore', {
                 return currentActivity
               })
             }
+            firstime = false;
           });
         })
       } catch (error) {
