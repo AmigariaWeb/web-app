@@ -50,7 +50,7 @@ onMounted( async() => {
         <span class="text">Nueva actividad</span>
       </RouterLink>
       <hr v-if="userStore.isAdmin">
-      <RouterLink v-if="userStore.isAssociation || userStore.isAdmin" class="navlink" to="/myactivities/form">
+      <RouterLink v-if="userStore.isAssociation || userStore.isAdmin" class="navlink" to="/workshops/form">
         <img
           src="@/assets/images/create-activity-icon.svg"
           alt="ir crear actividad"
