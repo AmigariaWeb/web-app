@@ -35,7 +35,8 @@ export const swal = (type, title, message) => {
       confirmButtonColor: "#71CC98",
       iconHtml: `<img width='100px' src='${iconInfo}'>`,
       imageAlt: 'info',
-      background: "#fff"
+      background: "#fff",
+      footer: '<a href="../components/FAQ">¿Necesita más información?</a>',
     })
   }
 }
