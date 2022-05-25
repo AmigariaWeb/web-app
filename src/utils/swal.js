@@ -36,7 +36,8 @@ export const swal = (type, title, message) => {
       iconHtml: `<img width='100px' src='${iconInfo}'>`,
       imageAlt: 'info',
       background: "#fff",
-      footer: '<a href="../components/FAQ">¿Necesita más información?</a>',
+      footer: '<a href="./FAQ">¿Necesita más información?</a>',
+
     })
   }
 }
