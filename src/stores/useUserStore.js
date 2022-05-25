@@ -8,6 +8,8 @@ import { addUpdateUser, getUser } from '../services/firebase/crud';
 export const useUserStore = defineStore("userStore", {
   state: () => ({
     user: null,
+    isAssociation:false,
+    isAdmin:false
   }),
   getters: {
     isEmailVerified: (state) => {
@@ -163,6 +165,22 @@ export const useUserStore = defineStore("userStore", {
           this.SET_USER(userDB);
         }
       })
+    },
+    async setAdmin(){
+      if(this.user){
+        let user = await getUser(this.user)
+        if(user.isAdmin){
+            this.isAdmin = true;
+        }
+      }
+    },
+    async setAssociation(){
+      if(this.user){
+        let user = await getUser(this.user)
+        if(user.isAssociation){
+            this.isAssociation = true;
+        }
+      }
     }
   },
 });
