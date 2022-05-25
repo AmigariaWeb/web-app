@@ -68,6 +68,10 @@ onMounted(() => {
           userStore.user.name || 'Usuario'
         }}</span>
       </RouterLink>
+      <RouterLink class="navlink" to="../../views/FAQsView.vue">
+        <img src="@/assets/images/info-modal.svg" alt="ir preguntas frecuentes" />
+        <span class="text">Preguntas<br>frecuentes</span>
+      </RouterLink>
       <button  class="navlink" @click="userStore.logout()">
         <img src="@/assets/images/logout-icon.svg" alt="cerrar sesión" />
         <span class="text" >
