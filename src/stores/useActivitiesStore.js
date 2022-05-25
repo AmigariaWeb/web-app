@@ -9,7 +9,6 @@ export const useActivitiesStore = defineStore('activitiesStore', {
     activities: [],
     queryActivities: [],
     searchQuery: '',
-    loading: false,
     error: null,
   }),
   getters: {
@@ -25,6 +24,9 @@ export const useActivitiesStore = defineStore('activitiesStore', {
         }
       });
       return foo;
+    },
+    isLoading() {
+      return this.activities.length > 0 ? false : true;
     }
   },
   actions: {

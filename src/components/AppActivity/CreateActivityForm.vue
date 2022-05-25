@@ -14,10 +14,7 @@ const todayDate = new Date().toISOString().split('T')[0];
 const sendForm = async (e) => {
   e.preventDefault()
   if(userStore.user.userActivities.length <= 2 || userStore.user.isAdmin === true){
-    newActivity.value.userId = userStore.user.uid;
-    newActivity.value.isAssigned = false;
-    newActivity.value.messages = [];
-    newActivity.value.userName = userStore.user.name || "Anónimo";
+    fillNewActivity();
     const activityId = await addNewActivity(newActivity.value)
     const newActivityWithId = { ...newActivity.value, id: activityId }
     userStore.user.userActivities.push(newActivityWithId)
@@ -27,6 +24,13 @@ const sendForm = async (e) => {
   }else{
     return swal("error", "Has llegado al límite", "Ya tienes 3 actividades creadas, borra alguna si quieres agregar nuevas.")
   }
+}
+
+const fillNewActivity =()=> {
+    newActivity.value.userId = userStore.user.uid;
+    newActivity.value.isAssigned = false;
+    newActivity.value.messages = [];
+    newActivity.value.userName = userStore.user.name || "Anónimo";
 }
 </script>
 

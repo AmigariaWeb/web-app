@@ -124,6 +124,7 @@ const cancelEditMode = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top:1rem;
 
   .user-details {
     background-color: var(--clr-yellow-light);

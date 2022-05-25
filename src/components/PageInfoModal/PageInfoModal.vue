@@ -38,8 +38,8 @@ const showInfo = () => {
 <style lang="scss" scoped>
 .info-modal {
   position: fixed;
-  bottom: 5%;
-  right: 5%;
+  bottom: 20%;
+  right: 0.5%;
 
   button {
     border-radius: 50%;

@@ -7,7 +7,7 @@ import SearchBar from '@/components/SearchBar.vue'
 import Spinner from '../components/Spinner/Spinner.vue'
 import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
 
-const { activities, queryActivities, searchQuery, loading, getAreAvailableActivities} = storeToRefs(
+const { activities, queryActivities, searchQuery, isLoading, getAreAvailableActivities} = storeToRefs(
   useActivitiesStore()
 )
 const activitiesStore = useActivitiesStore()
@@ -22,7 +22,7 @@ onBeforeMount(() => {
     <h1 class="title">Actividades disponibles</h1>
     <SearchBar />
     <div class="containerPostits">
-      <Spinner v-if="loading" />
+      <Spinner v-if="isLoading" />
       <div v-else-if="!getAreAvailableActivities">
         <p>
           No hay actividades creadas en este momento, haz clic en el botón de

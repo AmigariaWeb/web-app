@@ -24,7 +24,7 @@ onBeforeMount(() => {
   main {
     min-height: 100vh;
     flex: 1 1 0;
-    padding: 0.8rem;
+
     padding-left: 5rem;
   }
 }

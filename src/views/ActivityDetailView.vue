@@ -129,7 +129,8 @@ const addParticipation = async () => {
 .container {
   display: flex;
   flex-direction: column;
-  margin: 1rem auto;
+  margin: 0 auto;
+  padding-top:1rem;
   max-width: 700px;
   justify-content: center;
   gap: 1rem;

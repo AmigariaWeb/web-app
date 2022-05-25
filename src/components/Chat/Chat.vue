@@ -76,6 +76,7 @@ const send = () => {
   flex-direction: column;
   gap: 0.5rem;
   max-height: 20rem;
+  min-height: 7rem;
   overflow-y: scroll;
   overflow-x: hidden;
 
