@@ -129,6 +129,13 @@ const sendForm = async (e) => {
 </template>
 
 <style lang="scss" scoped>
+
+.container{
+    h1{
+    text-align: center;
+    color: var(--clr-emphasis-light);
+  }
+}
 .form-container {
   display: flex;
   align-items: center;
@@ -139,11 +146,15 @@ const sendForm = async (e) => {
   border-radius: 20px;
   width: 100%;
   max-width: 650px;
-  min-height: 85vh;
+  padding-block:1.5rem;
 }
 
 .form-title {
   text-align: center;
+   &:h3{
+    text-align: center;
+    color: var(--clr-emphasis-light);
+  }
 }
 
 form {
@@ -214,12 +225,14 @@ form {
     gap: 15px;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 
     .type,
     .date {
       display: flex;
       flex-direction: column;
-      min-width: 45%;
+      min-width: 25%;
     }
 
     .from,
