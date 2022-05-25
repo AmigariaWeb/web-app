@@ -115,6 +115,13 @@ const router = createRouter({
       }
     },
     {
+      path: '/access-denied',
+      component: () => import('@/views/PageAccessDeniedView.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: '/:pathMatch(.*)*',
       component: () => import('@/views/PageNotFound.vue')
     },
