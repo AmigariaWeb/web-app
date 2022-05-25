@@ -72,8 +72,10 @@ function convertToSlug(value) {
 	try{
 		if(value){
 			value=value.toLowerCase()
-						.replace(/[^\w ]+/g, '')
-						.replace(/ +/g, '-');
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, "")
+				.replace(/[^\w ]+/g, '')
+				.replace(/ +/g, '-');
 		}else{
 			value='';
 		}
