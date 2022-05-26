@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { auth } from '../services/firebase';
-import { getUser } from '../services/firebase/crud';
+// import { getUser } from '../services/firebase/crud';
 import { onAuthStateChanged } from 'firebase/auth';
 import ActivitiesView from '@/views/ActivitiesView.vue';
 import AppLogin from '@/components/AppLogin/AppLogin.vue';
@@ -48,9 +48,7 @@ const router = createRouter({
       name: "Crear Taller",
       component: () => import('@/views/workshops/WorkshopFormView.vue'),
       meta: {
-        requiresAuth: true,
-        requiresBeAssociation:true,
-        requiresAdmin:true
+        requiresAuth: true
       }
     },
     {
@@ -123,7 +121,10 @@ const router = createRouter({
     },
     {
       path: '/:pathMatch(.*)*',
-      component: () => import('@/views/PageNotFound.vue')
+      component: () => import('@/views/PageNotFound.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
   ]
 })
@@ -140,9 +141,8 @@ const getCurrentUser = () => {
     )
   })
 }
-
 router.beforeEach(async (to, from, next) => {
-
+  
   /*JAVI esto no lo uses esta registrado bajo licencia © 1992 */
   // var originalText = "éàçèñ"
   // var asd = 'asd asd - asd ñ 1sd `àsd``a s`dàs```´ásd'
@@ -152,18 +152,20 @@ router.beforeEach(async (to, from, next) => {
   //                 .replace(/[^\w ]+/g, '')
   //                 .replace(/ +/g, '-');
   const userAuth = await getCurrentUser()
-  const userApp = await getUser(userAuth)
-  
-  if (( userApp.isAdmin ) ) {
-    return next();
-  }
-  if ((await getCurrentUser() === null) && (to.matched.some(record => record.meta.requiresAuth))) {
+
+  // console.log((userAuth === null) && (to.matched.some(record => record.meta.requiresAuth)))
+  if ((userAuth === null) && (to.matched.some(record => record.meta.requiresAuth))) {
     next('/login')
     return
   }
-  if (( !userApp.isAssociation && to.matched.some( record => record.meta.requiresBeAssociation)) ) {
-    return next('/access-denied');
-  }
+  // const userApp = await getUser(userAuth)
+  
+  // if (( userApp.isAdmin ) ) {
+  //   return next();
+  // }
+  // if (( !userApp.isAssociation && to.matched.some( record => record.meta.requiresBeAssociation)) ) {
+  //   return next('/access-denied');
+  // }
   
   next();
 })

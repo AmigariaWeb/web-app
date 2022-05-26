@@ -5,15 +5,21 @@ import { storeToRefs } from 'pinia';
 import WorkshopList from '@/components/AppWorkshop/WorkshopList.vue';
 import Spinner from '@/components/Spinner/Spinner.vue';
 import PageInfoModal from '@/components/PageInfoModal/PageInfoModal.vue'
+import { useUserStore } from '@/stores/useUserStore'
 const { workshops, loading} = storeToRefs(useWorkshopsStore())
 const { fetchWorkshops } = useWorkshopsStore();
+const { isAssociation} = storeToRefs(useWorkshopsStore())
+const { setAssociation } = useUserStore()
+
 
 // Rellenar actividades
     onBeforeMount( async () => {
       await fetchWorkshops()
+      await setAssociation()
     })
     onMounted(() => {
-      
+      console.log(isAssociation);
+      console.log(workshops);
     })
 
 
