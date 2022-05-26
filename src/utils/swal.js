@@ -13,7 +13,8 @@ export const swal = (type, title, message) => {
       confirmButtonColor: "#71CC98",
       iconHtml: `<img width='100px' src='${iconSucces}'>`,
       imageAlt: 'éxito',
-      background: "#fff"
+      background: "#fff",
+      footer: '<a href="/FAQ">¿Necesita más información?</a>',
     })
   }
   if (type === "error") {
@@ -24,7 +25,8 @@ export const swal = (type, title, message) => {
       confirmButtonColor: "#71CC98",
       iconHtml: `<img width='100px' src='${iconError}'>`,
       imageAlt: 'error',
-      background: "#fff"
+      background: "#fff",
+      footer: '<a href="/FAQ">¿Necesita más información?</a>',
     })
   }
   if (type === "info") {
@@ -36,7 +38,7 @@ export const swal = (type, title, message) => {
       iconHtml: `<img width='100px' src='${iconInfo}'>`,
       imageAlt: 'info',
       background: "#fff",
-      footer: '<a href="./FAQ">¿Necesita más información?</a>',
+      footer: '<a href="/FAQ">¿Necesita más información?</a>',
 
     })
   }
