@@ -13,10 +13,12 @@ const toggleMenu = () => {
   localStorage.setItem('is_expanded', is_expanded.value)
 }
 
-onMounted(() => {
+onMounted( async() => {
   if (width.value >= 1720) {
     is_expanded.value = true
     localStorage.setItem('is_expanded', is_expanded.value)
+    await userStore.setAssociation()
+    await userStore.setAdmin()
   }
 })
 </script>
@@ -29,23 +31,31 @@ onMounted(() => {
       </button>
     </div>
     <div class="menu" v-if="userStore.user">
-      <RouterLink class="navlink" to="/">
+      <RouterLink v-if="!userStore.isAssociation || userStore.isAdmin" class="navlink" to="/">
         <img src="@/assets/images/activities-icon.svg" alt="ir actividades" />
         <span class="text">Actividades</span>
       </RouterLink>
-      <RouterLink class="navlink" to="/myactivities">
+      <RouterLink v-if="!userStore.isAssociation || userStore.isAdmin" class="navlink" to="/myactivities">
         <img
           src="@/assets/images/myactivities-icon.svg"
           alt="ir mis actividades"
         />
         <span class="text">Mis actividades</span>
       </RouterLink>
-      <RouterLink class="navlink" to="/myactivities/form">
+      <RouterLink v-if="!userStore.isAssociation || userStore.isAdmin" class="navlink" to="/myactivities/form">
         <img
           src="@/assets/images/create-activity-icon.svg"
           alt="ir crear actividad"
         />
         <span class="text">Nueva actividad</span>
+      </RouterLink>
+      <hr v-if="userStore.isAdmin">
+      <RouterLink v-if="userStore.isAssociation || userStore.isAdmin" class="navlink" to="/workshops/form">
+        <img
+          src="@/assets/images/create-activity-icon.svg"
+          alt="ir crear actividad"
+        />
+        <span class="text">Nuevo Taller</span>
       </RouterLink>
       <RouterLink class="navlink" to="/workshops">
         <img src="@/assets/images/workshops-icon.svg" alt="ir talleres" />

@@ -153,7 +153,14 @@
                 border-radius: 20px;
                 background-color: var(--clr-emphasis-light);
                 padding: 10px;
-                text-align: center;
+                // text-align: center;
+
+                ::v-deep(.ql-size-small){
+                    font-size:0.75rem;
+                }
+                ::v-deep(.ql-size-large){
+                    font-size:1.5rem;
+                }
             }
             &__detall{
                 margin: 10px 0px 0px 0px;

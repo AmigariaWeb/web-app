@@ -32,7 +32,7 @@ let newWorkshop = reactive({
 	renderImgLogo:[] 
 	})
 function infoMap(){
-	swal("infoMaps", "para insertar el mapa", '<p>Situado sobre el lugar de interés clicamos en "Compartir" y luego en "insertar un mapa", del "iframe" que nos dan a copiar solo usaremos la url (lo que está marcado en negrita) </p><p style="background: #003a70;border-radius: 20px;padding: 10px; color:white;">"<strong style="color: #20f37a;">&lt;iframe&gt; src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d449581.6911820676!2d-16.778972358006236!3d28.317801550662995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc6a8398062de729%3A0x67633a63c20a292d!2sParque%20Nacional%20del%20Teide!5e0!3m2!1ses!2ses!4v1652379991909!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"&gt;/iframe&gt;</strong>"</p>')
+	swal("infoMaps", "para insertar el mapa", '<p>Situado sobre el lugar de interés clicamos en "Compartir" y luego en "insertar un mapa", del "iframe" que nos dan a copiar solo usaremos la url (lo que está marcado en negrita) </p><p style="background: #003a70;border-radius: 20px;padding: 10px; color:white;">"<strong style="color: #20f37a;">&lt;iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d449581.6911820676!2d-16.778972358006236!3d28.317801550662995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc6a8398062de729%3A0x67633a63c20a292d!2sParque%20Nacional%20del%20Teide!5e0!3m2!1ses!2ses!4v1652379991909!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"&gt;&lt;/iframe&gt;</strong>"</p>')
 } 
 
 const router = useRouter();
@@ -72,8 +72,10 @@ function convertToSlug(value) {
 	try{
 		if(value){
 			value=value.toLowerCase()
-						.replace(/[^\w ]+/g, '')
-						.replace(/ +/g, '-');
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, "")
+				.replace(/[^\w ]+/g, '')
+				.replace(/ +/g, '-');
 		}else{
 			value='';
 		}
@@ -184,7 +186,7 @@ const previewImage = async (event, obj, image, render) =>{
 					v-model:content="newWorkshop.description"
 					theme="snow" 
 					:toolbar="[
-					[{ 'header': [2, 3, false] }],
+					[{ 'size': [ 'small', false, 'large' ] }],
 					[{ 'list': 'ordered'}, { 'list': 'bullet' }],
 					['bold', 'italic', 'underline'],
 					['blockquote', 'code-block'],
