@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { auth } from '../services/firebase';
-// import { getUser } from '../services/firebase/crud';
+import { getUser } from '../services/firebase/crud';
 import { onAuthStateChanged } from 'firebase/auth';
 import ActivitiesView from '@/views/ActivitiesView.vue';
 import AppLogin from '@/components/AppLogin/AppLogin.vue';
@@ -16,7 +16,8 @@ const router = createRouter({
       name: "Actividades",
       component: ActivitiesView,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresBeAssociation:false
       }
     },
     {
@@ -25,7 +26,8 @@ const router = createRouter({
       component: ActivityDetailView,
       props: true,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresBeAssociation:false
       }
     },
     {
@@ -33,14 +35,14 @@ const router = createRouter({
       name: "Talleres",
       component: () => import('@/views/workshops/WorkshopsListView.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
       }
     },
     {
       path: '/workshops/:slug',
       component: () => import('@/views/workshops/WorkshopShowView.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
       }
     },
         {
@@ -48,7 +50,8 @@ const router = createRouter({
       name: "Crear Taller",
       component: () => import('@/views/workshops/WorkshopFormView.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresBeAssociation:true
       }
     },
     {
@@ -56,7 +59,8 @@ const router = createRouter({
       name: "Mis Actividades",
       component: () => import('@/views/MyActivitiesView.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresBeAssociation:false
       }
     },
     {
@@ -64,7 +68,8 @@ const router = createRouter({
       name: "Crear Actividad",
       component: () => import('@/components/AppActivity/CreateActivityForm.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresBeAssociation:false
       }
     },
     {
@@ -73,7 +78,8 @@ const router = createRouter({
       component: () => import('@/components/AppActivity/EditActivityForm.vue'),
       props: true,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresBeAssociation:false
       }
     },
     {
@@ -81,13 +87,16 @@ const router = createRouter({
       name: "Perfil de Usuario",
       component: () => import('@/views/UserProfileView.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
       }
     },
     {
       path: "/login",
       name: " - ",
       component: () => import('@/views/LoginRegisterView.vue'),
+      meta: {
+        requiresAuth: false,
+      },
       children: [{
         name: "Iniciar sesión",
         path: '',
@@ -109,7 +118,8 @@ const router = createRouter({
       path: '/workinprogress',
       component: () => import('@/views/WorkInProgressView.vue'),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresBeAssociation:false
       }
     },
     {
@@ -142,31 +152,28 @@ const getCurrentUser = () => {
   })
 }
 router.beforeEach(async (to, from, next) => {
-  
-  /*JAVI esto no lo uses esta registrado bajo licencia © 1992 */
-  // var originalText = "éàçèñ"
-  // var asd = 'asd asd - asd ñ 1sd `àsd``a s`dàs```´ásd'
-	// var result = originalText.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
-  // var resultAsd = asd.normalize('NFD')
-  //                 .replace(/[\u0300-\u036f]/g, "")
-  //                 .replace(/[^\w ]+/g, '')
-  //                 .replace(/ +/g, '-');
   const userAuth = await getCurrentUser()
-
-  // console.log((userAuth === null) && (to.matched.some(record => record.meta.requiresAuth)))
+  let userApp;
   if ((userAuth === null) && (to.matched.some(record => record.meta.requiresAuth))) {
-    next('/login')
-    return
+    return next('/login')
   }
-  // const userApp = await getUser(userAuth)
-  
-  // if (( userApp.isAdmin ) ) {
-  //   return next();
-  // }
-  // if (( !userApp.isAssociation && to.matched.some( record => record.meta.requiresBeAssociation)) ) {
-  //   return next('/access-denied');
-  // }
-  
+  try{
+    if (userAuth) {
+      userApp = await getUser(userAuth);
+      if (( userApp.isAdmin ) ) {
+        return next();
+      }
+      if ( ( !userApp.isAssociation && (to.matched.some( record => record.meta.requiresBeAssociation)) ) ) {
+        return next('/access-denied');
+      }
+      if ( ( userApp.isAssociation && ( to.matched.some( record => false === record.meta.requiresBeAssociation)) ) ) {
+        return next('/access-denied');
+      }
+    }
+  }catch (error) {
+    console.log(error);
+    return error;
+  }
   next();
 })
 
