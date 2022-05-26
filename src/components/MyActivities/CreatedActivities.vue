@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 <template>
   <div class="card-activities">
-    <h3 class="title">Actividades creadas</h3>
+    <div class="secondary-title">Actividades creadas</div>
     <div
       v-if="activities.length !== 0"
       class="card-activity"
@@ -56,6 +56,13 @@ const props = defineProps({
 <style lang="scss" scoped>
 p {
   font-weight: 700;
+}
+
+.secondary-title {
+  text-align: center;
+  color: var(--clr-emphasis-light);
+  font-size: 2.25rem;
+  line-height: 4.5rem;
 }
 
 img {

@@ -8,7 +8,7 @@ const props = defineProps({
 
 <template>
   <div class="card-activities">
-    <h1 class="title">Participaciones</h1>
+    <div class="secondary-title">Participaciones</div>
     <div v-if="activities.length !== 0" class="card-activity" v-for="activity in activities" :key="activity.id">
       <div class="details">
         <p class="activity-title">{{ activity.title }}</p>
@@ -41,6 +41,13 @@ const props = defineProps({
 <style lang="scss" scoped>
 p {
   font-weight: 700;
+}
+
+.secondary-title {
+  text-align: center;
+  color: var(--clr-emphasis-light);
+  font-size: 2.25rem;
+  line-height: 4.5rem;
 }
 
 img {

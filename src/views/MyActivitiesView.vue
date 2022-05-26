@@ -1,80 +1,92 @@
 <script setup>
-import { useUserStore } from '../stores/useUserStore'
-import { useActivitiesStore } from '../stores/useActivitiesStore.js'
-import { onBeforeMount } from 'vue'
-import { useRouter } from 'vue-router'
-import ParticipatedActivities from '@/components/MyActivities/ParticipatedActivities.vue'
-import CreatedActivities from '@/components/MyActivities/CreatedActivities.vue'
-import { updateActivity } from '@/services/firebase/crud.js'
-import { swal } from '@/utils/swal.js'
-import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
+import { useUserStore } from "../stores/useUserStore";
+import { useActivitiesStore } from "../stores/useActivitiesStore.js";
+import { onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
+import ParticipatedActivities from "@/components/MyActivities/ParticipatedActivities.vue";
+import CreatedActivities from "@/components/MyActivities/CreatedActivities.vue";
+import { updateActivity } from "@/services/firebase/crud.js";
+import { swal } from "@/utils/swal.js";
+import PageInfoModal from "../components/PageInfoModal/PageInfoModal.vue";
 
-const userStore = useUserStore()
-const activitiesStore = useActivitiesStore()
-const router = useRouter()
+const userStore = useUserStore();
+const activitiesStore = useActivitiesStore();
+const router = useRouter();
 
 onBeforeMount(() => {
-  activitiesStore.fetchActivities()
-})
+  activitiesStore.fetchActivities();
+});
 
 const deleteActivity = (activity) => {
-  activitiesStore.deleteActivity(activity)
+  activitiesStore.deleteActivity(activity);
   userStore.user.userActivities = userStore.user.userActivities.filter(
     (currentActivity) => currentActivity.id !== activity.id
-  )
-  userStore.updateUser(userStore.user)
-}
+  );
+  userStore.updateUser(userStore.user);
+};
 
 const editActivity = (activity) => {
-  router.push({ name: 'Editar Actividad', params: activity })
-}
+  router.push({ name: "Editar Actividad", params: activity });
+};
 
 const showActivity = (activity) => {
-  router.push({ name: 'Actividad', params: activity })
-  localStorage.setItem('lastActivity', JSON.stringify(activity))
-}
+  router.push({ name: "Actividad", params: activity });
+  localStorage.setItem("lastActivity", JSON.stringify(activity));
+};
 
 const removeParticipation = (activity) => {
-  activity.isAssigned = false
-  updateActivity(activity)
-  activitiesStore.updateActivities(activity)
+  activity.isAssigned = false;
+  updateActivity(activity);
+  activitiesStore.updateActivities(activity);
 
   userStore.user.joinedActivities = userStore.user.joinedActivities.filter(
     (currentActivity) => currentActivity.id !== activity.id
-  )
-  userStore.updateUser(userStore.user)
-  localStorage.setItem('lastActivity', JSON.stringify(activity))
+  );
+  userStore.updateUser(userStore.user);
+  localStorage.setItem("lastActivity", JSON.stringify(activity));
 
   swal(
-    'success',
-    'Participación eliminada',
-    'La actividad quedará disponible en mis actividades.'
-  )
-}
+    "success",
+    "Participación eliminada",
+    "La actividad quedará disponible en mis actividades."
+  );
+};
 </script>
 
 <template>
-  <main class="my-activities-container" v-if="userStore.user">
-    <CreatedActivities
-      :activities="userStore.user.userActivities"
-      :editActivity="editActivity"
-      :showActivity="showActivity"
-      :deleteActivity="deleteActivity"
-    />
-    <ParticipatedActivities
-      :activities="userStore.user.joinedActivities"
-      :showActivity="showActivity"
-      :removeParticipation="removeParticipation"
-    />
-    <PageInfoModal />
+  <main class="main-container" v-if="userStore.user">
+    <h1 class="main-title">Mis actividades</h1>
+    <div class="my-activities-container">
+      <CreatedActivities
+        :activities="userStore.user.userActivities"
+        :editActivity="editActivity"
+        :showActivity="showActivity"
+        :deleteActivity="deleteActivity"
+      />
+      <ParticipatedActivities
+        :activities="userStore.user.joinedActivities"
+        :showActivity="showActivity"
+        :removeParticipation="removeParticipation"
+      />
+      <PageInfoModal />
+    </div>
   </main>
 </template>
 
 <style lang="scss">
+h1 {
+  text-align: center;
+  color: var(--clr-emphasis-light);
+}
+
 .my-activities-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+
+  .main-title {
+    width: 100%;
+  }
 
   .card-activities {
     display: flex;
