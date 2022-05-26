@@ -99,7 +99,7 @@ const previewImage = async (event, obj, image, render) =>{
 
 <template>
 	<div>
-		<h3 class="form-title h3">Crear Nuevo Taller</h3>
+		<h1 class="form-title">Crear Nuevo Taller</h1>
 		<form class="form-container" @submit="sendForm" id="activity-form">
 			<div class="form-content form-content--half">
 				<label class="form-content__label" for="titleForm">Título</label>
@@ -203,10 +203,6 @@ const previewImage = async (event, obj, image, render) =>{
 
 <style lang="scss" scoped>
 .form{
-	.h3{
-		font-size: 2.25rem;
-		line-height: 3.375rem;
-	}
 	&-title{
 		width:100%;
 		text-align:center;
