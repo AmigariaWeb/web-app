@@ -64,10 +64,12 @@
         <summary class="question"><strong>¿Cómo me apunto a un taller?</strong></summary>
         <p class="answer">En la sección de “Talleres” tienes todos los eventos activos, si le das a saber mas entrarás en los detalles del taller y verás la asociación que lo organiza y los datos de contacto.</p>
       </details>
+
       <details>
         <summary class="question"><strong>Soy una organización, ¿cómo agrego un taller?</strong></summary>
         <p class="answer">Ponte en contacto con nosotros.</p>
       </details>
+
     </div>
     </div>
   </main>
@@ -82,25 +84,35 @@
 .container{
   max-width: 900px;
   margin:auto
-
 }
 
-  .question{
-    background-color: var(--clr-yellow-light);
-    color:var(--clr-dark-blue-shadow);
-    padding: 0.5rem 2rem;
-    margin: 1rem;
-    border-radius: 20px;
-    box-shadow: 10px 10px 0 #00000033;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  .answer{
-    color:white;
-    margin: -1.5rem 2rem 2rem 2rem;
-    font-size: 16px;
-    border: 3px solid var(--clr-yellow-light);
-    padding: 2rem;
-    border-radius: 0 0 20px 20px
-  }
+details{
+  padding: 0.5em 0.5em 0;
+  border-radius: 20px;
+  margin:2rem;
+  box-shadow: 10px 10px 0 #0003;
+
+}
+.question{
+  background-color: var(--clr-yellow-light);
+  color:var(--clr-dark-blue-shadow);
+  padding: 0.5rem 2rem;
+  margin: -0.5em -0.5em 0;
+  border-radius: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+details[open] {
+  border: 3px solid var(--clr-yellow-light);
+  padding: 0.5em;
+}
+.answer{
+  color:white;
+  font-size: 16px;
+  background-color: var(--clr-dark-blue-shadow);
+  padding: 1rem;
+  padding-top:1.5rem;
+  border-radius: 0 0 20px 20px
+}
 </style>
