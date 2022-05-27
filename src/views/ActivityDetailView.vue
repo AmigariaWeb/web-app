@@ -1,18 +1,18 @@
 <script setup>
-import ayudaImg from '../assets/images/amigariaTypes_Ayuda.svg'
-import socialImg from '../assets/images/amigariaTypes_Social.svg'
-import entretenimientoImg from '../assets/images/amigariaTypes_Entretenimiento.svg'
-import transporteImg from '../assets/images/amigariaTypes_Transporte.svg'
-import otrosImg from '../assets/images/amigariaTypes_Otros.svg'
+import ayudaImg from "../assets/images/amigariaTypes_Ayuda.svg";
+import socialImg from "../assets/images/amigariaTypes_Social.svg";
+import entretenimientoImg from "../assets/images/amigariaTypes_Entretenimiento.svg";
+import transporteImg from "../assets/images/amigariaTypes_Transporte.svg";
+import otrosImg from "../assets/images/amigariaTypes_Otros.svg";
 
-import { useUserStore } from '../stores/useUserStore'
-import { swal } from '@/utils/swal.js'
-import { useRouter } from 'vue-router'
-import { updateActivity } from '@/services/firebase/crud.js'
-import { onMounted, onBeforeMount, ref } from 'vue'
-import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
-import Chat from '../components/Chat/Chat.vue'
-import { useActivitiesStore } from '../stores/useActivitiesStore'
+import { useUserStore } from "../stores/useUserStore";
+import { swal } from "@/utils/swal.js";
+import { useRouter } from "vue-router";
+import { updateActivity } from "@/services/firebase/crud.js";
+import { onMounted, onBeforeMount, ref } from "vue";
+import PageInfoModal from "../components/PageInfoModal/PageInfoModal.vue";
+import Chat from "../components/Chat/Chat.vue";
+import { useActivitiesStore } from "../stores/useActivitiesStore";
 
 const activitiesStore = useActivitiesStore();
 
@@ -22,57 +22,54 @@ const TYPE_IMAGES = {
   entretenimiento: entretenimientoImg,
   transporte: transporteImg,
   otros: otrosImg,
-}
+};
 
-const userStore = useUserStore()
-const router = useRouter()
-const activity = ref(router.currentRoute.value.params)
-const typeImg = ref(TYPE_IMAGES[activity.value.type])
+const userStore = useUserStore();
+const router = useRouter();
+const activity = ref(router.currentRoute.value.params);
+const typeImg = ref(TYPE_IMAGES[activity.value.type]);
 
 onBeforeMount(() => {
   if (Object.keys(activity.value).length === 0) {
-    activity.value = JSON.parse(localStorage.getItem('lastActivity'))
-    typeImg.value = TYPE_IMAGES[activity.value.type]
+    activity.value = JSON.parse(localStorage.getItem("lastActivity"));
+    typeImg.value = TYPE_IMAGES[activity.value.type];
   }
-})
+});
 
 onMounted(() => {
   if (userStore.user !== null) {
     userStore.user.userActivities.forEach((element) => {
       if (element.userId === activity.value.userId) {
-        activity.value.activityIsMine = true
-        localStorage.setItem('lastActivity', JSON.stringify(activity.value))
+        activity.value.activityIsMine = true;
+        localStorage.setItem("lastActivity", JSON.stringify(activity.value));
       }
-    })
+    });
   }
-})
+});
 
 const addParticipation = async () => {
-  if (
-    userStore.user.joinedActivities.length <= 2 ||
-    userStore.user.isAdmin === true
-  ) {
-    activity.value.isAssigned = true
-    updateActivity(activity.value)
-    activitiesStore.updateActivities(activity.value)
-    userStore.user.joinedActivities.push(activity.value)
-    userStore.updateUser(userStore.user)
-    localStorage.setItem('lastActivity', JSON.stringify(activity.value))
+  if (userStore.user.joinedActivities.length <= 2 || userStore.user.isAdmin === true) {
+    activity.value.isAssigned = true;
+    updateActivity(activity.value);
+    activitiesStore.updateActivities(activity.value);
+    userStore.user.joinedActivities.push(activity.value);
+    userStore.updateUser(userStore.user);
+    localStorage.setItem("lastActivity", JSON.stringify(activity.value));
 
     swal(
-      'success',
-      '¡Actividad aceptada!',
-      'Se te ha asignado la actividad correctamente.'
-    )
-    router.push('/myactivities')
+      "success",
+      "¡Actividad aceptada!",
+      "Se te ha asignado la actividad correctamente."
+    );
+    router.push("/myactivities");
   } else {
     return swal(
-      'error',
-      'Has llegado al límite',
-      'Solo puedes apuntarte a tres actividades al mismo tiempo.'
-    )
+      "error",
+      "Has llegado al límite",
+      "Solo puedes apuntarte a tres actividades al mismo tiempo."
+    );
   }
-}
+};
 </script>
 
 <template>
@@ -111,15 +108,15 @@ const addParticipation = async () => {
           <img class="type-img" :src="typeImg" :alt="activity.type" />
         </div>
       </div>
-    <Chat
-    class="chat"
-      v-if="
-        activity.isAssigned === 'true' ||
-        activity.isAssigned === true ||
-        activity.activityIsMine
-      "
-      :activity="activity"
-    />
+      <Chat
+        class="chat"
+        v-if="
+          activity.isAssigned === 'true' ||
+          activity.isAssigned === true ||
+          activity.activityIsMine
+        "
+        :activity="activity"
+      />
     </div>
     <PageInfoModal />
   </main>
@@ -130,7 +127,7 @@ const addParticipation = async () => {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding-top:1rem;
+  padding-top: 1rem;
   max-width: 700px;
   justify-content: center;
   gap: 1rem;

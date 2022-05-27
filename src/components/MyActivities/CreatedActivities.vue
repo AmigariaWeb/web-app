@@ -4,7 +4,7 @@ const props = defineProps({
   editActivity: Function,
   deleteActivity: Function,
   showActivity: Function,
-})
+});
 </script>
 <template>
   <div class="card-activities">
@@ -23,28 +23,19 @@ const props = defineProps({
         <p>{{ activity.date }}</p>
         <p>{{ activity.from }}h a {{ activity.to }}h</p>
         <div class="buttons">
-          <button class="edit-btn" @click="showActivity(activity)">
-            Ver
-          </button>
-          <button class="edit-btn" @click="editActivity(activity)">
-            Editar
-          </button>
-          <button class="delete-btn" @click="deleteActivity(activity)">
-            Borrar
-          </button>
+          <button class="edit-btn" @click="showActivity(activity)">Ver</button>
+          <button class="edit-btn" @click="editActivity(activity)">Editar</button>
+          <button class="delete-btn" @click="deleteActivity(activity)">Borrar</button>
         </div>
       </div>
     </div>
     <div class="no-activities" v-else>
       <p>
-        No has creado ninguna actividad, haz clic en el botón de abajo para
-        crear una nueva actividad
+        No has creado ninguna actividad, haz clic en el botón de abajo para crear una
+        nueva actividad
       </p>
       <div class="button">
-        <img
-          src="@/assets/images/create-activity-icon.svg"
-          alt="ir actividades"
-        />
+        <img src="@/assets/images/create-activity-icon.svg" alt="ir actividades" />
         <RouterLink class="crearActividad" to="/myactivities/form">
           Crear Actividad
         </RouterLink>

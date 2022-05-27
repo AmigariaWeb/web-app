@@ -1,44 +1,39 @@
 <script setup>
-import { ref } from 'vue'
-import { updateActivity } from '@/services/firebase/crud'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/useUserStore.js'
-import { swal } from '@/utils/swal.js'
+import { onMounted, onUnmounted, ref } from "vue";
+import { updateActivity } from "@/services/firebase/crud";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/useUserStore.js";
+import { swal } from "@/utils/swal.js";
+import { useActivitiesStore } from "../../stores/useActivitiesStore";
 
-const router = useRouter()
-const activity = router.currentRoute.value.params
+const router = useRouter();
+const activitiesStore = useActivitiesStore();
+const activity = router.currentRoute.value.params;
 
-const userStore = useUserStore()
-const newActivity = ref({
-  title: activity.title,
-  description: activity.description,
-  type: activity.type,
-  date: activity.date,
-  from: activity.from,
-  to: activity.to,
-  id: activity.id,
-  userId: activity.userId,
-  messages: activity.messages,
-  isAssigned: activity.isAssigned === true,
-})
+console.log(activity);
+const userStore = useUserStore();
+const editedActivity = ref({});
+console.log(editedActivity.value);
+
+onMounted(() => {
+  fillEditedActivity();
+  console.log(editedActivity.value);
+});
 
 const sendForm = async (e) => {
-  e.preventDefault()
+  e.preventDefault();
+  console.log(editedActivity.value);
   if (Object.keys(activity).length !== 0) {
     userStore.user.userActivities = userStore.user.userActivities.filter(
-      (oldActivity) => oldActivity.id !== newActivity.value.id
-    )
-    userStore.user.userActivities.push(newActivity.value)
-    await updateActivity(newActivity.value)
-    userStore.updateUser(userStore.user)
-    swal(
-      'success',
-      'Actividad editada',
-      'La actividad se ha actualizado correctamente.'
-    )
-    router.push('/')
+      (oldActivity) => oldActivity.id !== editedActivity.value.id
+    );
+    userStore.user.userActivities.push(editedActivity.value);
+    await updateActivity(editedActivity.value);
+    userStore.updateUser(userStore.user);
+    swal("success", "Actividad editada", "La actividad se ha actualizado correctamente.");
+    router.push("/");
   }
-}
+};
 </script>
 
 <template>
@@ -53,7 +48,7 @@ const sendForm = async (e) => {
             id="titleForm"
             placeholder="Título..."
             required
-            v-model="newActivity.title"
+            v-model="editedActivity.title"
           />
         </div>
         <div class="description form-content">
@@ -64,16 +59,14 @@ const sendForm = async (e) => {
             rows="4"
             placeholder="Introduzca una descripción..."
             required
-            v-model="newActivity.description"
+            v-model="editedActivity.description"
           ></textarea>
         </div>
         <div class="time form-content">
           <div class="type form-content">
             <label for="typeForm">Tipo</label>
-            <select id="typeForm" required v-model="newActivity.type">
-              <option selected disabled value="undefined">
-                Selecciona un tipo
-              </option>
+            <select id="typeForm" required v-model="editedActivity.type">
+              <option selected disabled value="undefined">Selecciona un tipo</option>
               <option value="social">Social</option>
               <option value="entretenimiento">Entretenimiento</option>
               <option value="transporte">Transporte</option>
@@ -89,7 +82,7 @@ const sendForm = async (e) => {
               name="dateForm"
               id="dateForm"
               required
-              v-model="newActivity.date"
+              v-model="editedActivity.date"
             />
           </div>
         </div>
@@ -103,7 +96,7 @@ const sendForm = async (e) => {
               id="fromTimeForm"
               min="06:00:AM"
               required
-              v-model="newActivity.from"
+              v-model="editedActivity.from"
             />
           </div>
           <div class="to">
@@ -113,10 +106,10 @@ const sendForm = async (e) => {
               name="toTimeForm"
               id="toTimeForm"
               required
-              :min="newActivity.from"
+              :min="editedActivity.from"
               max="23:59:PM"
-              :disabled="newActivity.from === undefined"
-              v-model="newActivity.to"
+              :disabled="editedActivity.from === undefined"
+              v-model="editedActivity.to"
             />
           </div>
         </div>
@@ -129,9 +122,8 @@ const sendForm = async (e) => {
 </template>
 
 <style lang="scss" scoped>
-
-.container{
-    h1{
+.container {
+  h1 {
     text-align: center;
     color: var(--clr-emphasis-light);
   }
@@ -146,12 +138,12 @@ const sendForm = async (e) => {
   border-radius: 20px;
   width: 100%;
   max-width: 650px;
-  padding-block:1.5rem;
+  padding-block: 1.5rem;
 }
 
 .form-title {
   text-align: center;
-   &:h3{
+  &:h3 {
     text-align: center;
     color: var(--clr-emphasis-light);
   }
@@ -170,7 +162,7 @@ form {
   }
 
   label {
-    font-family: 'AtkinsonHyperlegible';
+    font-family: "AtkinsonHyperlegible";
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -182,7 +174,7 @@ form {
   input,
   textarea,
   select {
-    font-family: 'AtkinsonHyperlegible', sans-serif;
+    font-family: "AtkinsonHyperlegible", sans-serif;
     color: var(--clr-dark-blue-shadow);
     min-width: 44px;
     min-height: 44px;
@@ -275,7 +267,7 @@ button {
     max-width: 640px;
     margin: 0 auto;
   }
-  form{
+  form {
     padding-inline: 2rem;
   }
 }
