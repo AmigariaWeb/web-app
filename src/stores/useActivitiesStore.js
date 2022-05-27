@@ -38,34 +38,28 @@ export const useActivitiesStore = defineStore('activitiesStore', {
       this.activities = []
     },
     fetchActivities() {
-      this.loading = true
       try {
         this.activities = []
         onSnapshot(collection(db, "activities"), snapshot => {
-          console.log(this.fetchFirstTime);
           snapshot.docChanges().forEach(changedDoc => {
             const activityWithId = {
               ...changedDoc.doc.data(),
               id: changedDoc.doc.id
             };
-            if (this.activities.length > 0 && changedDoc.type === "added") {
-              console.log(1);
+            if (this.activities.length > 0 && changedDoc.type === "added" && this.fetchFirstTime) {
               this.activities.push(activityWithId)
               return
             }
             if (changedDoc.type === "added") {
-              console.log(2);
               this.activities.push(activityWithId)
               return
             }
             if (changedDoc.type === "removed") {
-              console.log(3);
               this.activities = this.activities.filter(
                 (currentActivity) => changedDoc.doc.id !== currentActivity.id
               )
             }
             if (changedDoc.type === "modified") {
-              console.log(4);
               this.activities = this.activities.map(currentActivity => {
                 if (changedDoc.doc.id === currentActivity.id) {
                   currentActivity = activityWithId
@@ -78,8 +72,6 @@ export const useActivitiesStore = defineStore('activitiesStore', {
         })
       } catch (error) {
         this.error = error
-      } finally {
-        this.loading = false;
       }
     },
 

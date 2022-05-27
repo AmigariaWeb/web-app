@@ -6,6 +6,7 @@ import { db } from '@/services/firebase';
 import { storeToRefs } from 'pinia';
 
 export function useChat(userStore, activity) {
+  console.log(activity);
   // Localstorage
   const { user } = storeToRefs(userStore)
   if (user.value === null) {
@@ -15,11 +16,15 @@ export function useChat(userStore, activity) {
   const activitiesDoc = doc(db, 'activities', activity.id)
   const messages = ref([])
   const refActivity = ref(null)
+  const isDisabled = ref(true)
   const unsubscribe = onSnapshot(activitiesDoc, (doc) => {
     refActivity.value = doc.data()
     refActivity.value.messages.length > 0
       ? messages.value = (refActivity.value.messages)
       : messages.value = ""
+    refActivity.value.isAssigned
+      ? isDisabled.value = false
+      : isDisabled.value = true
   })
   onUnmounted(unsubscribe)
 
@@ -51,5 +56,5 @@ export function useChat(userStore, activity) {
     })
   }
 
-  return { messages, sendMessage }
+  return { messages, sendMessage, isDisabled }
 }

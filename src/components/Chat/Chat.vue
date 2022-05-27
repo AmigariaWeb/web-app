@@ -1,35 +1,41 @@
 <script setup>
-import { ref, watch, nextTick } from 'vue'
-import Message from './Message.vue'
-import { useChat } from '../../services/firebase/messages'
-import { useUserStore } from '../../stores/useUserStore'
-import SendIcon from './SendIcon.vue'
+import { ref, watch, nextTick, onMounted, computed, onBeforeMount } from "vue";
+import { useChat } from "../../services/firebase/messages";
+import { useUserStore } from "../../stores/useUserStore";
+import SendIcon from "./SendIcon.vue";
+import Message from "./Message.vue";
+import { useActivitiesStore } from "../../stores/useActivitiesStore";
 
 const props = defineProps({
   activity: {
     type: Object,
   },
-})
+});
+const useActivities = useActivitiesStore();
 
-const userStore = useUserStore()
-const { messages, sendMessage } = useChat(userStore, props.activity)
+onBeforeMount(() => {
+  useActivities.fetchActivities();
+});
 
-const bottom = ref(null)
+const userStore = useUserStore();
+const { messages, sendMessage, isDisabled } = useChat(userStore, props.activity);
+
+const bottom = ref(null);
 watch(
   messages,
   () => {
     nextTick(() => {
-      bottom.value?.scrollIntoView({ behavior: 'smooth' })
-    })
+      bottom.value?.scrollIntoView({ behavior: "smooth" });
+    });
   },
   { deep: true }
-)
+);
 
-const message = ref('')
+const message = ref("");
 const send = () => {
-  sendMessage(message.value)
-  message.value = ''
-}
+  sendMessage(message.value);
+  message.value = "";
+};
 </script>
 
 <template>
@@ -47,13 +53,17 @@ const send = () => {
       >
         {{ text }}
       </Message>
-    <div ref="bottom" />
+      <div ref="bottom" />
     </div>
-
     <div class="bottom">
       <form @submit.prevent="send">
-        <input v-model="message" placeholder="Mensaje..." required />
-        <button type="submit">
+        <input
+          v-model="message"
+          :disabled="isDisabled"
+          placeholder="Mensaje..."
+          required
+        />
+        <button :disabled="isDisabled" type="submit">
           <SendIcon class="send-icon" />
         </button>
       </form>
@@ -107,7 +117,7 @@ input {
 
   &::placeholder {
     font-size: 1.1rem;
-    font-family: 'AtkinsonHyperlegible';
+    font-family: "AtkinsonHyperlegible";
   }
 }
 
