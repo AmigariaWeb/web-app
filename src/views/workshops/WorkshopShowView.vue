@@ -28,9 +28,9 @@
 <template>
     <main>
         <div class="container">
+                    <h1 class="card-header__title">{{selectedWorkshop.title}}</h1>
             <div class="card">
                 <div class="card-header">
-                    <h1 class="card-header__title">{{selectedWorkshop.title}}</h1>            
                 </div>
                 <div class="card-body">
                     <img class="card-body__img" :src="selectedWorkshop.image" :alt="selectedWorkshop.title">
@@ -50,7 +50,7 @@
                     </div>
                     <div class="card-footer__item">
                         <p class="card-footer__title">Detalles del organizador</p>
-                        <div class="card-footer__wrap">
+                        <div class="card-footer__wrap card-footer__wrap--detall">
                             <img class="card-footer__img" :src="selectedWorkshop.imageLogo" :alt="workshop.title">
                             <div class="card-footer__detall">
                                 <p><strong>Nombre:</strong> {{selectedWorkshop.asociationName}}</p>
@@ -90,14 +90,12 @@
         word-wrap: break-word;
     }
     .container{
-        background-color:var(--clr-green-light);
-        border-radius: 20px;
-        box-shadow:10px 10px 0px rgba(0, 0, 0, 0.15);
-        @media screen and (min-width: 768px) {
-            padding:20px;
-        }
+
     }
     .card{
+        border-radius: 20px;
+        box-shadow:10px 10px 0px rgba(0, 0, 0, 0.15);
+        background-color:var(--clr-green-light);
         max-width: 979px;
         text-decoration: none;
         border-radius: 20px;
@@ -107,6 +105,9 @@
         gap:20px;
         color:var(--clr-dark-blue);
         margin: auto;
+        @media screen and (min-width: 768px) {
+            padding:20px;
+        }
         @media screen and (min-width: 1024px) {
             gap:40px;
         }
@@ -116,24 +117,10 @@
         }
         &-header{
             &__title{
-
-                font-style: normal;
-                font-weight: 700;
-                font-size: 25px;
-                line-height: 44px;
-                /* or 176% */
-
                 text-align: center;
-
-
-                @media screen and (min-width: 1024px) {
-                    font-weight: 700;
-                    font-size: 36px;
-                    line-height: 63px;
-                    text-align: center;
-
-                }
-
+                color: var(--clr-emphasis-light);
+                font-size: 3rem;
+                line-height: 4.5rem;
             }
         }
         &-body{
@@ -187,7 +174,9 @@
                 font-size: 16px;
                 line-height: 35px;
                 width:100%;
+                flex: 100%;
                 @media screen and (min-width: 768px) {
+                    flex: 1;
                     width:auto;
                 }
             }
@@ -196,6 +185,7 @@
                 width: 100%;
                 border-radius: 20px;
                 overflow: hidden;
+                margin:auto;
                 @media screen and (min-width: 768px) {
                     width:265px;
                 }
@@ -222,6 +212,11 @@
                 gap:20px;
                 justify-content: center;
                 align-items: center;
+                &--detall{
+                    @media screen and (min-width: 768px) {
+                        flex-flow: row;
+                    }
+                }
             }
             &__detall{
                 display:flex;

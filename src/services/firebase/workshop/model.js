@@ -34,7 +34,11 @@ export const addNewWorkshop = async (newWorkshop) => {
     console.log("Document ", newWorkshop);
     
     const docRef =  await addDoc(collection(db, "workshops"), newWorkshop);
-    console.log("Document written with ID: ", docRef.id);
+    console.log("Document written with ID: ", docRef);
+
+    // this.updateWorkshop(newWorkshop, docRef.id )
+
+    return docRef.id;
   } catch (error) {
     console.error("Error adding document: ", error);
   }

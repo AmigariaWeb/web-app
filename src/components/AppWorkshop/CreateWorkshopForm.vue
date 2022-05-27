@@ -1,7 +1,6 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 
-// import { addNewWorkshop } from '@/services/firebase/crud'
 import { addNewWorkshop ,addNewImageWorkshop, getImageWorkshop } from '@/services/firebase/workshop/model.js';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/useUserStore'
@@ -29,17 +28,23 @@ let newWorkshop = reactive({
 	image:'',
 	renderImg:[], 
 	imageLogo:'', 
-	renderImgLogo:[] 
-	})
-function infoMap(){
-	swal("infoMaps", "para insertar el mapa", '<p>Situado sobre el lugar de interés clicamos en "Compartir" y luego en "insertar un mapa", del "iframe" que nos dan a copiar solo usaremos la url (lo que está marcado en negrita) </p><p style="background: #003a70;border-radius: 20px;padding: 10px; color:white;">"<strong style="color: #20f37a;">&lt;iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d449581.6911820676!2d-16.778972358006236!3d28.317801550662995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc6a8398062de729%3A0x67633a63c20a292d!2sParque%20Nacional%20del%20Teide!5e0!3m2!1ses!2ses!4v1652379991909!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"&gt;&lt;/iframe&gt;</strong>"</p>')
-} 
-
+	renderImgLogo:[]
+})
 const router = useRouter();
 newWorkshop = ref({ 
 	description: '',
 });
 const userStore = useUserStore()
+
+	console.log(
+		newWorkshop.renderImgLogo
+	);
+onMounted(() => {
+})
+
+function infoMap(){
+	swal("infoMaps", "para insertar el mapa", '<p>Situado sobre el lugar de interés clicamos en "Compartir" y luego en "insertar un mapa", del "iframe" que nos dan a copiar solo usaremos la url (lo que está marcado en negrita) </p><p style="background: #003a70;border-radius: 20px;padding: 10px; color:white;">"<strong style="color: #20f37a;">&lt;iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d449581.6911820676!2d-16.778972358006236!3d28.317801550662995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc6a8398062de729%3A0x67633a63c20a292d!2sParque%20Nacional%20del%20Teide!5e0!3m2!1ses!2ses!4v1652379991909!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"&gt;&lt;/iframe&gt;</strong>"</p>')
+} 
 
 const sendForm = async (e) => {
 	e.preventDefault();
@@ -47,6 +52,10 @@ const sendForm = async (e) => {
 
 		delete newWorkshop.value.renderImg;
 		delete newWorkshop.value.renderImgLogo;
+		
+		
+
+		userStore.user
 		addNewWorkshop(newWorkshop.value)
 		router.push("/workshops")
 	})
@@ -60,12 +69,10 @@ const fillForm = async () => {
 		let urlImage = await addNewImageWorkshop(newWorkshop.value.image, imageName)
 		newWorkshop.value.image = await getImageWorkshop(urlImage.metadata.fullPath)
 	}
-	if( newWorkshop.value.imageLogo.length !==0 ){
-		newWorkshop.value.slug = await convertToSlug(newWorkshop.value.title);
-		let imageNameLogo = `${userStore.user.uid}/${newWorkshop.value.slug}-${newWorkshop.value.imageLogo.name}`;
-		let urlImage = await addNewImageWorkshop(newWorkshop.value.imageLogo, imageNameLogo)
-		newWorkshop.value.imageLogo = await getImageWorkshop(urlImage.metadata.fullPath)
-	}
+	newWorkshop.value.asociationName = userStore.user.name
+	newWorkshop.value.email = userStore.user.email
+	newWorkshop.value.imageLogo = userStore.user.image
+	newWorkshop.value.email = userStore.user.email
 }
 
 function convertToSlug(value) {
@@ -107,11 +114,11 @@ const previewImage = async (event, obj, image, render) =>{
 			</div>
 			<div class="form-content form-content--half">
 				<label class="form-content__label" for="nameForm">Nombre organización</label>
-				<input class="form-content__input" type="text" id="nameForm" placeholder="Nombre organización..." required v-model="newWorkshop.asociationName">
+				<p class="form-content__input" id="nameForm">{{userStore.user.name}}</p>
 			</div>
 			<div class="form-content form-content--tiny">
 				<label class="form-content__label" for="typeForm">Tipo</label>
-				<select class="form-content__input" id="typeForm" required v-model="newWorkshop.type">
+				<select class="form-content__input form-content__input--select" id="typeForm" required v-model="newWorkshop.type">
 					<option selected disabled value="undefined">Selecciona un tipo</option>
 					<option value="social">Taller presencial</option>
 					<option value="entretenimiento">Taller virtual</option>
@@ -137,7 +144,7 @@ const previewImage = async (event, obj, image, render) =>{
 			</div>
 			<div class="form-content">
 				<label class="form-content__label" for="emailForm">Email</label>
-				<input class="form-content__input" type="email" id="emailForm" placeholder="Email..." required v-model="newWorkshop.email">
+				<p class="form-content__input" id="emailForm">{{userStore.user.email}}</p>
 			</div>
 			<div class="form-content">
 				<label class="form-content__label" for="phoneForm">Teléfono</label>
@@ -169,8 +176,7 @@ const previewImage = async (event, obj, image, render) =>{
 			<div class="form-content form-content--half">
 				<label class="form-content__input form-content__label form-content__label--image" for="logoForm">
 					<p class="form-content__label form-content__label--image">Logo de la Asociación</p>
-					<img class="form-content__image" :src="newWorkshop.renderImgLogo[index]" v-for="(image, index) in newWorkshop.renderImgLogo"  :index="index" :key="index" />
-					<input class="" type="file" id="logoForm" name="logo" @input="previewImage($event, newWorkshop, 'imageLogo', 'renderImgLogo')">
+					<img class="form-content__image" :src="userStore.user.image" />
 				</label>
 			</div>
 			<div class="form-content form-content--full">
@@ -246,7 +252,7 @@ const previewImage = async (event, obj, image, render) =>{
 			flex-basis: 100%;
 		}
 		&--center{
-			  justify-content: center;
+			justify-content: center;
 		}
 		&__label{
 			font-family: "AtkinsonHyperlegible", sans-serif;
@@ -256,6 +262,9 @@ const previewImage = async (event, obj, image, render) =>{
 			line-height: 35px;
 			text-align: center;
 			letter-spacing: 0.0012em;
+			&--image{
+				flex-flow: column;
+			}
 		}
 		&__input{
 			font-family: "AtkinsonHyperlegible", sans-serif;
@@ -274,6 +283,13 @@ const previewImage = async (event, obj, image, render) =>{
 			transition: border 0.2s ease;
 			box-shadow: (10px 10px 0px rgba(0, 0, 0, 0.15));
 			margin-bottom: 15px;
+			display: flex;
+			align-items: center;
+			@-moz-document url-prefix() {
+				&--select{
+					padding-top: 10px;
+				}
+			}
 			&:hover,
 			&:focus {
 				outline: none;
@@ -294,11 +310,17 @@ const previewImage = async (event, obj, image, render) =>{
 			min-height:200px;
 			padding:15px;
 			overflow:hidden;
+			flex-flow:column;
 			&--ritcheditor{
 				padding:0px;
 			}
+			::v-deep(.ql-toolbar){
+				width:100%;
+			}
+
 			::v-deep(#descriptionShortForm){
 				font-family: "AtkinsonHyperlegible", sans-serif;
+				width:100%;
 				& .ql-editor{
 					height: 100%;
 					min-height: 150px;
