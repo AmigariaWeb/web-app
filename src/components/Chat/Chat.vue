@@ -63,8 +63,8 @@ const send = () => {
           placeholder="Mensaje..."
           required
         />
-        <button :disabled="isDisabled" type="submit">
-          <SendIcon class="send-icon" />
+        <button type="submit" :disabled="isDisabled">
+          <SendIcon class="send-icon" :class="{ disabled: isDisabled }" />
         </button>
       </form>
     </div>
@@ -136,5 +136,9 @@ button {
   width: inherit;
   height: inherit;
   padding: 0.5rem;
+}
+
+.disabled {
+  background-color: #ffffff50;
 }
 </style>
