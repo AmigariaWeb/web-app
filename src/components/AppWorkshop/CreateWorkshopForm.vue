@@ -72,7 +72,7 @@ const fillForm = async () => {
 	newWorkshop.value.asociationName = userStore.user.name
 	newWorkshop.value.email = userStore.user.email
 	newWorkshop.value.imageLogo = userStore.user.image
-	newWorkshop.value.email = userStore.user.email
+	newWorkshop.value.userId = userStore.user.uid
 }
 
 function convertToSlug(value) {
