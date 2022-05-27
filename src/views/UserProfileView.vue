@@ -50,6 +50,7 @@ const cancelEditMode = () => {
 <template>
   <main>
     <div class="container">
+    <h1 class="title">Perfil</h1>
       <div class="user-details">
         <div class="user-image">
           <img
@@ -119,12 +120,20 @@ const cancelEditMode = () => {
 </template>
 
 <style lang="scss" scoped>
+
+.title{
+    text-align: center;
+    color: var(--clr-emphasis-light);
+    font-size: 3rem;
+    line-height: 4.5rem;
+}
 .container {
   min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top:1rem;
+  flex-direction:column;
 
   .user-details {
     background-color: var(--clr-yellow-light);
