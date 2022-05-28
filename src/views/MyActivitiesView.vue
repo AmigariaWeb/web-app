@@ -204,9 +204,4 @@ h1 {
     gap: 2rem;
   }
 }
-@media (max-width: 680px) {
-  .main-title {
-    font-size: 2em;
-  }
-}
 </style>

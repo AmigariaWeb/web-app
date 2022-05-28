@@ -85,7 +85,7 @@ img {
 
 @media (max-width: 680px) {
   .secondary-title {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 }
 @media (min-width: 400px) {
