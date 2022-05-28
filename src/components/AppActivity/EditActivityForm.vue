@@ -1,34 +1,22 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
 import { updateActivity } from "@/services/firebase/crud";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/useUserStore.js";
 import { swal } from "@/utils/swal.js";
-import { useActivitiesStore } from "../../stores/useActivitiesStore";
 
 const router = useRouter();
-const activitiesStore = useActivitiesStore();
 const activity = router.currentRoute.value.params;
 
-console.log(activity);
 const userStore = useUserStore();
-const editedActivity = ref({});
-console.log(editedActivity.value);
-
-onMounted(() => {
-  fillEditedActivity();
-  console.log(editedActivity.value);
-});
 
 const sendForm = async (e) => {
   e.preventDefault();
-  console.log(editedActivity.value);
   if (Object.keys(activity).length !== 0) {
     userStore.user.userActivities = userStore.user.userActivities.filter(
-      (oldActivity) => oldActivity.id !== editedActivity.value.id
+      (oldActivity) => oldActivity.id !== activity.id
     );
-    userStore.user.userActivities.push(editedActivity.value);
-    await updateActivity(editedActivity.value);
+    userStore.user.userActivities.push(activity);
+    await updateActivity(activity);
     userStore.updateUser(userStore.user);
     swal("success", "Actividad editada", "La actividad se ha actualizado correctamente.");
     router.push("/");
@@ -48,7 +36,7 @@ const sendForm = async (e) => {
             id="titleForm"
             placeholder="Título..."
             required
-            v-model="editedActivity.title"
+            v-model="activity.title"
           />
         </div>
         <div class="description form-content">
@@ -59,13 +47,13 @@ const sendForm = async (e) => {
             rows="4"
             placeholder="Introduzca una descripción..."
             required
-            v-model="editedActivity.description"
+            v-model="activity.description"
           ></textarea>
         </div>
         <div class="time form-content">
           <div class="type form-content">
             <label for="typeForm">Tipo</label>
-            <select id="typeForm" required v-model="editedActivity.type">
+            <select id="typeForm" required v-model="activity.type">
               <option selected disabled value="undefined">Selecciona un tipo</option>
               <option value="social">Social</option>
               <option value="entretenimiento">Entretenimiento</option>
@@ -82,7 +70,7 @@ const sendForm = async (e) => {
               name="dateForm"
               id="dateForm"
               required
-              v-model="editedActivity.date"
+              v-model="activity.date"
             />
           </div>
         </div>
@@ -96,7 +84,7 @@ const sendForm = async (e) => {
               id="fromTimeForm"
               min="06:00:AM"
               required
-              v-model="editedActivity.from"
+              v-model="activity.from"
             />
           </div>
           <div class="to">
@@ -106,10 +94,10 @@ const sendForm = async (e) => {
               name="toTimeForm"
               id="toTimeForm"
               required
-              :min="editedActivity.from"
+              :min="activity.from"
               max="23:59:PM"
-              :disabled="editedActivity.from === undefined"
-              v-model="editedActivity.to"
+              :disabled="activity.from === undefined"
+              v-model="activity.to"
             />
           </div>
         </div>

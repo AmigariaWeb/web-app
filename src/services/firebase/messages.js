@@ -6,7 +6,6 @@ import { db } from '@/services/firebase';
 import { storeToRefs } from 'pinia';
 
 export function useChat(userStore, activity) {
-  console.log(activity);
   // Localstorage
   const { user } = storeToRefs(userStore)
   if (user.value === null) {

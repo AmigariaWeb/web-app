@@ -36,9 +36,7 @@ newWorkshop = ref({
 });
 const userStore = useUserStore()
 
-	console.log(
-		newWorkshop.renderImgLogo
-	);
+
 onMounted(() => {
 })
 
