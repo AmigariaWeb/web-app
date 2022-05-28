@@ -202,10 +202,11 @@ h1 {
     align-items: center;
     justify-content: flex-start;
     gap: 2rem;
-
-    .title {
-      font-size: 1.5rem;
-    }
+  }
+}
+@media (max-width: 680px) {
+  .main-title {
+    font-size: 2em;
   }
 }
 </style>

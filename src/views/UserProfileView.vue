@@ -1,69 +1,61 @@
 <script setup>
-import { useUserStore } from '../stores/useUserStore'
-import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
-import { onBeforeMount, ref } from 'vue'
-import { swal } from '../utils/swal'
+import { useUserStore } from "../stores/useUserStore";
+import PageInfoModal from "../components/PageInfoModal/PageInfoModal.vue";
+import { onBeforeMount, ref } from "vue";
+import { swal } from "../utils/swal";
 
-const userStore = useUserStore()
-const editMode = ref(false)
+const userStore = useUserStore();
+const editMode = ref(false);
 
-const initialValues = ref({})
+const initialValues = ref({});
 
 const addInitialValues = (newValues) => {
-  initialValues.value.name = newValues.name
-  initialValues.value.description = newValues.description
-  initialValues.value.image = newValues.image
-  initialValues.value.email = newValues.email
-}
+  initialValues.value.name = newValues.name;
+  initialValues.value.description = newValues.description;
+  initialValues.value.image = newValues.image;
+  initialValues.value.email = newValues.email;
+};
 
 if (userStore.user) {
-  addInitialValues(userStore.user)
-  localStorage.setItem('userInfo', JSON.stringify(initialValues.value))
+  addInitialValues(userStore.user);
+  localStorage.setItem("userInfo", JSON.stringify(initialValues.value));
 }
 
 onBeforeMount(() => {
   if (userStore.user === null) {
-    const localValues = JSON.parse(localStorage.getItem('userInfo'))
-    addInitialValues(localValues)
+    const localValues = JSON.parse(localStorage.getItem("userInfo"));
+    addInitialValues(localValues);
   }
-})
+});
 
 const sendNewValues = () => {
-  userStore.updateUser(userStore.user)
-  swal(
-    'success',
-    'Perfil actualizado',
-    'Se han actualizado tus datos correctamente.'
-  )
-  addInitialValues(userStore.user)
-  localStorage.setItem('userInfo', JSON.stringify(initialValues.value))
-  editMode.value = false
-}
+  userStore.updateUser(userStore.user);
+  swal("success", "Perfil actualizado", "Se han actualizado tus datos correctamente.");
+  addInitialValues(userStore.user);
+  localStorage.setItem("userInfo", JSON.stringify(initialValues.value));
+  editMode.value = false;
+};
 
 const cancelEditMode = () => {
-  userStore.user.name = initialValues.value.name
-  userStore.user.description = initialValues.value.description
-  editMode.value = false
-}
+  userStore.user.name = initialValues.value.name;
+  userStore.user.description = initialValues.value.description;
+  editMode.value = false;
+};
 </script>
 
 <template>
   <main>
     <div class="container">
-    <h1 class="title">Perfil</h1>
+      <h1 class="title">Perfil</h1>
       <div class="user-details">
         <div class="user-image">
           <img
-            :class=" { 'user-image-google': userStore.user.image }"
+            :class="{ 'user-image-google': userStore.user.image }"
             v-if="initialValues.image"
             :src="initialValues.image"
             alt="imagen de usuario"
           />
-          <img
-            v-else
-            src="../assets/images/amigaria-logo.svg"
-            alt="imagen de usuario"
-          />
+          <img v-else src="../assets/images/amigaria-logo.svg" alt="imagen de usuario" />
         </div>
         <div class="user-email">
           <label for="userEmail">Email: </label>
@@ -78,7 +70,7 @@ const cancelEditMode = () => {
         <div class="user-name">
           <label for="editName">Usuario: </label>
           <span v-if="editMode === false">
-            {{ initialValues.name || 'Anónimo' }}
+            {{ initialValues.name || "Anónimo" }}
           </span>
           <input
             v-else
@@ -91,7 +83,7 @@ const cancelEditMode = () => {
         <div class="user-description">
           <label for="editDescription">Descripción: </label>
           <span v-if="editMode === false">
-            {{ initialValues.description || 'Vacío' }}
+            {{ initialValues.description || "Vacío" }}
           </span>
           <textarea
             v-else
@@ -103,14 +95,10 @@ const cancelEditMode = () => {
         </div>
 
         <div class="buttons">
-          <button v-if="editMode === false" @click="editMode = true">
-            Editar
-          </button>
+          <button v-if="editMode === false" @click="editMode = true">Editar</button>
           <div v-else class="editMode-btns">
             <button @click="sendNewValues()">Enviar</button>
-            <button class="cancel-btn" @click="cancelEditMode()">
-              Cancelar
-            </button>
+            <button class="cancel-btn" @click="cancelEditMode()">Cancelar</button>
           </div>
         </div>
       </div>
@@ -120,20 +108,18 @@ const cancelEditMode = () => {
 </template>
 
 <style lang="scss" scoped>
-
-.title{
-    text-align: center;
-    color: var(--clr-emphasis-light);
-    font-size: 3rem;
-    line-height: 4.5rem;
+.title {
+  text-align: center;
+  color: var(--clr-emphasis-light);
+  line-height: 4.5rem;
 }
 .container {
   min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top:1rem;
-  flex-direction:column;
+  padding-top: 1rem;
+  flex-direction: column;
 
   .user-details {
     background-color: var(--clr-yellow-light);
@@ -179,10 +165,10 @@ const cancelEditMode = () => {
       font-size: 1rem;
       text-decoration: underline;
       width: min(100%, 9rem);
-      font-family: 'AtkinsonHyperlegible', sans-serif;
+      font-family: "AtkinsonHyperlegible", sans-serif;
       color: var(--clr-dark-blue);
 
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
     }
@@ -198,7 +184,7 @@ const cancelEditMode = () => {
     }
     input,
     textarea {
-      font-family: 'AtkinsonHyperlegible', sans-serif;
+      font-family: "AtkinsonHyperlegible", sans-serif;
       color: var(--clr-dark-blue-shadow);
       min-width: 44px;
       min-height: 44px;

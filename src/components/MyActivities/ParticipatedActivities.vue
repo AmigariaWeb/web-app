@@ -2,14 +2,19 @@
 const props = defineProps({
   activities: Object,
   removeParticipation: Function,
-  showActivity: Function
-})
+  showActivity: Function,
+});
 </script>
 
 <template>
   <div class="card-activities">
     <div class="secondary-title">Participaciones</div>
-    <div v-if="activities.length !== 0" class="card-activity" v-for="activity in activities" :key="activity.id">
+    <div
+      v-if="activities.length !== 0"
+      class="card-activity"
+      v-for="activity in activities"
+      :key="activity.id"
+    >
       <div class="details">
         <p class="activity-title">{{ activity.title }}</p>
         <p class="description">{{ activity.description }}</p>
@@ -26,13 +31,13 @@ const props = defineProps({
       </div>
     </div>
     <div class="no-activities" v-else>
-      <p>No te has apuntado a ninguna actividad, haz clic el botón de abajo para ver las actividades disponibles y
-        asignarte una</p>
+      <p>
+        No te has apuntado a ninguna actividad, haz clic el botón de abajo para ver las
+        actividades disponibles y asignarte una
+      </p>
       <div class="button">
-        <img src="@/assets/images/activities-icon.svg" alt="ir actividades">
-        <RouterLink class="irActividad" to="/">
-          Actividades
-        </RouterLink>
+        <img src="@/assets/images/activities-icon.svg" alt="ir actividades" />
+        <RouterLink class="irActividad" to="/"> Actividades </RouterLink>
       </div>
     </div>
   </div>
@@ -46,7 +51,7 @@ p {
 .secondary-title {
   text-align: center;
   color: var(--clr-emphasis-light);
-  font-size: 2.25rem;
+  font-size: 1.8rem;
   line-height: 4.5rem;
 }
 
@@ -97,6 +102,12 @@ img {
   border: none;
   color: var(--clr-dark-blue);
   cursor: pointer;
+}
+
+@media (max-width: 680px) {
+  .secondary-title {
+    font-size: 1.25rem;
+  }
 }
 
 @media (min-width: 400px) {

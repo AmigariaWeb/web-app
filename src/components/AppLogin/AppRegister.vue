@@ -11,29 +11,36 @@ const register = async () => {
 };
 </script>
 <template>
+  <h1 class="login-title">{{ $route.name }}</h1>
   <main class="login-container">
-    <h1 class="login-title">{{ $route.name }}</h1>
     <form @submit.prevent="register">
       <div class="login-block">
         <label class="login-block__label" for="">Email</label>
-        <input v-model="register_form.email" autocomplete="off" placeholder="Introduce tu email" type="email"
-          required />
+        <input
+          v-model="register_form.email"
+          autocomplete="off"
+          placeholder="Introduce tu email"
+          type="email"
+          required
+        />
       </div>
       <div class="login-block">
         <label class="login-block__label" for="">Contraseña</label>
-        <input v-model="register_form.password" autocomplete="off" placeholder="Introduce tu contraseña" type="password"
-          required />
+        <input
+          v-model="register_form.password"
+          autocomplete="off"
+          placeholder="Introduce tu contraseña"
+          type="password"
+          required
+        />
         <label class="login-block__label" for="">Repite tu contraseña</label>
-        <input autocomplete="off" placeholder="Repite la contraseña" type="password" required />
+        <input
+          autocomplete="off"
+          placeholder="Repite la contraseña"
+          type="password"
+          required
+        />
       </div>
-      <!-- <div class="login-block">
-        <label class="login-block__label" for="">Datos personales</label>
-        <div class="login-block-personal">
-          <input autocomplete="off" placeholder="introduce tu nombre" type="text" required />
-          <input autocomplete="off" placeholder="introduce tus apellidos" type="text" required />
-          <input autocomplete="off" placeholder="introduce tu código postal" type="text" required />
-        </div>
-      </div> -->
       <div class="login-buttons">
         <button class="login-submit">Registrarse</button>
       </div>
@@ -43,7 +50,8 @@ const register = async () => {
         <AppLoginGoogle></AppLoginGoogle>
       </div>
       <p class="login-text">
-        ¿Ya estas registrado? <RouterLink :to="{ path: '/login' }">Inicia sesión</RouterLink>
+        ¿Ya estas registrado?
+        <RouterLink :to="{ path: '/login' }">Inicia sesión</RouterLink>
       </p>
     </div>
   </main>
@@ -57,7 +65,6 @@ const register = async () => {
     min-height: 10vh;
     flex: 1 1 0;
     padding: 1rem;
-    padding-left: 5rem;
   }
 }
 
@@ -204,7 +211,7 @@ form {
   gap: 1.5rem;
 }
 
-@media (min-width:1440px) {
+@media (min-width: 1440px) {
   main {
     max-width: 1440px;
     margin: 0 auto;

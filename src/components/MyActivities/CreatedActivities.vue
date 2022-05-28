@@ -52,7 +52,7 @@ p {
 .secondary-title {
   text-align: center;
   color: var(--clr-emphasis-light);
-  font-size: 2.25rem;
+  font-size: 1.8rem;
   line-height: 4.5rem;
 }
 
@@ -83,6 +83,11 @@ img {
   cursor: pointer;
 }
 
+@media (max-width: 680px) {
+  .secondary-title {
+    font-size: 1.25rem;
+  }
+}
 @media (min-width: 400px) {
   img {
     display: inline-block;

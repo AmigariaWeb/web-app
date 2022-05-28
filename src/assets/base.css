@@ -77,17 +77,18 @@ body {
 }
 
 h1{
-  font-size: 3rem;
+  font-size: 2.50rem;
   line-height: 4.5rem;
+  color: var(--clr-emphasis-light);
 }
 
 h2{
-  font-size: 3rem;
+  font-size: 2.25rem;
   line-height: 4.5rem;
 }
 
 h3{
-  font-size: 2.25rem;
+  font-size: 2rem;
   line-height: 3.375rem;
 }
 
@@ -107,4 +108,25 @@ strong{
 
 .swal2-popup, .swal2-confirm {
   font-family: var(--font-default)
+}
+
+@media (max-width: 680px) {
+  h1{
+    font-size: 2rem;
+    line-height: 4.5rem;
+  }
+  h2{
+    font-size: 1.8rem;
+    line-height: 4.5rem;
+  }
+  
+  h3{
+    font-size: 1.4rem;
+    line-height: 3.375rem;
+  }
+  
+  h4{
+    font-size: 1.2rem;
+    line-height: 2.75rem;
+  }
 }

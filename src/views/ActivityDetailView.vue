@@ -143,6 +143,8 @@ const addParticipation = async () => {
   h1 {
     font-weight: bold;
     text-align: center;
+    color: var(--clr-dark-blue);
+    font-size: 2rem;
   }
 
   h4 {
