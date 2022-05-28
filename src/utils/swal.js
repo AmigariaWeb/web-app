@@ -13,7 +13,8 @@ export const swal = (type, title, message) => {
       confirmButtonColor: "#71CC98",
       iconHtml: `<img width='100px' src='${iconSucces}'>`,
       imageAlt: 'éxito',
-      background: "#fff"
+      background: "#fff",
+      footer: '<a href="/FAQ">¿Necesita más información?</a>',
     })
   }
   if (type === "error") {
@@ -24,7 +25,8 @@ export const swal = (type, title, message) => {
       confirmButtonColor: "#71CC98",
       iconHtml: `<img width='100px' src='${iconError}'>`,
       imageAlt: 'error',
-      background: "#fff"
+      background: "#fff",
+      footer: '<a href="/FAQ">¿Necesita más información?</a>',
     })
   }
   if (type === "info") {
@@ -35,10 +37,12 @@ export const swal = (type, title, message) => {
       confirmButtonColor: "#71CC98",
       iconHtml: `<img width='100px' src='${iconInfo}'>`,
       imageAlt: 'info',
-      background: "#fff"
+      background: "#fff",
+      footer: '<a href="/FAQ">¿Necesita más información?</a>',
+
     })
   }
-    if (type === "infoMaps") {
+  if (type === "infoMaps") {
     Swal.fire({
       title: title,
       html: message,
@@ -46,7 +50,8 @@ export const swal = (type, title, message) => {
       confirmButtonText: "Aceptar",
       confirmButtonColor: "#71CC98",
       imageAlt: 'info',
-      background: "#fff"
+      background: "#fff",
+      footer: '<a href="/FAQ">¿Necesita más información?</a>',
     })
   }
 }
