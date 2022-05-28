@@ -1,38 +1,27 @@
 <script setup>
-import ayudaImg from "../assets/images/amigariaTypes_Ayuda.svg";
-import socialImg from "../assets/images/amigariaTypes_Social.svg";
-import entretenimientoImg from "../assets/images/amigariaTypes_Entretenimiento.svg";
-import transporteImg from "../assets/images/amigariaTypes_Transporte.svg";
-import otrosImg from "../assets/images/amigariaTypes_Otros.svg";
-
+import { onMounted, onBeforeMount, ref } from "vue";
 import { useUserStore } from "../stores/useUserStore";
 import { swal } from "@/utils/swal.js";
 import { useRouter } from "vue-router";
 import { updateActivity } from "@/services/firebase/crud.js";
-import { onMounted, onBeforeMount, ref } from "vue";
+import { useActivitiesStore } from "../stores/useActivitiesStore";
 import PageInfoModal from "../components/PageInfoModal/PageInfoModal.vue";
 import Chat from "../components/Chat/Chat.vue";
-import { useActivitiesStore } from "../stores/useActivitiesStore";
+import ImgTypeHelp from "@/components/Images/ImgTypeHelp.vue";
+import ImgTypeSocial from "../components/Images/ImgTypeSocial.vue";
+import ImgTypeTransport from "../components/Images/ImgTypeTransport.vue";
+import ImgTypeEntertaiment from "../components/Images/ImgTypeEntertaiment.vue";
+import ImgTypeOthers from "../components/Images/ImgTypeOthers.vue";
 
 const activitiesStore = useActivitiesStore();
-
-const TYPE_IMAGES = {
-  ayuda: ayudaImg,
-  social: socialImg,
-  entretenimiento: entretenimientoImg,
-  transporte: transporteImg,
-  otros: otrosImg,
-};
 
 const userStore = useUserStore();
 const router = useRouter();
 const activity = ref(router.currentRoute.value.params);
-const typeImg = ref(TYPE_IMAGES[activity.value.type]);
 
 onBeforeMount(() => {
   if (Object.keys(activity.value).length === 0) {
     activity.value = JSON.parse(localStorage.getItem("lastActivity"));
-    typeImg.value = TYPE_IMAGES[activity.value.type];
   }
 });
 
@@ -105,7 +94,14 @@ const addParticipation = async () => {
               Me apunto
             </button>
           </div>
-          <img class="type-img" :src="typeImg" :alt="activity.type" />
+          <ImgTypeHelp v-if="activity.type === 'ayuda'" class="type-img" />
+          <ImgTypeSocial v-if="activity.type === 'social'" class="type-img" />
+          <ImgTypeTransport v-if="activity.type === 'transporte'" class="type-img" />
+          <ImgTypeEntertaiment
+            v-if="activity.type === 'entretenimiento'"
+            class="type-img"
+          />
+          <ImgTypeOthers v-if="activity.type === 'otros'" class="type-img" />
         </div>
       </div>
       <Chat
