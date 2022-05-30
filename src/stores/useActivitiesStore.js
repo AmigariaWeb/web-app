@@ -110,11 +110,6 @@ export const useActivitiesStore = defineStore('activitiesStore', {
     },
 
     deleteActivity(activity) {
-      swal(
-        'success',
-        'Actividad eliminada',
-        'Se ha eliminado la actividad correctamente.'
-      )
       deleteActivityById(activity.id)
       const newActivities = this.activities.filter(
         (currentActivity) => activity.id !== currentActivity.id

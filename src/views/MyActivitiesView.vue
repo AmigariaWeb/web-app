@@ -1,56 +1,66 @@
 <script setup>
-import { useUserStore } from "../stores/useUserStore";
-import { useActivitiesStore } from "../stores/useActivitiesStore.js";
-import { onBeforeMount } from "vue";
-import { useRouter } from "vue-router";
-import ParticipatedActivities from "@/components/MyActivities/ParticipatedActivities.vue";
-import CreatedActivities from "@/components/MyActivities/CreatedActivities.vue";
-import { updateActivity } from "@/services/firebase/crud.js";
-import { swal } from "@/utils/swal.js";
-import PageInfoModal from "../components/PageInfoModal/PageInfoModal.vue";
+import { useUserStore } from '../stores/useUserStore'
+import { useActivitiesStore } from '../stores/useActivitiesStore.js'
+import { onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
+import ParticipatedActivities from '@/components/MyActivities/ParticipatedActivities.vue'
+import CreatedActivities from '@/components/MyActivities/CreatedActivities.vue'
+import { updateActivity } from '@/services/firebase/crud.js'
+import { swal } from '@/utils/swal.js'
+import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
 
-const userStore = useUserStore();
-const activitiesStore = useActivitiesStore();
-const router = useRouter();
+const userStore = useUserStore()
+const activitiesStore = useActivitiesStore()
+const router = useRouter()
 
 onBeforeMount(() => {
-  activitiesStore.fetchActivities();
-});
+  activitiesStore.fetchActivities()
+})
 
 const deleteActivity = (activity) => {
-  activitiesStore.deleteActivity(activity);
-  userStore.user.userActivities = userStore.user.userActivities.filter(
-    (currentActivity) => currentActivity.id !== activity.id
-  );
-  userStore.updateUser(userStore.user);
-};
+  const confirmRemove = () => {
+    activitiesStore.deleteActivity(activity)
+    userStore.user.userActivities = userStore.user.userActivities.filter(
+      (currentActivity) => currentActivity.id !== activity.id
+    )
+    userStore.updateUser(userStore.user)
+  }
+  swal(
+    'confirm',
+    '¿Estas seguro?',
+    'La actividad se eliminará por completo.',
+    confirmRemove
+  )
+}
 
 const editActivity = (activity) => {
-  router.push({ name: "Editar Actividad", params: activity });
-};
+  router.push({ name: 'Editar Actividad', params: activity })
+}
 
 const showActivity = (activity) => {
-  router.push({ name: "Actividad", params: activity });
-  localStorage.setItem("lastActivity", JSON.stringify(activity));
-};
+  router.push({ name: 'Actividad', params: activity })
+  localStorage.setItem('lastActivity', JSON.stringify(activity))
+}
 
 const removeParticipation = (activity) => {
-  activity.isAssigned = false;
-  updateActivity(activity);
-  activitiesStore.updateActivities(activity);
+  const confirmRemove = () => {
+    activity.isAssigned = false
+    updateActivity(activity)
+    activitiesStore.updateActivities(activity)
 
-  userStore.user.joinedActivities = userStore.user.joinedActivities.filter(
-    (currentActivity) => currentActivity.id !== activity.id
-  );
-  userStore.updateUser(userStore.user);
-  localStorage.setItem("lastActivity", JSON.stringify(activity));
-
+    userStore.user.joinedActivities = userStore.user.joinedActivities.filter(
+      (currentActivity) => currentActivity.id !== activity.id
+    )
+    userStore.updateUser(userStore.user)
+    localStorage.setItem('lastActivity', JSON.stringify(activity))
+  }
   swal(
-    "success",
-    "Participación eliminada",
-    "La actividad quedará disponible en mis actividades."
-  );
-};
+    'confirm',
+    '¿Estas seguro?',
+    'La actividad quedará disponible en mis actividades.',
+    confirmRemove
+  )
+}
 </script>
 
 <template>
