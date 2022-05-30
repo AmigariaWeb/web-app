@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL  } from "firebase/storage";
 import { db, storage } from '@/services/firebase';
 import { async } from "@firebase/util";
@@ -50,6 +50,14 @@ export const updateWorkshop = async (newWorkshop) => {
     await updateDoc(doc(db, "workshops", id), newWorkshop);
   } catch (error) {
     console.error("Error adding document: ", error);
+  }
+}
+
+export const deletenewWorkshopById = async (newWorkshopId) => {
+  try {
+    await deleteDoc(doc(db, "workshops", newWorkshopId));
+  } catch (error) {
+    console.error(error);
   }
 }
 

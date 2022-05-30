@@ -2,10 +2,12 @@
 import { RouterLink } from 'vue-router'
 import PageInfoModal from '@/components/PageInfoModal/PageInfoModal.vue'
 import Spinner from '@/components/Spinner/Spinner.vue';
-import { onBeforeMount, onMounted, reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
     const props = defineProps({
         data:Object,
-        index:Number
+        index:Number,
+        canUpdate:Boolean,
+        removeWorkshop: Function,
     })
 
     let objReactive = reactive({
@@ -19,19 +21,35 @@ import { onBeforeMount, onMounted, reactive } from 'vue';
         }, 500);
     })
 
+
 </script>
 <template>
+
     <Spinner v-show="objReactive.loading" />
-    <RouterLink v-show="!objReactive.loading" :to="'/workshops/' + data.slug" class="card" :class="index % 2 ? 'card-right' : 'card-left'">
-            <h2 class="card__title">{{data.title}}</h2>
+    <RouterLink v-if="!canUpdate" v-show="!objReactive.loading" :to="'/workshops/' + data.slug" class="card" :class="index % 2 ? 'card-right' : 'card-left'">
+        <h2 class="card__title">{{data.title}}</h2>
         <img class="card-header" :src="data.image" :alt="data.title" loading="lazy">
         <div class="card-body">
             <p class="card-body__text">
                 {{data.descriptionShort}}
             </p>
-            <p class="card__link">ver mas</p>
+            <p class="card-btn card-btn__link">Ver mas</p>
         </div>
     </RouterLink>
+
+    <div :id="data.id+data.slug" v-if="canUpdate" v-show="!objReactive.loading" class="card" :class="index % 2 ? 'card-right' : 'card-left'">
+        <h2 class="card__title">{{data.title}}</h2>
+        <img class="card-header" :src="data.image" :alt="data.title" loading="lazy">
+        <div class="card-body">
+            <p class="card-body__text">
+                {{data.descriptionShort}}
+            </p>
+            <div class="card-panel-editor">
+                <RouterLink  :to="'/workshops/' + data.slug" class="card-btn">Ver mas</RouterLink>
+                <button @click="removeWorkshop(data)" class="card-btn card-btn__delete"  >Eliminar</button>
+            </div>
+        </div>
+    </div>
 
 
 </template>
@@ -50,6 +68,9 @@ import { onBeforeMount, onMounted, reactive } from 'vue';
         color:var(--clr-dark-blue);
         max-width: 918px;
         margin: auto;
+        position:relative;
+        overflow:hidden;
+        transition: opacity 1s  ease-in-out, transform 0.5s ease-in-out;
         @media screen and (min-width: 768px) {
             padding: 20px;
         }
@@ -70,7 +91,10 @@ import { onBeforeMount, onMounted, reactive } from 'vue';
         }
         &-header,&-body{
             background-color: var(--clr-emphasis-light);
-            border-radius: 20px;
+            border-radius: 0px;
+            @media screen and (min-width: 768px) {
+                border-radius: 20px
+            }
         }
         &-header{
             object-fit: cover;
@@ -83,19 +107,71 @@ import { onBeforeMount, onMounted, reactive } from 'vue';
         }
         &-body{
             flex: 2;
-                padding: 10px;
+            padding: 10px;
+            display: flex;
+            flex-flow: column;
             &__text{
                 line-height: 35px;
                 text-align: center;
                 letter-spacing: 0.0012em;
             }
         }
-        &__link{
-            font-weight: 900;
-            cursor: pointer;
-            text-decoration: underline;
-            text-align: right;
-            margin: 10px;
+        &-btn {
+            font-weight: 500;
+            font-size: 1.5625rem;
+            line-height: 44px;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 3px solid transparent;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            margin-top: auto;
+            display: inline-block;
+            background-color: var(--clr-yellow-light);
+            color: var(--clr-dark-blue);
+            text-decoration:none;
+            &:hover,
+            &:focus {
+                cursor: pointer;
+                background-color: var(--clr-yellow-shadow);
+                color: var(--clr-emphasis-light);
+            }
+            &__link{
+                background-color: var(--clr-dark-blue);
+                color: var(--clr-yellow-light);
+                width: min(100%, 12.5rem);
+                margin: auto;
+                &:hover,
+                &:focus {
+                    cursor: pointer;
+                    background-color: var(--clr-dark-blue-shadow);
+                }
+            }
+            &__delete {
+                background-color: var(--clr-dark-blue);
+                color: var(--clr-yellow-light);
+                &:hover,
+                &:focus {
+                    cursor: pointer;
+                    background-color: var(--clr-dark-blue-shadow);
+                }
+            }
         }
+        &-panel{
+            &-editor{
+                font-size: 0.75rem;
+                text-align: end;
+                margin-top:auto;
+                gap: 10px;
+                display: inline-flex;
+                flex-wrap: wrap;
+                justify-content: end;
+            }
+        }
+    }
+    .remove{
+        transform:translateY(-50%) scale(0) ;
+        opacity:0;
+        position:absolute;
     }
 </style>
