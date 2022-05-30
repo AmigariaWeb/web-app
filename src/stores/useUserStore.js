@@ -143,9 +143,18 @@ export const useUserStore = defineStore("userStore", {
     },
 
     async logout() {
-      await signOut(auth);
-      this.CLEAR_USER();
-      router.push('/login');
+      const confirmLogout = async () => {
+        await signOut(auth);
+        this.CLEAR_USER();
+        router.push('/login');
+      }
+      swal(
+        'confirm',
+        '¿Quieres cerrar sesión',
+        '',
+        confirmLogout,
+        false
+      ) 
     },
 
     async signInWithGoogle() {
