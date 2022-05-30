@@ -1,14 +1,30 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import PageInfoModal from '@/components/PageInfoModal/PageInfoModal.vue'
-
+import Spinner from '@/components/Spinner/Spinner.vue';
+import { onBeforeMount, onMounted, reactive } from 'vue';
     const props = defineProps({
         data:Object,
         index:Number
     })
+
+    let objReactive = reactive({
+        image: true,
+        loading:true
+     });
+    onMounted(() => {
+        const myTimeout = setTimeout(()=>{
+            objReactive.loading = false;
+            clearTimeout(myTimeout);
+        }, 500);
+
+        console.log(props.data.id)
+    })
+
 </script>
 <template>
-    <RouterLink :to="'/workshops/' + data.slug" class="card" :class="index % 2 ? 'card-right' : 'card-left'">
+    <Spinner v-show="objReactive.loading" />
+    <RouterLink v-show="!objReactive.loading" :to="'/workshops/' + data.slug" class="card" :class="index % 2 ? 'card-right' : 'card-left'">
             <h2 class="card__title">{{data.title}}</h2>
         <img class="card-header" :src="data.image" :alt="data.title" loading="lazy">
         <div class="card-body">

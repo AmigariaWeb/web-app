@@ -83,11 +83,13 @@ export const useUserStore = defineStore("userStore", {
         return
       }
       try {
-        const user = await getUser(auth.currentUser);
-        this.SET_USER(user);
-        if(this.user.isAssociation){
-          router.push('/workshops')
-          return;       
+        if (auth.currentUser) {
+          const user = await getUser(auth.currentUser);
+          this.SET_USER(user);
+          if(this.user.isAssociation){
+            router.push('/workshops')
+            return;       
+          }
         }
         router.push('/')
       } catch (error) {

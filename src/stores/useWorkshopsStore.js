@@ -18,7 +18,9 @@ export const useWorkshopsStore = defineStore({
      async fetchWorkshops() {
       this.loading = true
       try {
-        this.workshops = await getAllWorkshops();
+        await getAllWorkshops().then((value)=>{
+            this.workshops = value
+        });
       } catch (error) {
         this.error = error;
       } finally {
