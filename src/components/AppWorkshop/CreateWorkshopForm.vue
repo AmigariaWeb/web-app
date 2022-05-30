@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 
-import { addNewWorkshop ,addNewImageWorkshop, getImageWorkshop } from '@/services/firebase/workshop/model.js';
+import { addNewWorkshop ,addNewImageWorkshop, getImageWorkshop, updateWorkshop } from '@/services/firebase/workshop/model.js';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/useUserStore'
 import { swal } from '@/utils/swal.js'
@@ -47,14 +47,12 @@ function infoMap(){
 const sendForm = async (e) => {
 	e.preventDefault();
 	await fillForm().then(()=>{
-
 		delete newWorkshop.value.renderImg;
 		delete newWorkshop.value.renderImgLogo;
-		
-		
-
-		userStore.user
-		addNewWorkshop(newWorkshop.value)
+		addNewWorkshop(newWorkshop.value).then((newWorkId)=>{
+			newWorkshop.value.id = newWorkId;
+			updateWorkshop(newWorkshop.value)
+		})
 		router.push("/workshops")
 	})
 }

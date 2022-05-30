@@ -17,8 +17,6 @@ import { onBeforeMount, onMounted, reactive } from 'vue';
             objReactive.loading = false;
             clearTimeout(myTimeout);
         }, 500);
-
-        console.log(props.data.id)
     })
 
 </script>

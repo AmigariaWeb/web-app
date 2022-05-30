@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, updateDoc, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL  } from "firebase/storage";
 import { db, storage } from '@/services/firebase';
 import { async } from "@firebase/util";
@@ -35,14 +35,24 @@ export const addNewWorkshop = async (newWorkshop) => {
     
     const docRef =  await addDoc(collection(db, "workshops"), newWorkshop);
     console.log("Document written");
-
-    // this.updateWorkshop(newWorkshop, docRef.id )
+    console.log(newWorkshop, 'addNewWorkshop');
 
     return docRef.id;
   } catch (error) {
     console.error("Error adding document: ", error);
   }
 }
+
+export const updateWorkshop = async (newWorkshop) => {
+  try {
+    const { id } = newWorkshop;
+    console.log(newWorkshop);
+    await updateDoc(doc(db, "workshops", id), newWorkshop);
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+}
+
 export const getAllWorkshops = async () => {
   try {
     let workshops = [];
