@@ -10,8 +10,8 @@
       <div class="container">
         <div class="contact">
           <p> Puedes ponerte en contacto con nosotros mediante nuestras redes sociales:</p>
-          <a href="https://www.facebook.com/amigariaeoi/"  target="_blank"><img src="src/assets/images/facebook.svg" alt="Facebook">facebook.com/amigariaeoi/</a><br>
-          <a href="https://www.twitter.com/amigaria_eoi" target="_blank"><img src="src/assets/images/twitter.svg" alt="Twitter">twitter.com/amigaria_eoi</a>
+          <a href="https://www.facebook.com/amigariaeoi/"  target="_blank"><img src="@/assets/images/facebook.svg" alt="Facebook">facebook.com/amigariaeoi/</a><br>
+          <a href="https://www.twitter.com/amigaria_eoi" target="_blank"><img src="@/assets/images/twitter.svg" alt="Twitter">twitter.com/amigaria_eoi</a>
           <p>O mediante correo electrónico: <a href="mailto:info.amigaria@gmail.com"> info.amigaria@gmail.com</a></p>
           </div>
 
