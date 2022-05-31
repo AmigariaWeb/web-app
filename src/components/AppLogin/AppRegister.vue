@@ -1,14 +1,20 @@
 <script setup>
-import AppLoginGoogle from "@/components/AppLogin/AppLoginGoogle.vue";
-import { useUserStore } from "@/stores/useUserStore";
-import { ref } from "vue";
+import AppLoginGoogle from '@/components/AppLogin/AppLoginGoogle.vue'
+import { useUserStore } from '@/stores/useUserStore'
+import { ref } from 'vue'
+import { swal } from '../../utils/swal'
 
-const register_form = ref({});
-const userStore = useUserStore();
+const register_form = ref({})
+const userStore = useUserStore()
+const repeatPassword = ref('')
 
-const register = async () => {
-  userStore.register(register_form.value);
-};
+const register = () => {
+  if (register_form.value.password === repeatPassword.value) {
+    userStore.register(register_form.value)
+  } else {
+    swal('error', 'Las contraseñas no coinciden.', '')
+  }
+}
 </script>
 <template>
   <h1 class="login-title">{{ $route.name }}</h1>
@@ -35,6 +41,7 @@ const register = async () => {
         />
         <label class="login-block__label" for="">Repite tu contraseña</label>
         <input
+          v-model="repeatPassword"
           autocomplete="off"
           placeholder="Repite la contraseña"
           type="password"
