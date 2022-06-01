@@ -102,7 +102,7 @@ const previewImage = async (event, obj, image, render) =>{
 
 <template>
 	<div>
-		<h1 class="form-title">Crear Nuevo Taller</h1>
+		<h1 class="form-title">Crear Nuevo Taller: <br/> {{newWorkshop.title}}</h1>
 		<form class="form-container" @submit="sendForm" id="activity-form">
 			<div class="form-content form-content--half">
 				<label class="form-content__label" for="titleForm">Título</label>
