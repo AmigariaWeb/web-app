@@ -27,6 +27,8 @@ export const useUserStore = defineStore("userStore", {
     },
     CLEAR_USER() {
       this.user = null;
+      this.isAssociation=false,
+      this.isAdmin=false
     },
 
     async createNewUser(user) {
