@@ -1,6 +1,6 @@
 <script setup>
 import { useUserStore } from '@/stores/useUserStore'
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 const { width } = useWindowSize()
@@ -13,12 +13,15 @@ const toggleMenu = () => {
   localStorage.setItem('is_expanded', is_expanded.value)
 }
 
+  onBeforeMount( async () => {
+    await userStore.setAssociation()
+    await userStore.setAdmin()
+  })
+
 onMounted( async() => {
   if (width.value >= 1720) {
     is_expanded.value = true
     localStorage.setItem('is_expanded', is_expanded.value)
-    await userStore.setAssociation()
-    await userStore.setAdmin()
   }
 })
 </script>
