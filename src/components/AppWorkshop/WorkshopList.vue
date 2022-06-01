@@ -8,6 +8,7 @@ import { onMounted, reactive } from 'vue';
         index:Number,
         canUpdate:Boolean,
         removeWorkshop: Function,
+        editWorkshop: Function
     })
 
     let objReactive = reactive({
@@ -46,6 +47,7 @@ import { onMounted, reactive } from 'vue';
             </p>
             <div class="card-panel-editor">
                 <RouterLink  :to="'/workshops/' + data.slug" class="card-btn">Ver mas</RouterLink>
+                <button @click="editWorkshop(data)" class="card-btn card-btn__update" type="submit">Actualizar</button>
                 <button @click="removeWorkshop(data)" class="card-btn card-btn__delete"  >Eliminar</button>
             </div>
         </div>

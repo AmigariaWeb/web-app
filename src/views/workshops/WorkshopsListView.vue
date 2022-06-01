@@ -38,6 +38,20 @@ const router = useRouter()
       }
     })
 
+const editWorkshop = (workshop) => {
+    console.log('EDITANDOOO!!')
+    const editWorkshops = () => {
+    router.push({ name: 'Editar Taller', params: workshop })
+    // console.log(workshop);
+  }
+  swal(
+    'editWorkshops',
+    '¿Estas seguro?',
+    'Editar el taller publicado',
+    editWorkshops
+  )
+  return false;
+}
 
 const removeWorkshop = (workshop) => {
     const confirmRemove = async () => {
@@ -84,6 +98,7 @@ const removeWorkshop = (workshop) => {
         :canUpdate="data.canUpdate" 
         :key="index"
         :removeWorkshop="removeWorkshop"
+        :editWorkshop="editWorkshop"
       />
     </div>
     <PageInfoModal />

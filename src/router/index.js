@@ -56,6 +56,15 @@ const router = createRouter({
       }
     },
     {
+      path: "/workshops/edit/:",
+      name: "Editar Taller",
+      component: () => import('@/components/AppWorkshop/EditWorkshopForm.vue'),
+      meta: {
+        requiresAuth: true,
+        requiresBeAssociation:true
+      }
+    },
+    {
       path: "/myactivities",
       name: "Mis Actividades",
       component: () => import('@/views/MyActivitiesView.vue'),
