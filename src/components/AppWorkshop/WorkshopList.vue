@@ -1,6 +1,5 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import PageInfoModal from '@/components/PageInfoModal/PageInfoModal.vue'
 import Spinner from '@/components/Spinner/Spinner.vue';
 import { onMounted, reactive } from 'vue';
     const props = defineProps({
@@ -73,6 +72,7 @@ import { onMounted, reactive } from 'vue';
         position:relative;
         overflow:hidden;
         transition: opacity 1s  ease-in-out, transform 0.5s ease-in-out;
+        width: 100%;
         @media screen and (min-width: 768px) {
             padding: 20px;
         }
@@ -84,6 +84,7 @@ import { onMounted, reactive } from 'vue';
             letter-spacing: 0.0012em;
             flex: 100%;
             width: 100%;
+            text-transform: capitalize;
         }
         @media screen and (min-width: 768px) {
             flex-flow: row wrap;
