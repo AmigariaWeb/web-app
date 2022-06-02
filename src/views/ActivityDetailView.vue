@@ -171,6 +171,10 @@ const addParticipation = async () => {
       flex-direction: column;
       gap: 0.5rem;
 
+      .type{
+        text-transform: capitalize;
+      }
+
       button {
         margin-top: 1rem;
         font-size: 1.5rem;
