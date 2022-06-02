@@ -1,6 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
-
+import { ref, reactive } from 'vue';
 import { addNewWorkshop ,addNewImageWorkshop, getImageWorkshop, updateWorkshop } from '@/services/firebase/workshop/model.js';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/useUserStore'
@@ -30,15 +29,16 @@ let newWorkshop = reactive({
 	imageLogo:'', 
 	renderImgLogo:[]
 })
+
+const page = reactive({
+	isSubmit:false
+})
+
 const router = useRouter();
 newWorkshop = ref({ 
 	description: '',
 });
 const userStore = useUserStore()
-
-
-onMounted(() => {
-})
 
 function infoMap(){
 	swal("infoMaps", "para insertar el mapa", '<p>Situado sobre el lugar de interés clicamos en "Compartir" y luego en "insertar un mapa", del "iframe" que nos dan a copiar solo usaremos la url (lo que está marcado en negrita) </p><p style="background: #003a70;border-radius: 20px;padding: 10px; color:white;">"<strong style="color: #20f37a;">&lt;iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d449581.6911820676!2d-16.778972358006236!3d28.317801550662995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc6a8398062de729%3A0x67633a63c20a292d!2sParque%20Nacional%20del%20Teide!5e0!3m2!1ses!2ses!4v1652379991909!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"&gt;&lt;/iframe&gt;</strong>"</p>')
@@ -46,29 +46,39 @@ function infoMap(){
 
 const sendForm = async (e) => {
 	e.preventDefault();
+	page.isSubmit = true;
 	await fillForm().then(()=>{
 		delete newWorkshop.value.renderImg;
 		delete newWorkshop.value.renderImgLogo;
 		addNewWorkshop(newWorkshop.value).then((newWorkId)=>{
 			newWorkshop.value.id = newWorkId;
-			updateWorkshop(newWorkshop.value)
+			updateWorkshop(newWorkshop.value).then(()=>{
+				router.push("/workshops")
+			})
 		})
-		router.push("/workshops")
 	})
 }
 
 const fillForm = async () => {
 
-	if( newWorkshop.value.image.length !==0 ){
+	if( newWorkshop.value.image && newWorkshop.value.image.length !==0 ){
 		newWorkshop.value.slug = await convertToSlug(newWorkshop.value.title);
 		let imageName = `${userStore.user.uid}/${newWorkshop.value.slug}-${newWorkshop.value.image.name}`;
 		let urlImage = await addNewImageWorkshop(newWorkshop.value.image, imageName)
 		newWorkshop.value.image = await getImageWorkshop(urlImage.metadata.fullPath)
 	}
-	newWorkshop.value.asociationName = userStore.user.name
-	newWorkshop.value.email = userStore.user.email
-	newWorkshop.value.imageLogo = userStore.user.image
-	newWorkshop.value.userId = userStore.user.uid
+	if(userStore.user.isAdmin && newWorkshop.value.imageLogo && newWorkshop.value.imageLogo.length !==0 ){
+		newWorkshop.value.slug = await convertToSlug(newWorkshop.value.title);
+		let imageName = `${userStore.user.uid}/${newWorkshop.value.slug}-${newWorkshop.value.imageLogo.name}`;
+		let urlImage = await addNewImageWorkshop(newWorkshop.value.imageLogo, imageName)
+		newWorkshop.value.imageLogo = await getImageWorkshop(urlImage.metadata.fullPath)
+	}
+	if(!userStore.user.isAdmin){
+		newWorkshop.value.asociationName = userStore.user.name
+		newWorkshop.value.email = userStore.user.email
+		newWorkshop.value.imageLogo = userStore.user.image
+		newWorkshop.value.userId = userStore.user.uid
+	}
 }
 
 function convertToSlug(value) {
@@ -110,7 +120,8 @@ const previewImage = async (event, obj, image, render) =>{
 			</div>
 			<div class="form-content form-content--half">
 				<label class="form-content__label" for="nameForm">Nombre organización</label>
-				<p class="form-content__input" id="nameForm">{{userStore.user.name}}</p>
+				<input v-if="userStore.user.isAdmin" class="form-content__input" type="text" id="nameForm" placeholder="Nombre Organización..." required v-model="newWorkshop.asociationName">
+				<p v-else class="form-content__input" id="nameForm">{{userStore.user.name}}</p>
 			</div>
 			<div class="form-content form-content--tiny">
 				<label class="form-content__label" for="typeForm">Tipo</label>
@@ -126,12 +137,12 @@ const previewImage = async (event, obj, image, render) =>{
 			</div>
 			<div class="form-content form-content--tiny">
 				<label class="form-content__label" for="fromTimeForm">Desde</label>
-				<input class="form-content__input" type="time" name="fromTimeForm" id="fromTimeForm" min="06:00:AM" required
+				<input class="form-content__input" type="time" name="fromTimeForm" id="fromTimeForm" required
 					v-model="newWorkshop.from">
 			</div>
 			<div class="form-content form-content--tiny">
 				<label class="form-content__label" for="toTimeForm">Hasta</label>
-				<input class="form-content__input" type="time" name="toTimeForm" id="toTimeForm" required :min="newWorkshop.from" max="23:59:PM"
+				<input class="form-content__input" type="time" name="toTimeForm" id="toTimeForm" required 
 					:disabled="newWorkshop.from === undefined" v-model="newWorkshop.to">
 			</div>
 			<div class="form-content">
@@ -140,7 +151,8 @@ const previewImage = async (event, obj, image, render) =>{
 			</div>
 			<div class="form-content">
 				<label class="form-content__label" for="emailForm">Email</label>
-				<p class="form-content__input" id="emailForm">{{userStore.user.email}}</p>
+				<input v-if="userStore.user.isAdmin" class="form-content__input" type="text" id="emailForm" placeholder="Nombre Organización..." required v-model="newWorkshop.email">
+				<p v-else class="form-content__input" id="emailForm">{{userStore.user.email}}</p>
 			</div>
 			<div class="form-content">
 				<label class="form-content__label" for="phoneForm">Teléfono</label>
@@ -172,7 +184,9 @@ const previewImage = async (event, obj, image, render) =>{
 			<div class="form-content form-content--half">
 				<label class="form-content__input form-content__label form-content__label--image" for="logoForm">
 					<p class="form-content__label form-content__label--image">Logo de la Asociación</p>
-					<img class="form-content__image" :src="userStore.user.image" />
+					<img v-if="!userStore.user.isAdmin" class="form-content__image" :src="userStore.user.image" />
+					<img v-else class="form-content__image" :src="newWorkshop.renderImgLogo[index]" v-for="(image, index) in newWorkshop.renderImgLogo"  :index="index" :key="index" />
+					<input v-if="userStore.user.isAdmin" class="" type="file" id="imageForm" name="logo" @input="previewImage($event, newWorkshop, 'imageLogo', 'renderImgLogo')">
 				</label>
 			</div>
 			<div class="form-content form-content--full">
@@ -197,7 +211,7 @@ const previewImage = async (event, obj, image, render) =>{
 				</div>
 			</div>
 			<div class="form-content form-content--full form-content--center">
-				<button class="form-content__btn" form="activity-form" type="submit">Enviar</button>
+				<button class="form-content__btn" form="activity-form" type="submit" :disabled="page.isSubmit">Enviar</button>
 			</div>
 		</form>
 	</div>
