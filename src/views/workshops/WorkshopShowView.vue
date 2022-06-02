@@ -4,27 +4,38 @@ import { storeToRefs } from "pinia";
 import Spinner from "@/components/Spinner/Spinner.vue";
 
 import { onBeforeMount, onMounted, ref, reactive } from "vue";
-import { useRoute, RouterView, RouterLink } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 
-const { workshops, loading, selectedWorkshop } = storeToRefs(useWorkshopsStore());
+const { selectedWorkshop } = storeToRefs(useWorkshopsStore());
 const { fetchWorkshops, workshopBySlug } = useWorkshopsStore();
 let workshop = reactive({});
+let page = reactive({
+  render:false
+});
 
-// // Rellenar actividades
+
+onMounted(async() => {
+  workshop = selectedWorkshop.value;
+  page.render= false;
+  console.log(page)
+});
 onBeforeMount(async () => {
   await fetchWorkshops();
-
   workshop = await workshopBySlug(route.params.slug);
-});
-onMounted(() => {
-  workshop = selectedWorkshop.value;
+  console.log(workshop)
+  if(!workshop){
+    router.push("/404");
+  }
+  page.render= true;
 });
 </script>
 
 <template>
-  <main>
+  <main v-show="page.render">
+
     <div class="container">
       <h1 class="card-header__title">{{ selectedWorkshop.title }}</h1>
       <div class="card">

@@ -17,7 +17,8 @@ const router = useRouter()
 
     let data = reactive({
         workshop:[],
-        canUpdate:false
+        canUpdate:false,
+        render:false
      });
 
 // Rellenar actividades
@@ -30,6 +31,7 @@ const router = useRouter()
       if(user.value.isAssociation){
         data.workshop = workshops.value.filter((workshop)=> workshop.userId === user.value.uid  )
       }
+      data.render = true
     })
 
     onMounted(() => {
@@ -78,7 +80,7 @@ const removeWorkshop = (workshop) => {
 
 <template>
   <Spinner v-if="loading" />
-  <main v-else>
+  <main v-if="data.render">
     <div v-if="data.workshop.length === 0" >
       <h1 class="workshops-content__title">Aun no hay talleres registrados</h1>
       <div class="workshops-content__button">
