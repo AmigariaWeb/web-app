@@ -1,31 +1,38 @@
 <script setup>
-import { storeToRefs } from 'pinia';
-import { useActivitiesStore } from '../stores/useActivitiesStore';
+import { storeToRefs } from 'pinia'
+import { useActivitiesStore } from '../stores/useActivitiesStore'
 
-const {searchQuery} = storeToRefs(useActivitiesStore());
-const {findSearchQuery} = useActivitiesStore();
-
+const { searchQuery } = storeToRefs(useActivitiesStore())
+const { findSearchQuery } = useActivitiesStore()
 </script>
+
 <template>
   <div class="searchBarContainer">
-      <label for="searchBar">Buscar: </label>
-      <input id="searchBar" class="searchBar" type="search" placeholder="Título o tipo..." v-model="searchQuery" @keyup="findSearchQuery">
-    </div>
+    <label for="searchBar">Buscar</label>
+    <input
+      id="searchBar"
+      class="searchBar"
+      type="search"
+      placeholder="Título, tipo, descrip..."
+      v-model="searchQuery"
+      @keyup="findSearchQuery"
+    />
+  </div>
 </template>
 
-
 <style lang="scss" scoped>
-.searchBarContainer{
+.searchBarContainer {
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   justify-content: flex-end;
 
-  label{
+  label {
     font-weight: 700;
     font-size: 1.2rem;
-    color: var( --clr-emphasis-light);
+    color: var(--clr-emphasis-light);
+
   }
   .searchBar {
     font-size: 1rem;
@@ -35,11 +42,25 @@ const {findSearchQuery} = useActivitiesStore();
     box-shadow: var(--shadow);
     color: var(--clr-dark-blue);
     transition: border 0.5s ease;
-  
-    &:hover, &:focus  {
+    width: min(100%, 12.5rem);
+
+    &:hover,
+    &:focus {
       border: 3px solid var(--clr-yellow-light);
       outline: none;
     }
   }
+
 }
+  @media(max-width:640px){
+    .searchBarContainer{
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0;
+      label{
+            width: min(100%, 12.5rem);
+
+      }
+    }
+  }
 </style>

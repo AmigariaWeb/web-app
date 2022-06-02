@@ -1,49 +1,33 @@
 <script setup>
-import { ref } from 'vue'
-import { updateActivity } from '@/services/firebase/crud'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/useUserStore.js'
-import { swal } from '@/utils/swal.js'
+import { updateActivity } from "@/services/firebase/crud";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/useUserStore.js";
+import { swal } from "@/utils/swal.js";
 
-const router = useRouter()
-const activity = router.currentRoute.value.params
+const router = useRouter();
+const activity = router.currentRoute.value.params;
 
-const userStore = useUserStore()
-const newActivity = ref({
-  title: activity.title,
-  description: activity.description,
-  type: activity.type,
-  date: activity.date,
-  from: activity.from,
-  to: activity.to,
-  id: activity.id,
-  userId: activity.userId,
-  isAssigned: activity.isAssigned === "true",
-})
+const userStore = useUserStore();
 
 const sendForm = async (e) => {
+  e.preventDefault();
   if (Object.keys(activity).length !== 0) {
-    e.preventDefault()
     userStore.user.userActivities = userStore.user.userActivities.filter(
-      (oldActivity) => oldActivity.id !== newActivity.value.id
-    )
-    userStore.user.userActivities.push(newActivity.value)
-    await updateActivity(newActivity.value)
-    userStore.updateUser(userStore.user)
-    swal(
-      'success',
-      'Actividad editada',
-      'La actividad se ha actualizado correctamente.'
-    )
-    router.push('/')
+      (oldActivity) => oldActivity.id !== activity.id
+    );
+    userStore.user.userActivities.push(activity);
+    await updateActivity(activity);
+    userStore.updateUser(userStore.user);
+    swal("success", "Actividad editada", "La actividad se ha actualizado correctamente.");
+    router.push("/");
   }
-}
+};
 </script>
 
 <template>
   <main>
+    <h1 class="form-title">Editar Actividad</h1>
     <div class="form-container">
-      <h3 class="form-title">Editar Actividad</h3>
       <form @submit="sendForm" id="activity-form">
         <div class="title form-content">
           <label for="titleForm">Título</label>
@@ -52,7 +36,7 @@ const sendForm = async (e) => {
             id="titleForm"
             placeholder="Título..."
             required
-            v-model="newActivity.title"
+            v-model="activity.title"
           />
         </div>
         <div class="description form-content">
@@ -63,16 +47,14 @@ const sendForm = async (e) => {
             rows="4"
             placeholder="Introduzca una descripción..."
             required
-            v-model="newActivity.description"
+            v-model="activity.description"
           ></textarea>
         </div>
         <div class="time form-content">
           <div class="type form-content">
             <label for="typeForm">Tipo</label>
-            <select id="typeForm" required v-model="newActivity.type">
-              <option selected disabled value="undefined">
-                Selecciona un tipo
-              </option>
+            <select id="typeForm" required v-model="activity.type">
+              <option selected disabled value="undefined">Selecciona un tipo</option>
               <option value="social">Social</option>
               <option value="entretenimiento">Entretenimiento</option>
               <option value="transporte">Transporte</option>
@@ -88,7 +70,7 @@ const sendForm = async (e) => {
               name="dateForm"
               id="dateForm"
               required
-              v-model="newActivity.date"
+              v-model="activity.date"
             />
           </div>
         </div>
@@ -102,7 +84,7 @@ const sendForm = async (e) => {
               id="fromTimeForm"
               min="06:00:AM"
               required
-              v-model="newActivity.from"
+              v-model="activity.from"
             />
           </div>
           <div class="to">
@@ -112,10 +94,10 @@ const sendForm = async (e) => {
               name="toTimeForm"
               id="toTimeForm"
               required
-              :min="newActivity.from"
+              :min="activity.from"
               max="23:59:PM"
-              :disabled="newActivity.from === undefined"
-              v-model="newActivity.to"
+              :disabled="activity.from === undefined"
+              v-model="activity.to"
             />
           </div>
         </div>
@@ -128,6 +110,10 @@ const sendForm = async (e) => {
 </template>
 
 <style lang="scss" scoped>
+h1 {
+  text-align: center;
+}
+
 .form-container {
   display: flex;
   align-items: center;
@@ -138,15 +124,19 @@ const sendForm = async (e) => {
   border-radius: 20px;
   width: 100%;
   max-width: 650px;
-  min-height: 85vh;
+  padding-block: 1.5rem;
 }
 
 .form-title {
   text-align: center;
+  &:h3 {
+    text-align: center;
+    color: var(--clr-emphasis-light);
+  }
 }
 
 form {
-  padding: 1rem 2rem;
+  padding: 1rem 0.5rem;
   width: 100%;
   display: flex;
   gap: 15px;
@@ -158,7 +148,7 @@ form {
   }
 
   label {
-    font-family: 'AtkinsonHyperlegible';
+    font-family: "AtkinsonHyperlegible";
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -170,7 +160,7 @@ form {
   input,
   textarea,
   select {
-    font-family: 'AtkinsonHyperlegible', sans-serif;
+    font-family: "AtkinsonHyperlegible", sans-serif;
     color: var(--clr-dark-blue-shadow);
     min-width: 44px;
     min-height: 44px;
@@ -213,12 +203,14 @@ form {
     gap: 15px;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 
     .type,
     .date {
       display: flex;
       flex-direction: column;
-      min-width: 45%;
+      min-width: 25%;
     }
 
     .from,
@@ -260,6 +252,9 @@ button {
   main {
     max-width: 640px;
     margin: 0 auto;
+  }
+  form {
+    padding-inline: 2rem;
   }
 }
 </style>

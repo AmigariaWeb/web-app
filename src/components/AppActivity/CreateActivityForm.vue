@@ -1,32 +1,46 @@
 <script setup>
-import { ref } from 'vue'
-import { addNewActivity } from '@/services/firebase/crud'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/useUserStore.js'
-import { swal } from '@/utils/swal.js'
+import { ref } from "vue";
+import { addNewActivity } from "@/services/firebase/crud";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/useUserStore.js";
+import { swal } from "@/utils/swal.js";
+import PageInfoModal from "../PageInfoModal/PageInfoModal.vue";
 
-const router = useRouter()
-const newActivity = ref({})
-const userStore = useUserStore()
-const todayDate = new Date().toISOString().split('T')[0];
+const router = useRouter();
+const newActivity = ref({});
+const userStore = useUserStore();
+const todayDate = new Date().toISOString().split("T")[0];
 
 const sendForm = async (e) => {
-  e.preventDefault()
+  e.preventDefault();
+  if (userStore.user.userActivities.length <= 2 || userStore.user.isAdmin === true) {
+    fillNewActivity();
+    const activityId = await addNewActivity(newActivity.value);
+    const newActivityWithId = { ...newActivity.value, id: activityId };
+    userStore.user.userActivities.push(newActivityWithId);
+    userStore.updateUser(userStore.user);
+    swal("success", "Actividad creada", "La actividad se ha creado correctamente.");
+    router.push("/myactivities");
+  } else {
+    return swal(
+      "error",
+      "Has llegado al límite",
+      "Ya tienes 3 actividades creadas, borra alguna si quieres agregar nuevas."
+    );
+  }
+};
+
+const fillNewActivity = () => {
   newActivity.value.userId = userStore.user.uid;
   newActivity.value.isAssigned = false;
-  newActivity.value.userName = userStore.user.name;
-  const activityId = await addNewActivity(newActivity.value)
-  const newActivityWithId = { ...newActivity.value, id: activityId }
-  userStore.user.userActivities.push(newActivityWithId)
-  userStore.updateUser(userStore.user)
-  swal("success","Actividad creada","La actividad se ha creado correctamente.")
-  router.push('/myactivities')
-}
+  newActivity.value.messages = [];
+  newActivity.value.userName = userStore.user.name || "Anónimo";
+};
 </script>
 
 <template>
   <main class="container">
-  <h3>Crear Actividad</h3>
+    <h1>Crear Actividad</h1>
     <div class="form-container">
       <form @submit="sendForm" id="activity-form">
         <div class="title form-content">
@@ -56,9 +70,7 @@ const sendForm = async (e) => {
           <div class="type form-content">
             <label for="typeForm">Tipo</label>
             <select id="typeForm" required v-model="newActivity.type">
-              <option selected disabled value="undefined">
-                Selecciona un tipo
-              </option>
+              <option selected disabled value="undefined">Selecciona un tipo</option>
               <option value="social">Social</option>
               <option value="entretenimiento">Entretenimiento</option>
               <option value="transporte">Transporte</option>
@@ -111,16 +123,13 @@ const sendForm = async (e) => {
         </div>
       </form>
     </div>
+    <PageInfoModal />
   </main>
 </template>
 
 <style lang="scss" scoped>
-
-.container{
-    h3{
-    text-align: center;
-    color: var(--clr-emphasis-light);
-  }
+h1 {
+  text-align: center;
 }
 .form-container {
   display: flex;
@@ -132,19 +141,19 @@ const sendForm = async (e) => {
   border-radius: 20px;
   width: 100%;
   max-width: 650px;
-  padding-block:1.5rem;
+  padding-block: 1.5rem;
 }
 
 .form-title {
   text-align: center;
-   &:h3{
+  &:h3 {
     text-align: center;
     color: var(--clr-emphasis-light);
   }
 }
 
 form {
-  padding: 1rem 2rem;
+  padding: 1rem 0.5rem;
   width: 100%;
   display: flex;
   gap: 15px;
@@ -156,7 +165,7 @@ form {
   }
 
   label {
-    font-family: 'AtkinsonHyperlegible';
+    font-family: "AtkinsonHyperlegible";
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -168,7 +177,7 @@ form {
   input,
   textarea,
   select {
-    font-family: 'AtkinsonHyperlegible', sans-serif;
+    font-family: "AtkinsonHyperlegible", sans-serif;
     color: var(--clr-dark-blue-shadow);
     min-width: 44px;
     min-height: 44px;
@@ -260,6 +269,9 @@ button {
   main {
     max-width: 640px;
     margin: 0 auto;
+  }
+  form {
+    padding-inline: 2rem;
   }
 }
 </style>

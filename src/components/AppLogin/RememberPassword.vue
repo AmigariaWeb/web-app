@@ -1,40 +1,49 @@
-
 <script setup>
-import { auth } from '../../services/firebase';
-import { sendPasswordResetEmail } from '@firebase/auth';
-import { ref } from 'vue'
-import { useRouter } from 'vue-router';
-import { swal } from '@/utils/swal.js'
+import { auth } from "../../services/firebase";
+import { sendPasswordResetEmail } from "@firebase/auth";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { swal } from "@/utils/swal.js";
 
 const router = useRouter();
-const email = ref("")
+const email = ref("");
 
 const resetUserPassword = async () => {
   try {
-    await sendPasswordResetEmail(auth, email.value)
-    swal("success", "Email válido", "¡Te hemos enviado un correo! Ahora cambia tu contraseña e inicia sesión.")
-    router.push('/login')
+    await sendPasswordResetEmail(auth, email.value);
+    swal(
+      "success",
+      "Email válido",
+      "¡Te hemos enviado un correo! Ahora cambia tu contraseña e inicia sesión."
+    );
+    router.push("/login");
   } catch (error) {
     if (error.code === "auth/user-not-found") {
-      return swal("error", "Email incorrecto", "Este email de usuario no existe.")
+      return swal("error", "Email incorrecto", "Este email de usuario no existe.");
     }
     if (error.code === "auth/missing-email") {
       return swal("error", "Email vacio", "Rellena el campo email.");
     }
   }
-}
+};
 </script>
 <template>
   <RouterLink to="/login">&lt- Volver a inicio de sesión</RouterLink>
   <form class="resetPasswordForm" @submit.prevent="resetUserPassword">
-    <h3>¿Has olvidado la contraseña?</h3>
+    <h1>¿Has olvidado la contraseña?</h1>
     <p>Introduce tu correo electrónico para obtener una nueva.</p>
     <div class="details">
       <label for="emailForResetPass">Email:</label>
-      <input id="emailForResetPass" type="email" name="email" v-model="email" placeholder="email@email.com">
+      <input
+        id="emailForResetPass"
+        type="email"
+        name="email"
+        v-model="email"
+        placeholder="email@email.com"
+      />
     </div>
     <button>Enviar</button>
-    <img src="@/assets/images/forgot-password.svg" alt="recordar contraseña">
+    <img src="@/assets/images/forgot-password.svg" alt="recordar contraseña" />
   </form>
 </template>
 
@@ -46,7 +55,6 @@ a {
   padding: 1rem;
   text-decoration: none;
   font-weight: 600;
-
 }
 
 .resetPasswordForm {
@@ -61,6 +69,10 @@ a {
   border-radius: 20px;
   padding: 2rem 0.5rem;
 
+  h1 {
+    color: var(--clr-dark-blue);
+  }
+
   p {
     font-size: 1.2rem;
   }
@@ -68,8 +80,6 @@ a {
   .details {
     display: flex;
     flex-direction: column;
-
-
 
     label {
       font-weight: 700;
@@ -105,7 +115,6 @@ a {
         background-color: #ffffffd1;
       }
     }
-
   }
 
   button {
@@ -140,16 +149,15 @@ a {
   }
 }
 
-@media(max-width:640px) {
+@media (max-width: 640px) {
   .resetPasswordForm {
-
-    h3 {
+    h1 {
       font-size: 1.8rem;
     }
   }
 }
 
-@media(max-width:500px) {
+@media (max-width: 500px) {
   .resetPasswordForm {
     img {
       margin-top: 0px;

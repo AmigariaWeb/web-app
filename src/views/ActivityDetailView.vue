@@ -1,73 +1,79 @@
 <script setup>
-import ayudaImg from '../assets/images/amigariaTypes_Ayuda.svg'
-import socialImg from '../assets/images/amigariaTypes_Social.svg'
-import entretenimientoImg from '../assets/images/amigariaTypes_Entretenimiento.svg'
-import transporteImg from '../assets/images/amigariaTypes_Transporte.svg'
-import otrosImg from '../assets/images/amigariaTypes_Otros.svg'
+import { onMounted, onBeforeMount, ref } from "vue";
+import { useUserStore } from "../stores/useUserStore";
+import { swal } from "@/utils/swal.js";
+import { useRouter } from "vue-router";
+import { updateActivity } from "@/services/firebase/crud.js";
+import { useActivitiesStore } from "../stores/useActivitiesStore";
+import PageInfoModal from "../components/PageInfoModal/PageInfoModal.vue";
+import Chat from "../components/Chat/Chat.vue";
+import ImgTypeHelp from "@/components/Images/ImgTypeHelp.vue";
+import ImgTypeSocial from "../components/Images/ImgTypeSocial.vue";
+import ImgTypeTransport from "../components/Images/ImgTypeTransport.vue";
+import ImgTypeEntertaiment from "../components/Images/ImgTypeEntertaiment.vue";
+import ImgTypeOthers from "../components/Images/ImgTypeOthers.vue";
 
-import { useUserStore } from '../stores/useUserStore'
-import { swal } from '@/utils/swal.js'
-import { useRouter } from 'vue-router'
-import { updateActivity } from '@/services/firebase/crud.js'
-import { onMounted, onBeforeMount, ref } from 'vue'
+const activitiesStore = useActivitiesStore();
 
-
-const userStore = useUserStore()
-const router = useRouter()
-const activity = ref(router.currentRoute.value.params)
-
-const TYPE_IMAGES = {
-  "ayuda":  ayudaImg,
-  "social":  socialImg,
-  "entretenimiento":  entretenimientoImg,
-  "transporte":  transporteImg,
-  "otros":  otrosImg,
-}
-
-let typeImg = TYPE_IMAGES[activity.value.type]
-
+const userStore = useUserStore();
+const router = useRouter();
+const activity = ref(router.currentRoute.value.params);
 
 onBeforeMount(() => {
   if (Object.keys(activity.value).length === 0) {
-    activity.value = JSON.parse(localStorage.getItem('lastActivity'))
+    activity.value = JSON.parse(localStorage.getItem("lastActivity"));
   }
-})
+});
 
 onMounted(() => {
   if (userStore.user !== null) {
     userStore.user.userActivities.forEach((element) => {
       if (element.userId === activity.value.userId) {
-        activity.value.activityIsMine = true
-        localStorage.setItem('lastActivity', JSON.stringify(activity.value))
+        activity.value.activityIsMine = true;
+        localStorage.setItem("lastActivity", JSON.stringify(activity.value));
       }
-    })
+    });
   }
-})
+});
 
-const addParticipation = () => {
-  activity.value.isAssigned = true
-  updateActivity(activity.value)
-  userStore.user.joinedActivities.push(activity.value)
-  userStore.updateUser(userStore.user)
-  swal(
-    'success',
-    '¡Actividad aceptada!',
-    'Se te ha asignado la actividad correctamente.'
-  )
-  router.push('/myactivities')
-}
+const addParticipation = async () => {
+  if (userStore.user.joinedActivities.length <= 2 || userStore.user.isAdmin === true) {
+    activity.value.isAssigned = true;
+    updateActivity(activity.value);
+    activitiesStore.updateActivities(activity.value);
+    userStore.user.joinedActivities.push(activity.value);
+    userStore.updateUser(userStore.user);
+    localStorage.setItem("lastActivity", JSON.stringify(activity.value));
+
+    swal(
+      "success",
+      "¡Actividad aceptada!",
+      "Se te ha asignado la actividad correctamente."
+    );
+    router.push("/myactivities");
+  } else {
+    return swal(
+      "error",
+      "Has llegado al límite",
+      "Solo puedes apuntarte a tres actividades al mismo tiempo."
+    );
+  }
+};
 </script>
 
 <template>
   <main>
     <div class="container">
       <div class="details">
-        <h3>{{ activity.title }}</h3>
+        <h1>{{ activity.title }}</h1>
         <div class="description">
           <p>{{ activity.description }}</p>
         </div>
         <div class="info-box">
           <div class="info">
+            <div class="user-name">
+              <p><strong>Autor:</strong> {{ activity.userName }}</p>
+            </div>
             <div class="type">
               <p><strong>Tipo:</strong> {{ activity.type }}</p>
             </div>
@@ -91,19 +97,39 @@ const addParticipation = () => {
               Me apunto
             </button>
           </div>
-          <img class="type-img" :src="typeImg" :alt="activity.type" />
+          <ImgTypeHelp v-if="activity.type === 'ayuda'" class="type-img" />
+          <ImgTypeSocial v-if="activity.type === 'social'" class="type-img" />
+          <ImgTypeTransport v-if="activity.type === 'transporte'" class="type-img" />
+          <ImgTypeEntertaiment
+            v-if="activity.type === 'entretenimiento'"
+            class="type-img"
+          />
+          <ImgTypeOthers v-if="activity.type === 'otros'" class="type-img" />
         </div>
       </div>
+      <Chat
+        class="chat"
+        v-if="
+          activity.isAssigned === 'true' ||
+          activity.isAssigned === true ||
+          activity.activityIsMine
+        "
+        :activity="activity"
+      />
     </div>
+    <PageInfoModal />
   </main>
 </template>
 
 <style lang="scss" scoped>
 .container {
   display: flex;
-  margin: 1rem auto;
+  flex-direction: column;
+  margin: 0 auto;
+  padding-top: 1rem;
   max-width: 700px;
   justify-content: center;
+  gap: 1rem;
 }
 
 .details {
@@ -117,9 +143,11 @@ const addParticipation = () => {
   box-shadow: var(--shadow);
   position: relative;
 
-  h3 {
+  h1 {
     font-weight: bold;
     text-align: center;
+    color: var(--clr-dark-blue);
+    font-size: 2rem;
   }
 
   h4 {
@@ -145,6 +173,10 @@ const addParticipation = () => {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+
+      .type{
+        text-transform: capitalize;
+      }
 
       button {
         margin-top: 1rem;

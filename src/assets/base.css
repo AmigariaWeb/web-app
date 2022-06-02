@@ -18,14 +18,6 @@
 }
 
 @font-face {
-  font-family: "JosefinSans";
-  font-weight: bold;
-  src:
-    url(./fonts/JosefinSans/JosefinSans-Bold.woff2) format("woff2"),
-    url(./fonts/JosefinSans/JosefinSans-Bold.woff) format("woff"),
-    url(./fonts/JosefinSans/JosefinSans-Bold.ttf) format("truetype")
-}
-@font-face {
   font-family: "Roboto";
   font-weight: regular;
   src:
@@ -34,12 +26,12 @@
     url(./fonts/Roboto/roboto.ttf) format("truetype")
 }
 @font-face {
-  font-family: "JosefinSans";
+  font-family: "Pacifico";
   font-weight: regular;
   src:
-    url(./fonts/JosefinSans/JosefinSans-Bold.woff2) format("woff2"),
-    url(./fonts/JosefinSans/JosefinSans-Bold.woff) format("woff"),
-    url(./fonts/JosefinSans/JosefinSans-Bold.ttf) format("truetype")
+    url(./fonts/Pacifico/Pacifico-Regular.woff2) format("woff2"),
+    url(./fonts/Pacifico/Pacifico-Regular.woff) format("woff"),
+    url(./fonts/Pacifico/Pacifico-Regular.ttf) format("truetype")
 }
 @font-face {
   font-family: "AtkinsonHyperlegible";
@@ -64,6 +56,10 @@
   margin: 0;
   padding: 0;
   font-weight: normal;
+
+}
+*:focus{
+  outline: 3px solid var(--clr-green-light);
 }
 
 body {
@@ -80,18 +76,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h2{
+h1{
   font-size: 3rem;
+  line-height: 4.5rem;
+  color: var(--clr-emphasis-light);
+}
+
+h2{
+  font-size: 2.5rem;
   line-height: 4.5rem;
 }
 
 h3{
-  font-size: 2.25rem;
+  font-size: 2.2rem;
   line-height: 3.375rem;
 }
 
 h4{
-  font-size: 1.563rem;
+  font-size: 1.8rem;
   line-height: 2.75rem;
 }
 
@@ -106,4 +108,25 @@ strong{
 
 .swal2-popup, .swal2-confirm {
   font-family: var(--font-default)
+}
+
+@media (max-width: 680px) {
+  h1{
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+  }
+  h2{
+    font-size: 2rem;
+    line-height: 2.8rem;
+  }
+  
+  h3{
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+  
+  h4{
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
 }

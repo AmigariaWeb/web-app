@@ -23,22 +23,23 @@ onBeforeMount(() => {
 <style lang="scss" scoped>
 #app {
 	main {
-		padding-left: 1rem;
+		padding-left: 0rem;
 	}
 }
 
 .container {
-	max-width: 800px;
-	margin: auto;
 	padding: 0px;
 	color: var(--clr-emphasis-light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 
 }
 
 .login {
 	&-wrap {
-		margin-top: 32px;
+		width: min(100%, 800px);
 	}
 
 	&-block {

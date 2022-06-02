@@ -7,6 +7,7 @@ import ParticipatedActivities from '@/components/MyActivities/ParticipatedActivi
 import CreatedActivities from '@/components/MyActivities/CreatedActivities.vue'
 import { updateActivity } from '@/services/firebase/crud.js'
 import { swal } from '@/utils/swal.js'
+import PageInfoModal from '../components/PageInfoModal/PageInfoModal.vue'
 
 const userStore = useUserStore()
 const activitiesStore = useActivitiesStore()
@@ -17,11 +18,19 @@ onBeforeMount(() => {
 })
 
 const deleteActivity = (activity) => {
-  activitiesStore.deleteActivity(activity)
-  userStore.user.userActivities = userStore.user.userActivities.filter(
-    (currentActivity) => currentActivity.id !== activity.id
+  const confirmRemove = () => {
+    activitiesStore.deleteActivity(activity)
+    userStore.user.userActivities = userStore.user.userActivities.filter(
+      (currentActivity) => currentActivity.id !== activity.id
+    )
+    userStore.updateUser(userStore.user)
+  }
+  swal(
+    'confirm',
+    '¿Estas seguro?',
+    'La actividad se eliminará por completo.',
+    confirmRemove
   )
-  userStore.updateUser(userStore.user)
 }
 
 const editActivity = (activity) => {
@@ -34,40 +43,60 @@ const showActivity = (activity) => {
 }
 
 const removeParticipation = (activity) => {
-  activity.isAssigned = false
-  updateActivity(activity)
-  userStore.user.joinedActivities = userStore.user.joinedActivities.filter(
-    (currentActivity) => currentActivity.id !== activity.id
-  )
-  userStore.updateUser(userStore.user)
+  const confirmRemove = () => {
+    activity.isAssigned = false
+    updateActivity(activity)
+    activitiesStore.updateActivities(activity)
+
+    userStore.user.joinedActivities = userStore.user.joinedActivities.filter(
+      (currentActivity) => currentActivity.id !== activity.id
+    )
+    userStore.updateUser(userStore.user)
+    localStorage.setItem('lastActivity', JSON.stringify(activity))
+  }
   swal(
-    'success',
-    'Participación eliminada',
-    'La actividad quedará disponible en mis actividades.'
+    'confirm',
+    '¿Estas seguro?',
+    'La actividad quedará disponible en mis actividades.',
+    confirmRemove
   )
 }
 </script>
 
 <template>
-  <main class="my-activities-container" v-if="userStore.user">
-    <CreatedActivities
-      :activities="userStore.user.userActivities"
-      :editActivity="editActivity"
-      :deleteActivity="deleteActivity"
-    />
-    <ParticipatedActivities
-      :activities="userStore.user.joinedActivities"
-      :showActivity="showActivity"
-      :removeParticipation="removeParticipation"
-    />
+  <main class="main-container" v-if="userStore.user">
+    <h1 class="main-title">Mis actividades</h1>
+    <div class="my-activities-container">
+      <CreatedActivities
+        :activities="userStore.user.userActivities"
+        :editActivity="editActivity"
+        :showActivity="showActivity"
+        :deleteActivity="deleteActivity"
+      />
+      <ParticipatedActivities
+        :activities="userStore.user.joinedActivities"
+        :showActivity="showActivity"
+        :removeParticipation="removeParticipation"
+      />
+      <PageInfoModal />
+    </div>
   </main>
 </template>
 
 <style lang="scss">
+h1 {
+  text-align: center;
+  color: var(--clr-emphasis-light);
+}
+
 .my-activities-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+
+  .main-title {
+    width: 100%;
+  }
 
   .card-activities {
     display: flex;
@@ -98,7 +127,7 @@ const removeParticipation = (activity) => {
         align-items: center;
         width: min(100%, 19rem);
         gap: 0.8rem;
-        overflow:hidden;
+        overflow: hidden;
 
         .activity-title {
           font-size: 1.563rem;
@@ -107,7 +136,7 @@ const removeParticipation = (activity) => {
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
-          text-align:center;
+          text-align: center;
         }
         .description {
           background-color: var(--clr-emphasis-light);
@@ -120,7 +149,7 @@ const removeParticipation = (activity) => {
           -webkit-box-orient: vertical;
           overflow: hidden;
           line-height: 2rem;
-          padding:0.5rem;
+          padding: 0.5rem;
         }
       }
       .info-and-btns {
@@ -171,10 +200,10 @@ const removeParticipation = (activity) => {
   }
 }
 .no-activities {
-  margin-top:1rem;
+  margin-top: 1rem;
   color: var(--clr-emphasis-light);
   text-align: center;
-  font-size:1.2rem;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 @media (max-width: 1440px) {
@@ -183,10 +212,6 @@ const removeParticipation = (activity) => {
     align-items: center;
     justify-content: flex-start;
     gap: 2rem;
-
-    .title {
-      font-size: 1.5rem;
-    }
   }
 }
 </style>

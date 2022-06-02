@@ -1,14 +1,14 @@
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 const props = defineProps({
   activity: Object,
 })
 
 const saveActivity = () => {
-  router.push({ name: 'Actividad', params: props.activity });
+  router.push({ name: 'Actividad', params: props.activity })
   localStorage.setItem('lastActivity', JSON.stringify(props.activity))
 }
 </script>
@@ -16,15 +16,16 @@ const saveActivity = () => {
 <template>
   <div class="box">
     <div class="postit">
-      <h3>{{ activity.title }}</h3>
+      <p class="title">{{ activity.title }}</p>
       <p class="postItContent">{{ activity.description }}</p>
       <div class="postItData">
-        <p>{{ activity.date }}</p>
-        <p><strong>Creado por:</strong> {{activity.userName || "anónimo"}}</p>
+        <div class="typeAndTime" >
+          <p>{{ activity.date }}</p>
+          <p class="postItType">{{ activity.type }}</p>
+        </div>
+        <p><strong>Creado por:</strong> {{ activity.userName || 'anónimo' }}</p>
       </div>
-      <button @click="saveActivity()" class="card"
-        >Saber más
-      </button>
+      <button @click="saveActivity()" class="card">Saber más</button>
     </div>
   </div>
 </template>
@@ -50,10 +51,10 @@ const saveActivity = () => {
   padding: 1rem;
   position: relative;
   width: min(100%, 300px);
-  transition: transform 0.5s ease;
+  transition: transform 0.3s ease;
   clip-path: polygon(0% 0%, 0% 100%, 85% 100%, 100% 85%, 100% 0%);
 
-  h3 {
+  .title {
     font-size: 1.5rem;
     line-height: 2.25rem;
     text-align: center;
@@ -95,7 +96,27 @@ const saveActivity = () => {
   }
 
   & .postItData {
+    gap: 0.8rem;
+    width: 100%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .typeAndTime{
+      display: flex;
+      width: 100%;
+      text-transform: capitalize;
+      justify-content:space-between;
+    }
+
+    .postItType{
+      background-color: var(--clr-green-light);
+      border-radius: 5px;
+      padding: 0 0.5rem;
+      align-self: flex-end;
+      color: var(--clr-dark-blue-shadow)
+    }
   }
 
   & button {

@@ -8,6 +8,8 @@ import { addUpdateUser, getUser } from '../services/firebase/crud';
 export const useUserStore = defineStore("userStore", {
   state: () => ({
     user: null,
+    isAssociation:false,
+    isAdmin:false
   }),
   getters: {
     isEmailVerified: (state) => {
@@ -25,6 +27,8 @@ export const useUserStore = defineStore("userStore", {
     },
     CLEAR_USER() {
       this.user = null;
+      this.isAssociation=false,
+      this.isAdmin=false
     },
 
     async createNewUser(user) {
@@ -81,8 +85,14 @@ export const useUserStore = defineStore("userStore", {
         return
       }
       try {
-        const user = await getUser(auth.currentUser);
-        this.SET_USER(user);
+        if (auth.currentUser) {
+          const user = await getUser(auth.currentUser);
+          this.SET_USER(user);
+          if(this.user.isAssociation){
+            router.push('/workshops')
+            return;       
+          }
+        }
         router.push('/')
       } catch (error) {
         return swal("error", "El usuario no existe", "")
@@ -135,9 +145,18 @@ export const useUserStore = defineStore("userStore", {
     },
 
     async logout() {
-      await signOut(auth);
-      this.CLEAR_USER();
-      router.push('/login');
+      const confirmLogout = async () => {
+        await signOut(auth);
+        this.CLEAR_USER();
+        router.push('/login');
+      }
+      swal(
+        'confirm',
+        '¿Quieres cerrar sesión',
+        '',
+        confirmLogout,
+        false
+      ) 
     },
 
     async signInWithGoogle() {
@@ -150,6 +169,10 @@ export const useUserStore = defineStore("userStore", {
         user = await getUser(auth.currentUser)
       }
       this.SET_USER(user);
+      if(this.user.isAssociation){
+        router.push('/workshops')
+        return;       
+      }
       router.push("/")
     },
 
@@ -163,6 +186,22 @@ export const useUserStore = defineStore("userStore", {
           this.SET_USER(userDB);
         }
       })
+    },
+    async setAdmin(){
+      if(this.user){
+        let user = await getUser(this.user)
+        if(user.isAdmin){
+            this.isAdmin = true;
+        }
+      }
+    },
+    async setAssociation(){
+      if(this.user){
+        let user = await getUser(this.user)
+        if(user.isAssociation){
+            this.isAssociation = true;
+        }
+      }
     }
   },
 });
