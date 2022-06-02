@@ -19,7 +19,10 @@ const saveActivity = () => {
       <p class="title">{{ activity.title }}</p>
       <p class="postItContent">{{ activity.description }}</p>
       <div class="postItData">
-        <p>{{ activity.date }}</p>
+        <div class="typeAndTime" >
+          <p>{{ activity.date }}</p>
+          <p class="postItType">{{ activity.type }}</p>
+        </div>
         <p><strong>Creado por:</strong> {{ activity.userName || 'anónimo' }}</p>
       </div>
       <button @click="saveActivity()" class="card">Saber más</button>
@@ -93,7 +96,27 @@ const saveActivity = () => {
   }
 
   & .postItData {
+    gap: 0.8rem;
+    width: 100%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .typeAndTime{
+      display: flex;
+      width: 100%;
+      text-transform: capitalize;
+      justify-content:space-between;
+    }
+
+    .postItType{
+      background-color: var(--clr-green-light);
+      border-radius: 5px;
+      padding: 0 0.5rem;
+      align-self: flex-end;
+      color: var(--clr-dark-blue-shadow)
+    }
   }
 
   & button {
