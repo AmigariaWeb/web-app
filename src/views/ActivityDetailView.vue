@@ -71,6 +71,9 @@ const addParticipation = async () => {
         </div>
         <div class="info-box">
           <div class="info">
+            <div class="user-name">
+              <p><strong>Autor:</strong> {{ activity.userName }}</p>
+            </div>
             <div class="type">
               <p><strong>Tipo:</strong> {{ activity.type }}</p>
             </div>
