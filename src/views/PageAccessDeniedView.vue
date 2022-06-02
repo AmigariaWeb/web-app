@@ -1,5 +1,13 @@
 <script setup>
-
+import { onBeforeMount } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/useUserStore'
+const { setAssociation } = useUserStore()
+const { isAssociation, user } = storeToRefs(useUserStore())
+onBeforeMount( async () => {
+  await setAssociation()
+  console.log()
+});
 </script>
 
 <template>
@@ -14,7 +22,7 @@
     </div>
     <div class="links">
       <span>¿Qué tal si pruebas por aquí?</span>
-      <div class="buttons">
+      <div v-if="user.isAdmin" class="buttons">
         <RouterLink class="buttonsLink" to="/">
           Actividades
         </RouterLink>
@@ -23,6 +31,34 @@
         </RouterLink>
         <RouterLink class="buttonsLink" to="/myactivities/form">
           Crear actividad
+        </RouterLink>
+        <RouterLink class="buttonsLink" to="/workshops/form">
+          Nuevo Taller
+        </RouterLink>
+        <RouterLink class="buttonsLink" to="/workshops">
+          Talleres
+        </RouterLink>
+      </div>
+      <div v-else-if="isAssociation" class="buttons">
+        <RouterLink class="buttonsLink" to="/workshops/form">
+          Nuevo Taller
+        </RouterLink>
+        <RouterLink class="buttonsLink" to="/workshops">
+          Talleres
+        </RouterLink>
+      </div>
+      <div v-else class="buttons">
+        <RouterLink class="buttonsLink" to="/">
+          Actividades
+        </RouterLink>
+        <RouterLink class="buttonsLink" to="/myactivities">
+          Mis actividades
+        </RouterLink>
+        <RouterLink class="buttonsLink" to="/myactivities/form">
+          Crear actividad
+        </RouterLink>
+        <RouterLink class="buttonsLink" to="/workshops">
+          Talleres
         </RouterLink>
       </div>
     </div>
