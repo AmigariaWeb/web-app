@@ -101,7 +101,6 @@ import { onMounted, reactive } from 'vue';
         }
         &-header{
             object-fit: cover;
-            // min-width: 245px;
             flex: 1;
             width:100%;
             @media screen and (min-width: 768px) {

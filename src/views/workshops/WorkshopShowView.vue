@@ -19,12 +19,10 @@ let page = reactive({
 
 onMounted(async() => {
   workshop = selectedWorkshop.value;
-  console.log(page)
 });
 onBeforeMount(async () => {
   await fetchWorkshops();
   workshop = await workshopBySlug(route.params.slug);
-  console.log(workshop)
   if(!workshop){
     router.push("/404");
   }
@@ -132,7 +130,6 @@ onBeforeMount(async () => {
   }
   &-header,
   &-body {
-    // padding: 15px;
     border-radius: 20px;
   }
   &-header {
@@ -159,8 +156,6 @@ onBeforeMount(async () => {
       border-radius: 20px;
       background-color: var(--clr-emphasis-light);
       padding: 10px;
-      // text-align: center;
-
       ::v-deep(.ql-size-small) {
         font-size: 0.75rem;
       }

@@ -31,12 +31,7 @@ export const getImageWorkshop = async (urlImage) => {
 
 export const addNewWorkshop = async (newWorkshop) => {
   try {
-    console.log("Document ", newWorkshop);
-    
     const docRef =  await addDoc(collection(db, "workshops"), newWorkshop);
-    console.log("Document written");
-    console.log(newWorkshop, 'addNewWorkshop');
-
     return docRef.id;
   } catch (error) {
     console.error("Error adding document: ", error);
@@ -46,7 +41,6 @@ export const addNewWorkshop = async (newWorkshop) => {
 export const updateWorkshop = async (newWorkshop) => {
   try {
     const { id } = newWorkshop;
-    console.log(newWorkshop);
     await updateDoc(doc(db, "workshops", id), newWorkshop);
   } catch (error) {
     console.error("Error adding document: ", error);

@@ -74,7 +74,6 @@ const fillForm = async () => {
 		newWorkshop.value.slug = await convertToSlug(newWorkshop.value.title);
 		let imageName = `${newWorkshop.value.userId}/${newWorkshop.value.slug}-${newWorkshop.value.image.name}`;
 		if(newWorkshop.value.image !== ActualImage){
-			console.log('AQUINOOOOO!!')
 			let urlImage = await addNewImageWorkshop(newWorkshop.value.image, imageName)
 			newWorkshop.value.image = await getImageWorkshop(urlImage.metadata.fullPath)
 		}
@@ -83,7 +82,6 @@ const fillForm = async () => {
 		newWorkshop.value.slug = await convertToSlug(newWorkshop.value.title);
 		let imageName = `${newWorkshop.value.userId}/${newWorkshop.value.slug}-${newWorkshop.value.imageLogo.name}`;
 		if(newWorkshop.value.imageLogo !== ActualImageLogo){
-			console.log('AQUINOOOOO!!')
 			let urlImage = await addNewImageWorkshop(newWorkshop.value.imageLogo, imageName)
 			newWorkshop.value.imageLogo = await getImageWorkshop(urlImage.metadata.fullPath)
 		}

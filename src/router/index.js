@@ -150,7 +150,6 @@ const router = createRouter({
       path: '/FAQ',
       name: "Preguntas",
       component: FAQ,
-      // component: () => import('@/components/FAQ/FAQsView.vue'),
       meta: {
         requiresAuth: true
       }

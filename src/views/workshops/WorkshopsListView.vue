@@ -21,7 +21,6 @@ const router = useRouter()
         render:false
      });
 
-// Rellenar actividades
     onBeforeMount( async () => {
       await fetchWorkshops()
       await setAssociation()
@@ -41,10 +40,8 @@ const router = useRouter()
     })
 
 const editWorkshop = (workshop) => {
-    console.log('EDITANDOOO!!')
     const editWorkshops = () => {
     router.push({ name: 'Editar Taller', params: workshop })
-    // console.log(workshop);
   }
   swal(
     'editWorkshops',
@@ -58,7 +55,6 @@ const editWorkshop = (workshop) => {
 const removeWorkshop = (workshop) => {
     const confirmRemove = async () => {
       let element = document.querySelector('#'+workshop.id+workshop.slug)
-      // element.classList.add("remove")
       let auxArray = []
       data.workshop.filter((item)=>{ 
         if(item.id !== workshop.id){

@@ -1,5 +1,4 @@
 <script setup>
-  // import Spinner from '../components/Spinner/Spinner.vue'
 </script>
 
 <template>
