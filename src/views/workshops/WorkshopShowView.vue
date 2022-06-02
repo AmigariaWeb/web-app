@@ -19,7 +19,6 @@ let page = reactive({
 
 onMounted(async() => {
   workshop = selectedWorkshop.value;
-  page.render= false;
   console.log(page)
 });
 onBeforeMount(async () => {
