@@ -1,6 +1,6 @@
 <script setup>
-import { ref, reactive, onMounted, onBeforeMount } from 'vue';
-import { addNewWorkshop ,addNewImageWorkshop, getImageWorkshop, updateWorkshop } from '@/services/firebase/workshop/model.js';
+import { ref, reactive, onBeforeMount } from 'vue';
+import { addNewImageWorkshop, getImageWorkshop, updateWorkshop } from '@/services/firebase/workshop/model.js';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/useUserStore'
 import { swal } from '@/utils/swal.js'
@@ -29,6 +29,9 @@ let newWorkshop = reactive({
 	imageLogo:'', 
 	renderImgLogo:[],
 })
+const page = reactive({
+	isSubmit:false
+})
 const ActualImage = router.currentRoute.value.params.image;
 const ActualImageLogo = router.currentRoute.value.params.imageLogo;
 newWorkshop = ref({
@@ -48,15 +51,14 @@ onBeforeMount(() => {
 		}
 	}
 })
-onMounted(() => {
 
-})
 function infoMap(){
 	swal("infoMaps", "para insertar el mapa", '<p>Situado sobre el lugar de interés clicamos en "Compartir" y luego en "insertar un mapa", del "iframe" que nos dan a copiar solo usaremos la url (lo que está marcado en negrita) </p><p style="background: #003a70;border-radius: 20px;padding: 10px; color:white;">"<strong style="color: #20f37a;">&lt;iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d449581.6911820676!2d-16.778972358006236!3d28.317801550662995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc6a8398062de729%3A0x67633a63c20a292d!2sParque%20Nacional%20del%20Teide!5e0!3m2!1ses!2ses!4v1652379991909!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"&gt;&lt;/iframe&gt;</strong>"</p>')
 } 
 
 const sendForm = async (e) => {
 	e.preventDefault();
+	page.isSubmit = true;
 	await fillForm().then(()=>{
 		delete newWorkshop.value.renderImg;
 		delete newWorkshop.value.renderImgLogo;
@@ -70,7 +72,7 @@ const fillForm = async () => {
 	if(!userStore.user.isAdmin){
 		newWorkshop.value.userId = userStore.user.uid
 	}
-	if( newWorkshop.value.image.length !==0 ){
+	if( newWorkshop.value.image && newWorkshop.value.image.length !==0 ){
 		newWorkshop.value.slug = await convertToSlug(newWorkshop.value.title);
 		let imageName = `${newWorkshop.value.userId}/${newWorkshop.value.slug}-${newWorkshop.value.image.name}`;
 		if(newWorkshop.value.image !== ActualImage){
@@ -78,7 +80,7 @@ const fillForm = async () => {
 			newWorkshop.value.image = await getImageWorkshop(urlImage.metadata.fullPath)
 		}
 	}
-	if( newWorkshop.value.imageLogo.length !==0 ){
+	if( userStore.user.isAdmin && newWorkshop.value.imageLogo && newWorkshop.value.imageLogo.length !==0 ){
 		newWorkshop.value.slug = await convertToSlug(newWorkshop.value.title);
 		let imageName = `${newWorkshop.value.userId}/${newWorkshop.value.slug}-${newWorkshop.value.imageLogo.name}`;
 		if(newWorkshop.value.imageLogo !== ActualImageLogo){
@@ -222,7 +224,7 @@ const previewImage = async (event, obj, image, render) =>{
 				</div>
 			</div>
 			<div class="form-content form-content--full form-content--center">
-				<button class="form-content__btn" form="activity-form" type="submit">Enviar</button>
+				<button class="form-content__btn" form="activity-form" type="submit" :disabled="page.isSubmit">Enviar</button>
 			</div>
 		</form>
 	</main>
