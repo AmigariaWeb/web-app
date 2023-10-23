@@ -125,7 +125,7 @@ export const useUserStore = defineStore("userStore", {
         return
       }
       const actionCodeSettings = {
-        url: `https://app.amigaria.com`
+        url: `https://amigaria-app.vercel.app/`
       }
       await sendEmailVerification(auth.currentUser, actionCodeSettings);
       swal("success", "Registrado con éxito", "Ahora confirma tu correo electrónico. Si no lo encuentras busca en la bandeja de spam.")
