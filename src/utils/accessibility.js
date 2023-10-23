@@ -1,6 +1,6 @@
 
 window.interdeal = {
-  "sitekey": "2ba259f60eeda3401f4f2fd315e69eed",
+  "sitekey": "85c3bdd2dfedf8107dac3aabebb36ef1",
   "Position": "Right",
   "Menulang": "ES",
   "domains": {
@@ -29,9 +29,9 @@ window.interdeal = {
 };
 (function (doc, head, body) {
   var coreCall = doc.createElement('script');
-  coreCall.src = 'https://cdn.equalweb.com/core/4.2.2/accessibility.js';
+  coreCall.src = 'https://cdn.equalweb.com/core/4.5.11/accessibility.js';
   coreCall.defer = true;
-  coreCall.integrity = 'sha512-5JFUorutIyGmP61zRJjdTke6AFi8/IYzJ6pyQL0UpUqwMNDuukmNH2qv2s+lj0X6MPtblMt4KgWLoDmqrTa5kg==';
+  coreCall.integrity = 'sha512-ituk7fx8YI2pGzcu9bn3wbur6GvkBObBAGbpaq/9oRHAiODhgNxe7fstsL6nJJ8JmSwn3b6nH9i2Mtfr5tdkVw==';
   coreCall.crossOrigin = 'anonymous';
   coreCall.setAttribute('data-cfasync', true);
   body ? body.appendChild(coreCall) : head.appendChild(coreCall);
